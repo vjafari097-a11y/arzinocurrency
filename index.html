@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>قیمت لحظه‌ای ارز | دلار، یورو، بیت‌کوین</title>
+<title>قیمت لحظه‌ای ارز</title>
 <style>
 body{font-family:Tahoma;background:#1a1a2e;color:#fff;margin:0;padding:20px}
 h1{text-align:center;color:#f9d423;margin-bottom:5px}
+#logoBox{font-size:40px;vertical-align:middle;margin-left:8px}
 .section{max-width:950px;margin:25px auto 10px;border-right:4px solid #f9d423;padding-right:10px;font-size:18px}
 .toman-box{background:#16213e;max-width:430px;margin:15px auto;padding:12px;border-radius:12px;text-align:center;border:1px solid #f9d423}
 .toman-box small{color:#aaa;display:block;margin-bottom:8px}
@@ -25,7 +26,7 @@ h1{text-align:center;color:#f9d423;margin-bottom:5px}
 </style>
 </head>
 <body>
-<h1>💰 قیمت لحظه‌ای ارز</h1>
+<h1><span id="logoBox">💰</span> <span id="siteName"></span></h1>
 
 <div class="toman-box">
 <small>💵 نرخ دلار به تومان (برای محاسبه قیمت‌های تومانی):</small>
@@ -44,7 +45,16 @@ h1{text-align:center;color:#f9d423;margin-bottom:5px}
 <p class="time" id="time"></p>
 
 <script>
+var SITE_NAME = ' arzino';
+var LOGO = '';
 var DEFAULT_TOMAN = 60000;
+
+document.getElementById('siteName').textContent = SITE_NAME;
+document.title = SITE_NAME + ' | قیمت لحظه‌ای ارز';
+if(LOGO !== ''){
+  document.getElementById('logoBox').innerHTML = '<img src="'+LOGO+'" alt="logo" style="width:46px;height:46px;border-radius:12px;vertical-align:middle">';
+}
+
 var TOMAN = Number(localStorage.getItem('tomanRate')) || DEFAULT_TOMAN;
 document.getElementById('tomanInput').value = TOMAN;
 
@@ -95,12 +105,12 @@ function card(icon,name,usd,change){
   return '<div class="card"><div class="name">'+icon+' '+name+'</div><div class="price">$'+Number(usd).toLocaleString('en-US',{maximumFractionDigits:4})+'</div><div class="toman">'+toman(usd)+'</div>'+ch+'</div>';
 }
 
-function fiatCard(icon,name,ratePerUsd){
+  function fiatCard(icon,name,ratePerUsd){
   var usd = 1/ratePerUsd;
   return '<div class="card"><div class="name">'+icon+' '+name+'</div><div class="price">$'+usd.toFixed(4)+'</div><div class="toman">'+toman(usd)+'</div></div>';
 }
 
- async function loadAll(){
+async function loadAll(){
   var cbox=document.getElementById('crypto');
   var fbox=document.getElementById('fiat');
   cbox.innerHTML='<div class="msg">در حال بارگذاری...</div>';
@@ -135,4 +145,4 @@ loadAll();
 setInterval(loadAll,60000);
 </script>
 </body>
-</html> 
+</html>
