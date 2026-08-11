@@ -3,55 +3,136 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>قیمت لحظه‌ای ارز</title>
+<title>قیمت لحظه‌ای ارز | دلار، یورو، بیت‌کوین</title>
 <style>
 body{font-family:Tahoma;background:#1a1a2e;color:#fff;margin:0;padding:20px}
-h1{text-align:center;color:#f9d423}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;max-width:900px;margin:20px auto}
+h1{text-align:center;color:#f9d423;margin-bottom:5px}
+.section{max-width:950px;margin:25px auto 10px;border-right:4px solid #f9d423;padding-right:10px;font-size:18px}
+.toman-box{background:#16213e;max-width:430px;margin:15px auto;padding:12px;border-radius:12px;text-align:center;border:1px solid #f9d423}
+.toman-box small{color:#aaa;display:block;margin-bottom:8px}
+.toman-box input{width:130px;padding:6px;border-radius:8px;border:none;text-align:center;font-size:16px;font-weight:bold}
+.toman-box button{padding:6px 14px;border:none;border-radius:8px;background:#f9d423;font-weight:bold;cursor:pointer;margin-right:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;max-width:950px;margin:10px auto}
 .card{background:#16213e;border-radius:12px;padding:15px;text-align:center}
-.price{font-size:20px;font-weight:bold;direction:ltr}
+.name{color:#ccc;margin-bottom:8px}
+.price{font-size:18px;font-weight:bold;direction:ltr}
+.toman{color:#f9d423;font-size:14px;margin-top:6px}
 .up{color:#00e676}.down{color:#ff5252}
+.change{font-size:13px;margin-top:4px;direction:ltr}
 .msg{text-align:center;color:#aaa;padding:20px}
-button{display:block;margin:15px auto;padding:10px 25px;border:none;border-radius:20px;background:#f9d423;font-weight:bold;cursor:pointer}
+.refresh{display:block;margin:15px auto;padding:10px 25px;border:none;border-radius:20px;background:#f9d423;font-weight:bold;cursor:pointer}
+.time{text-align:center;color:#888;font-size:13px;margin-top:20px}
 </style>
 </head>
 <body>
 <h1>💰 قیمت لحظه‌ای ارز</h1>
-<button onclick="loadAll()">🔄 بروزرسانی</button>
-<div class="grid" id="box"><div class="msg">در حال بارگذاری...</div></div>
-<p class="msg" id="time"></p>
+
+<div class="toman-box">
+<small>💵 نرخ دلار به تومان (برای محاسبه قیمت‌های تومانی):</small>
+<input type="number" id="tomanInput" value="60000">
+<button onclick="setToman()">ثبت</button>
+</div>
+
+<button class="refresh" onclick="loadAll()">🔄 بروزرسانی قیمت‌ها</button>
+
+<h2 class="section">🪙 ارزهای دیجیتال</h2>
+<div class="grid" id="crypto"><div class="msg">در حال بارگذاری...</div></div>
+
+<h2 class="section">💵 ارزهای فیزیکی</h2>
+<div class="grid" id="fiat"><div class="msg">در حال بارگذاری...</div></div>
+
+<p class="time" id="time"></p>
+
 <script>
-async function loadAll(){
-  var box=document.getElementById('box');
-  box.innerHTML='<div class="msg">در حال بارگذاری...</div>';
+var DEFAULT_TOMAN = 60000;
+var TOMAN = Number(localStorage.getItem('tomanRate')) || DEFAULT_TOMAN;
+document.getElementById('tomanInput').value = TOMAN;
+
+var CRYPTOS = [
+['bitcoin','₿','بیت‌کوین'],
+['ethereum','Ξ','اتریوم'],
+['tether','💲','تتر'],
+['binancecoin','🔶','بایننس کوین'],
+['solana','◎','سولانا'],
+['ripple','✕','ریپل'],
+['dogecoin','🐕','دوج‌کوین'],
+['tron','🔴','ترون']
+];
+
+var FIATS = [
+['EUR','€','یورو'],
+['GBP','£','پوند انگلیس'],
+['TRY','₺','لیر ترکیه'],
+['AED','درهم','درهم امارات'],
+['CHF','فرانک','فرانک سوئیس'],
+['CNY','¥','یوان چین'],
+['RUB','₽','روبل روسیه'],
+['INR','₹','روپیه هند'],
+['JPY','ین','ین ژاپن'],
+['CAD','$','دلار کانادا'],
+['AUD','$','دلار استرالیا']
+];
+
+function setToman(){
+  var v = Number(document.getElementById('tomanInput').value);
+  if(v > 0){
+    TOMAN = v;
+    localStorage.setItem('tomanRate', v);
+    loadAll();
+  }
+}
+
+function toman(usd){
+  return Math.round(usd * TOMAN).toLocaleString('fa-IR') + ' تومان';
+}
+
+function card(icon,name,usd,change){
+  var ch='';
+  if(change!==null && change!==undefined){
+    var cls = change>=0 ? 'up':'down';
+    ch='<div class="change '+cls+'">'+(change>=0?'▲':'▼')+' '+Math.abs(change).toFixed(2)+'%</div>';
+  }
+  return '<div class="card"><div class="name">'+icon+' '+name+'</div><div class="price">$'+Number(usd).toLocaleString('en-US',{maximumFractionDigits:4})+'</div><div class="toman">'+toman(usd)+'</div>'+ch+'</div>';
+}
+
+function fiatCard(icon,name,ratePerUsd){
+  var usd = 1/ratePerUsd;
+  return '<div class="card"><div class="name">'+icon+' '+name+'</div><div class="price">$'+usd.toFixed(4)+'</div><div class="toman">'+toman(usd)+'</div></div>';
+}
+
+ async function loadAll(){
+  var cbox=document.getElementById('crypto');
+  var fbox=document.getElementById('fiat');
+  cbox.innerHTML='<div class="msg">در حال بارگذاری...</div>';
+  fbox.innerHTML='<div class="msg">در حال بارگذاری...</div>';
   try{
-    var r1=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether&vs_currencies=usd&include_24hr_change=true');
-    var d1=await r1.json();
-    var r2=await fetch('https://open.er-api.com/v6/latest/USD');
-    var d2=await r2.json();
-    var html='';
-    html+=card('₿','بیت‌کوین',d1.bitcoin.usd,d1.bitcoin.usd_24h_change);
-    html+=card('Ξ','اتریوم',d1.ethereum.usd,d1.ethereum.usd_24h_change);
-    html+=card('💲','تتر',d1.tether.usd,d1.tether.usd_24h_change);
-    html+=card('€','یورو (برابر دلار)',d2.rates.EUR,null);
-    html+=card('£','پوند (برابر دلار)',d2.rates.GBP,null);
-    html+=card('₺','لیر (برابر دلار)',d2.rates.TRY,null);
-    box.innerHTML=html;
+    var ids = CRYPTOS.map(function(c){return c[0];}).join(',');
+    var r1 = await fetch('https://api.coingecko.com/api/v3/simple/price?ids='+ids+'&vs_currencies=usd&include_24hr_change=true');
+    var d1 = await r1.json();
+    var r2 = await fetch('https://open.er-api.com/v6/latest/USD');
+    var d2 = await r2.json();
+    var h='';
+    for(var i=0;i<CRYPTOS.length;i++){
+      var c=CRYPTOS[i];
+      var info=d1[c[0]];
+      if(info){ h+=card(c[1],c[2],info.usd,info.usd_24h_change); }
+    }
+    cbox.innerHTML=h;
+    var fh=fiatCard('💵','دلار آمریکا',1);
+    for(var j=0;j<FIATS.length;j++){
+      var f=FIATS[j];
+      if(d2.rates[f[0]]){ fh+=fiatCard(f[1],f[2],d2.rates[f[0]]); }
+    }
+    fbox.innerHTML=fh;
     document.getElementById('time').textContent='آخرین بروزرسانی: '+new Date().toLocaleTimeString('fa-IR');
   }catch(e){
-    box.innerHTML='<div class="msg">❌ خطا در دریافت قیمت. دکمه بروزرسانی را بزنید.</div>';
+    cbox.innerHTML='<div class="msg">❌ خطا در دریافت قیمت. دکمه بروزرسانی را بزنید.</div>';
+    fbox.innerHTML='';
   }
 }
-function card(icon,name,price,change){
-  var ch='';
-  if(change!==null&&change!==undefined){
-    var cls=change>=0?'up':'down';
-    ch='<div class="'+cls+'">'+(change>=0?'▲':'▼')+' '+Math.abs(change).toFixed(2)+'%</div>';
-  }
-  return '<div class="card"><div>'+icon+' '+name+'</div><div class="price">$'+Number(price).toLocaleString('en-US',{maximumFractionDigits:4})+'</div>'+ch+'</div>';
-}
+
 loadAll();
 setInterval(loadAll,60000);
 </script>
 </body>
-</html>
+</html> 
