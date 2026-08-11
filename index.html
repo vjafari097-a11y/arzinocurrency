@@ -86,7 +86,7 @@ async function fetchAutoToman(){
   var proxies = [
     function(u){ return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); },
     function(u){ return 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(u); }
-    ];
+  ];
   for(var s=0;s<sources.length;s++){
     for(var p=0;p<proxies.length;p++){
       try{
@@ -214,4 +214,4 @@ initToman();
 setInterval(loadAll, 60000);
 </script>
 </body>
-</html>
+</html>  
