@@ -9,10 +9,11 @@ body{font-family:Tahoma;background:#1a1a2e;color:#fff;margin:0;padding:20px}
 h1{text-align:center;color:#f9d423;margin-bottom:5px}
 #logoBox{font-size:40px;vertical-align:middle;margin-left:8px}
 .section{max-width:950px;margin:25px auto 10px;border-right:4px solid #f9d423;padding-right:10px;font-size:18px}
-.toman-box{background:#16213e;max-width:430px;margin:15px auto;padding:12px;border-radius:12px;text-align:center;border:1px solid #f9d423}
+.toman-box{background:#16213e;max-width:460px;margin:15px auto;padding:12px;border-radius:12px;text-align:center;border:1px solid #f9d423}
 .toman-box small{color:#aaa;display:block;margin-bottom:8px}
 .toman-box input{width:130px;padding:6px;border-radius:8px;border:none;text-align:center;font-size:16px;font-weight:bold}
-.toman-box button{padding:6px 14px;border:none;border-radius:8px;background:#f9d423;font-weight:bold;cursor:pointer;margin-right:6px}
+.toman-box button{padding:6px 12px;border:none;border-radius:8px;background:#f9d423;font-weight:bold;cursor:pointer;margin-right:4px}
+#rateBadge{color:#00e676}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;max-width:950px;margin:10px auto}
 .card{background:#16213e;border-radius:12px;padding:15px;text-align:center}
 .name{color:#ccc;margin-bottom:8px}
@@ -29,9 +30,10 @@ h1{text-align:center;color:#f9d423;margin-bottom:5px}
 <h1><span id="logoBox">💰</span> <span id="siteName">آرزینو</span></h1>
 
 <div class="toman-box">
-<small>💵 نرخ دلار به تومان (برای محاسبه قیمت‌های تومانی):</small>
+<small>💵 نرخ دلار به تومان: <b id="rateBadge">...</b></small>
 <input type="number" id="tomanInput" value="187500">
-<button onclick="setToman()">ثبت</button>
+<button onclick="setToman()">ثبت دستی</button>
+<button onclick="setAuto()">🔄 خودکار</button>
 </div>
 
 <button class="refresh" onclick="loadAll()">🔄 بروزرسانی قیمت‌ها</button>
@@ -56,7 +58,87 @@ if(LOGO !== ''){
 }
 
 var TOMAN = Number(localStorage.getItem('tomanRate')) || DEFAULT_TOMAN;
-document.getElementById('tomanInput').value = TOMAN;
+var mode = localStorage.getItem('tomanMode') || 'auto';
+
+function badge(t){ document.getElementById('rateBadge').textContent = t; }
+
+function parseToman(j, src){
+  try{
+    if(src.indexOf('bonbast') !== -1){
+      if(j && j.usd && j.usd.sell){ return Number(String(j.usd.sell).replace(/,/g,'')); }
+      if(j && j.usd && j.usd.buy){ return Number(String(j.usd.buy).replace(/,/g,'')); }
+    }else{
+      if(j && j.data){
+        if(j.data.usd && j.data.usd.price){ return Number(j.data.usd.price); }
+        if(j.data.price){ return Number(j.data.price); }
+        if(Array.isArray(j.data) && j.data[0] && j.data[0].price){ return Number(j.data[0].price); }
+      }
+    }
+  }catch(e){}
+  return 0;
+}
+
+async function fetchAutoToman(){
+  var sources = [
+    'https://bonbast.com/json/',
+    'https://api.tgju.org/v1/market/indicator/summary-parameter-data?name=usd'
+  ];
+  var proxies = [
+    function(u){ return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); },
+    function(u){ return 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(u); }
+    ];
+  for(var s=0;s<sources.length;s++){
+    for(var p=0;p<proxies.length;p++){
+      try{
+        var r = await fetch(proxies[p](sources[s]));
+        var j = await r.json();
+        var v = parseToman(j, sources[s]);
+        if(v > 1000){ return v; }
+      }catch(e){}
+    }
+  }
+  return 0;
+}
+
+async function initToman(){
+  if(mode === 'auto'){
+    badge('⏳ در حال دریافت خودکار...');
+    var a = await fetchAutoToman();
+    if(a > 1000){
+      TOMAN = a;
+      badge('🟢 خودکار: ' + a.toLocaleString('fa-IR') + ' تومان');
+    }else{
+      badge('🟡 دستی (منبع خودکار در دسترس نیست)');
+    }
+  }else{
+    badge('🟡 دستی');
+  }
+  document.getElementById('tomanInput').value = TOMAN;
+  loadAll();
+}
+
+function setToman(){
+  var v = Number(document.getElementById('tomanInput').value);
+  if(v > 0){
+    TOMAN = v;
+    mode = 'manual';
+    localStorage.setItem('tomanRate', v);
+    localStorage.setItem('tomanMode', 'manual');
+    badge('🟡 دستی');
+    loadAll();
+  }
+}
+
+function setAuto(){
+  mode = 'auto';
+  localStorage.setItem('tomanMode', 'auto');
+  localStorage.removeItem('tomanRate');
+  initToman();
+}
+
+function toman(usd){
+  return Math.round(usd * TOMAN).toLocaleString('fa-IR') + ' تومان';
+}
 
 var CRYPTOS = [
 ['bitcoin','₿','بیت‌کوین'],
@@ -82,19 +164,6 @@ var FIATS = [
 ['CAD','$','دلار کانادا'],
 ['AUD','$','دلار استرالیا']
 ];
-
-function setToman(){
-  var v = Number(document.getElementById('tomanInput').value);
-  if(v > 0){
-    TOMAN = v;
-    localStorage.setItem('tomanRate', v);
-    loadAll();
-  }
-}
-
-function toman(usd){
-  return Math.round(usd * TOMAN).toLocaleString('fa-IR') + ' تومان';
-}
 
 function card(icon,name,usd,change){
   var ch='';
@@ -141,8 +210,8 @@ async function loadAll(){
   }
 }
 
-loadAll();
-setInterval(loadAll,60000);
+initToman();
+setInterval(loadAll, 60000);
 </script>
 </body>
-</html>  
+</html>
