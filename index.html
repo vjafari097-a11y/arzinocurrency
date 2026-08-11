@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قیمت لحظه‌ای ارز</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Tahoma, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 {
+            text-align: center;
+            margin: 30px 0;
+            font-size: 28px;
+            background: linear-gradient(90deg, #f9d423, #ff4e50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .section-title {
+            font-size: 20px;
+            margin: 30px 0 15px;
+            padding-right: 10px;
+            border-right: 4px solid #f9d423;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.2s;
+        }
+        .card:hover { transform: translateY(-3px); }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .card-icon { font-size: 28px; }
+        .card-name { font-size: 16px; color: #ccc; }
+        .card-price {
+            font-size: 24px;
+            font-weight: bold;
+            direction: ltr;
+            text-align: left;
+        }
+        .card-change {
+            font-size: 14px;
+            margin-top: 5px;
+            direction: ltr;
+            text-align: left;
+        }
+        .up { color: #00e676; }
+        .down { color: #ff5252; }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #aaa;
+        }
+        .error {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255,0,0,0.1);
+            border-radius: 10px;
+            margin: 20px 0;
+            color: #ff8a80;
+        }
+        .update-time {
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            margin-top: 30px;
+        }
+        .refresh-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 12px 30px;
+            background: linear-gradient(90deg, #f9d423, #ff4e50);
+            border: none;
+            border-radius: 25px;
+            color: #000;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .refresh-btn:hover { opacity: 0.9; }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💰 قیمت لحظه‌ای ارز دیجیتال و فیزیکی</h1>
+        
+        <button class="refresh-btn" onclick="loadAll()">🔄 بروزرسانی قیمت‌ها</button>
+        
+        <div id="crypto-section">
+            <h2 class="section-title">🪙 ارزهای دیجیتال</h2>
+            <div class="grid" id="crypto-grid">
+                <div class="loading">در حال بارگذاری...</div>
+            </div>
+        </div>
+
+        <div id="fiat-section">
+            <h2 class="section-title">💵 ارزهای فیزیکی (نرخ جهانی)</h2>
+            <div class="grid" id="fiat-grid">
+                <div class="loading">در حال بارگذاری...</div>
+            </div>
+        </div>
+
+        <p class="update-time" id="update-time"></p>
+
+        <footer>
+            ⚠️ قیمت‌ها صرفاً جنبه اطلاع‌رسانی دارند و توصیه مالی نیستند.<br>
+            منبع: CoinGecko API
+        </footer>
+    </div>
+
+<script>
+        // لیست ارزهای دیجیتال
+        const cryptos = [
+            { id: 'bitcoin', name: 'بیت‌کوین', icon: '₿' },
+            { id: 'ethereum', name: 'اتریوم', icon: 'Ξ' },
+            { id: 'tether', name: 'تتر (USDT)', icon: '💲' },
+            { id: 'binancecoin', name: 'بایننس کوین', icon: '🔶' },
+            { id: 'solana', name: 'سولانا', icon: '◎' },
+            { id: 'ripple', name: 'ریپل', icon: '✕' },
+        ];
+
+        // لیست ارزهای فیزیکی نسبت به دلار
+        const fiatRates = [
+            { code: 'EUR', name: 'یورو', icon: '€' },
+            { code: 'GBP', name: 'پوند', icon: '£' },
+            { code: 'TRY', name: 'لیر ترکیه', icon: '₺' },
+            { code: 'AED', name: 'درهم امارات', icon: '🇦🇪' },
+            { code: 'JPY', name: 'ین ژاپن', icon: '¥' },
+        ];
+
+        // فرمت عدد با کاما
+        function formatNumber(num) {
+            if (num >= 1000) {
+                return num.toLocaleString('en-US', { maximumFractionDigits: 0 });
+            }
+            return num.toLocaleString('en-US', { maximumFractionDigits: 4 });
+        }
+
+        // دریافت قیمت ارزهای دیجیتال از CoinGecko (رایگان)
+        async function loadCrypto() {
+            const grid = document.getElementById('crypto-grid');
+            try {
+                const ids = cryptos.map(c => c.id).join(',');
+                const res = await fetch(https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true);
+                
+                if (!res.ok) throw new Error('خطا در دریافت اطلاعات');
+                
+                const data = await res.json();
+                
+                let html = '';
+                cryptos.forEach(c => {
+                    const price = data[c.id]?.usd || 0;
+                    const change = data[c.id]?.usd_24h_change || 0;
+                    const changeClass = change >= 0 ? 'up' : 'down';
+                    const changeSymbol = change >= 0 ? '▲' : '▼';
+                    
+                    html += 
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="card-icon">${c.icon}</span>
+                                <span class="card-name">${c.name}</span>
+                            </div>
+                            <div class="card-price">$${formatNumber(price)}</div>
+                            <div class="card-change ${changeClass}">
+                                ${changeSymbol} ${Math.abs(change).toFixed(2)}% (24h)
+                            </div>
+                        </div>
+                    ;
+                });
+                
+                grid.innerHTML = html;
+                
+            } catch (err) {
+                grid.innerHTML = '<div class="error">❌ خطا در دریافت قیمت ارز دیجیتال. دوباره تلاش کنید.</div>';
+            }
+        }
+
+        // دریافت نرخ ارز فیزیکی از API رایگان
+        async function loadFiat() {
+            const grid = document.getElementById('fiat-grid');
+            try {
+                const res = await fetch('https://open.er-api.com/v6/latest/USD');
+                
+                if (!res.ok) throw new Error('خطا');
+                
+                const data = await res.json();
+                
+                let html = '';
+                
+                // دلار آمریکا (مرجع)
+                html += 
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-icon">💵</span>
+                            <span class="card-name">دلار آمریکا (مرجع)</span>
+                        </div>
+                        <div class="card-price">$1.00</div>
+                    </div>
+                ;
+                
+                fiatRates.forEach(f => {
+const rate = data.rates[f.code];
+                    if (rate) {
+                        html += 
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-icon">${f.icon}</span>
+                                    <span class="card-name">${f.name}</span>
+                                </div>
+                                <div class="card-price">${rate.toFixed(4)}</div>
+                                <div class="card-change" style="color:#888">در برابر دلار</div>
+                            </div>
+                        ;
+                    }
+                });
+                
+                grid.innerHTML = html;
+                
+            } catch (err) {
+                grid.innerHTML = '<div class="error">❌ خطا در دریافت نرخ ارز فیزیکی.</div>';
+            }
+        }
+
+        // بروزرسانی زمان
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('update-time').textContent = 
+                آخرین بروزرسانی: ${now.toLocaleDateString('fa-IR')} - ${now.toLocaleTimeString('fa-IR')};
+        }
+
+        // بارگذاری همه
+        async function loadAll() {
+            document.getElementById('crypto-grid').innerHTML = '<div class="loading">در حال بروزرسانی...</div>';
+            document.getElementById('fiat-grid').innerHTML = '<div class="loading">در حال بروزرسانی...</div>';
+            
+            await Promise.all([loadCrypto(), loadFiat()]);
+            updateTime();
+        }
+
+        // اجرای اولیه
+        loadAll();
+
+        // بروزرسانی خودکار هر ۶۰ ثانیه
+        setInterval(loadAll, 60000);
+    </script>
+</body>
+</html>
