@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>قیمت لحظه‌ای ارز</title>
+<title>آرزینو | قیمت لحظه‌ای ارز</title>
 <style>
 body{font-family:Tahoma;background:#1a1a2e;color:#fff;margin:0;padding:20px}
 h1{text-align:center;color:#f9d423;margin-bottom:5px}
@@ -26,11 +26,11 @@ h1{text-align:center;color:#f9d423;margin-bottom:5px}
 </style>
 </head>
 <body>
-<h1><span id="logoBox">💰</span> <span id="siteName"></span></h1>
+<h1><span id="logoBox">💰</span> <span id="siteName">آرزینو</span></h1>
 
 <div class="toman-box">
 <small>💵 نرخ دلار به تومان (برای محاسبه قیمت‌های تومانی):</small>
-<input type="number" id="tomanInput" value="60000">
+<input type="number" id="tomanInput" value="187500">
 <button onclick="setToman()">ثبت</button>
 </div>
 
@@ -45,9 +45,9 @@ h1{text-align:center;color:#f9d423;margin-bottom:5px}
 <p class="time" id="time"></p>
 
 <script>
-var SITE_NAME = ' arzino';
+var SITE_NAME = 'آرزینو | Arzino';
 var LOGO = '';
-var DEFAULT_TOMAN = 60000;
+var DEFAULT_TOMAN = 187500;
 
 document.getElementById('siteName').textContent = SITE_NAME;
 document.title = SITE_NAME + ' | قیمت لحظه‌ای ارز';
@@ -105,7 +105,7 @@ function card(icon,name,usd,change){
   return '<div class="card"><div class="name">'+icon+' '+name+'</div><div class="price">$'+Number(usd).toLocaleString('en-US',{maximumFractionDigits:4})+'</div><div class="toman">'+toman(usd)+'</div>'+ch+'</div>';
 }
 
-  function fiatCard(icon,name,ratePerUsd){
+function fiatCard(icon,name,ratePerUsd){
   var usd = 1/ratePerUsd;
   return '<div class="card"><div class="name">'+icon+' '+name+'</div><div class="price">$'+usd.toFixed(4)+'</div><div class="toman">'+toman(usd)+'</div></div>';
 }
@@ -145,4 +145,4 @@ loadAll();
 setInterval(loadAll,60000);
 </script>
 </body>
-</html>
+</html>  
