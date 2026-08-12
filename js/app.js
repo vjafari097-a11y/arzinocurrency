@@ -114,19 +114,21 @@ var METALS = [
   ['XAL','⬜','آلومینیوم (پوند)'],
   ['XNI','🔘','نیکل (پوند)'],
   ['XZN','🔩','روی (پوند)'],
-  ['XPB','⚫','سرب (پوند)']
+  ['XPB','⚫','سرب (پوند)'],
+  ['XFE','⚙️','آهن (پوند)'],
+  ['XSN','🥫','قلع (پوند)']
 ];
 
-// ============ ضریب تبدیل هر کلید به تومان واقعی ============
-var MULTIPLIERS = {
-  'sekkeh': 100,
-  'bahar': 100,
-  'nim': 100,
-  'rob': 100,
-  'gerami': 1000,
-  'absodeh': 1000,
-  '18ayar': 1
+// ============ نرمال‌سازی هوشمند قیمت طلا و سکه ============
+var COIN_KEYS = {
+  'sekkeh': 1, 'bahar': 1, 'nim': 1, 'rob': 1,
+  'gerami': 1, 'absodeh': 1, '18ayar': 1
 };
+function normalize(v){
+  while(v < 10000000) v *= 10;
+  while(v > 2000000000) v /= 10;
+  return Math.round(v);
+}
 
 // ============ خواندن داده Navasan ============
 function navItem(j, key){
@@ -134,7 +136,7 @@ function navItem(j, key){
   if(!it) return null;
   var v = num(it.value);
   if(v <= 0) return null;
-  v = v * (MULTIPLIERS[key] || 1);
+  if(COIN_KEYS[key]) v = normalize(v);
   return {value: v, change: num(it.change)};
 }
 function pctOf(info){
