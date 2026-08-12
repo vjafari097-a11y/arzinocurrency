@@ -4,6 +4,7 @@ var TOMAN = Number(localStorage.getItem('cachedTomanRate')) || DEFAULT_TOMAN;
 
 function badge(t){ document.getElementById('rateBadge').textContent = t; }
 function faNum(n){ return Number(n).toLocaleString('fa-IR'); }
+function faM(n){ return Number(n).toLocaleString('fa-IR', {maximumFractionDigits: 1}); }
 function usdFmt(n){ return '$' + Number(n).toLocaleString('en-US', {maximumFractionDigits: n < 10 ? 4 : 2}); }
 function num(x){
   if(typeof x === 'number') return isFinite(x) ? x : 0;
@@ -112,15 +113,15 @@ var METALS = [
   ['XPD','🌑','پالادیوم (انس)']
 ];
 
-// ============ کلیدهایی که قیمتشون به ریاله (باید تقسیم بر ۱۰ بشه) ============
-var RIAL_KEYS = {
-  'sekkeh': true,
-  'bahar': true,
-  'nim': true,
-  'rob': true,
-  'gerami': true,
-  '18ayar': true,
-  'absodeh': true
+// ============ ضریب تبدیل هر کلید به تومان واقعی ============
+var MULTIPLIERS = {
+  'sekkeh': 100,
+  'bahar': 100,
+  'nim': 100,
+  'rob': 100,
+  'gerami': 1000,
+  'absodeh': 1000,
+  '18ayar': 1
 };
 
 // ============ خواندن داده Navasan ============
@@ -129,8 +130,7 @@ function navItem(j, key){
   if(!it) return null;
   var v = num(it.value);
   if(v <= 0) return null;
-  // اگه کلید توی لیست ریال‌ها باشه، تقسیم بر ۱۰ می‌کنیم
-  if(RIAL_KEYS[key]) v = Math.round(v / 10);
+  v = v * (MULTIPLIERS[key] || 1);
   return {value: v, change: num(it.change)};
 }
 function pctOf(info){
@@ -160,17 +160,13 @@ function changeHtml(ch){
   var cls = ch >= 0 ? 'up' : 'down';
   return '<div class="change ' + cls + '">' + (ch >= 0 ? '▲' : '▼') + ' ' + Math.abs(ch).toFixed(2) + '%</div>';
 }
+function priceText(v){
+  if(v >= 1000000) return faM(v / 1000000) + ' میلیون تومان';
+  return faNum(v) + ' تومان';
+}
 function iranCard(icon, name, info){
-  // اگه قیمت بالای ۱ میلیون باشه، به میلیون تومان نشون بده
-  var priceText;
-  if(info.value >= 1000000){
-    var millions = (info.value / 1000000).toFixed(1);
-    priceText = faNum(millions) + ' میلیون تومان';
-  } else {
-    priceText = faNum(info.value) + ' تومان';
-  }
   return '<div class="card"><div class="name">' + icon + ' ' + name + '</div>' +
-    '<div><div class="price-ir">' + priceText + '</div>' + changeHtml(pctOf(info)) + '</div></div>';
+    '<div><div class="price-ir">' + priceText(info.value) + '</div>' + changeHtml(pctOf(info)) + '</div></div>';
 }
 function cryptoCard(icon, name, usd, change){
   return '<div class="card"><div class="name">' + icon + ' ' + name + '</div>' +
@@ -184,14 +180,8 @@ function metalCard(icon, name, usd){
 }
 function tick(name, info){
   if(!info) return '';
-  // برای نوار بالا هم اگه میلیونی بود، کوتاه‌تر نشون بده
-  var priceText;
-  if(info.value >= 1000000){
-    priceText = (info.value / 1000000).toFixed(1) + 'M';
-  } else {
-    priceText = faNum(info.value);
-  }
-  return '<div class="tick"><span class="t-name">' + name + '</span><span class="t-price">' + priceText + '</span></div>';
+  var t = (info.value >= 1000000) ? (faM(info.value / 1000000) + ' میلیون') : faNum(info.value);
+  return '<div class="tick"><span class="t-name">' + name + '</span><span class="t-price">' + t + '</span></div>';
 }
 function renderList(list, data){
   var h = '';
@@ -228,7 +218,7 @@ async function loadAll(){
   var crypto = res[1].status === 'fulfilled' ? res[1].value : null;
   var metals = res[2].status === 'fulfilled' ? res[2].value : {};
 
-// ---- دلار هوشمند ----
+  // ---- دلار هوشمند ----
   var d = navItem(nav,'usd_sell') || navItem(nav,'usd_buy') || navItem(nav,'usd_usdt');
   if(d && d.value > 1000){
     TOMAN = d.value;
@@ -240,7 +230,7 @@ async function loadAll(){
     badge('🟡 دلار: نرخ پشتیبان');
   }
 
-  // ---- بخش‌ها ----
+// ---- بخش‌ها ----
   setSection(g, renderList(GOLD, nav), 'gold');
   setSection(f, renderList(MAIN_FIAT, nav), 'fiat');
   setSection(w, renderList(WORLD_FIAT, nav), 'world');
