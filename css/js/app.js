@@ -113,22 +113,7 @@ function fetchMetals(){
   var ps = METALS.map(function(m){
     return fetch('https://api.gold-api.com/price/' + m[0])
       .then(function(r){ if(!r.ok) throw new Error('net'); return r.json(); })
-      // ---- فلزات ----
-  var mh = '';
-  METALS.forEach(function(mt){ if(metals[mt[0]]) mh += metalCard(mt[1], mt[2], metals[mt[0]]); });
-  if(mh){ m.innerHTML = mh; localStorage.setItem('cache_metals', mh); }
-  else if(!localStorage.getItem('cache_metals')) m.innerHTML = '<div class="msg">دریافت قیمت فلزات ممکن نشد</div>';
-
-  // ---- نوار بالا ----
-  var th = tick('💵 دلار', iran.usd) + tick('🪙 سکه امامی', iran.sekkeh) + tick('✨ طلای ۱۸ عیار', iran.gold18);
-  if(th){ document.getElementById('ticker').innerHTML = th; localStorage.setItem('cache_ticker', th); }
-
-  document.getElementById('time').textContent = 'آخرین به‌روزرسانی: ' + new Date().toLocaleTimeString('fa-IR');
-}
-
-loadAll();
-setInterval(loadAll, 60000);
-    .then(function(j){ return {sym: m[0], price: num(j.price)}; })
+.then(function(j){ return {sym: m[0], price: num(j.price)}; })
       .catch(function(){ return null; });
   });
   return Promise.all(ps).then(function(rs){
@@ -216,3 +201,19 @@ async function loadAll(){
   if(crypto){ CRYPTOS.forEach(function(cc){ var info = crypto[cc[0]]; if(info) chh += cryptoCard(cc[1], cc[2], info.usd, info.usd_24h_change); }); }
   if(chh){ c.innerHTML = chh; localStorage.setItem('cache_crypto', chh); }
   else if(!localStorage.getItem('cache_crypto')) c.innerHTML = '<div class="msg">دریافت قیمت کریپتو ممکن نشد</div>';
+
+// ---- فلزات ----
+  var mh = '';
+  METALS.forEach(function(mt){ if(metals[mt[0]]) mh += metalCard(mt[1], mt[2], metals[mt[0]]); });
+  if(mh){ m.innerHTML = mh; localStorage.setItem('cache_metals', mh); }
+  else if(!localStorage.getItem('cache_metals')) m.innerHTML = '<div class="msg">دریافت قیمت فلزات ممکن نشد</div>';
+
+  // ---- نوار بالا ----
+  var th = tick('💵 دلار', iran.usd) + tick('🪙 سکه امامی', iran.sekkeh) + tick('✨ طلای ۱۸ عیار', iran.gold18);
+  if(th){ document.getElementById('ticker').innerHTML = th; localStorage.setItem('cache_ticker', th); }
+
+  document.getElementById('time').textContent = 'آخرین به‌روزرسانی: ' + new Date().toLocaleTimeString('fa-IR');
+}
+
+loadAll();
+setInterval(loadAll, 60000);
