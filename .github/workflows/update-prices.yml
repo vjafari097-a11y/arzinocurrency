@@ -44,6 +44,10 @@ jobs:
           [ -s data/xzn.json ] || echo "{}" > data/xzn.json
           curl -s --max-time 40 "https://api.gold-api.com/price/XPB" -o data/xpb.json
           [ -s data/xpb.json ] || echo "{}" > data/xpb.json
+          curl -s --max-time 40 "https://api.gold-api.com/price/XFE" -o data/xfe.json
+          [ -s data/xfe.json ] || echo "{}" > data/xfe.json
+          curl -s --max-time 40 "https://api.gold-api.com/price/XSN" -o data/xsn.json
+          [ -s data/xsn.json ] || echo "{}" > data/xsn.json
 
       - name: Commit and push
         run: |
