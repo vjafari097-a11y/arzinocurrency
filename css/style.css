@@ -24,7 +24,13 @@ body{font-family:Tahoma,'Segoe UI',sans-serif;background:#101828;color:#fff;marg
 .time{text-align:center;color:#888;font-size:12px;margin-top:22px}
 @media (max-width:760px){
   .grid{grid-template-columns:1fr}
-  .grid-2{grid-template-columns:1fr}
+  .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid-2 .card{flex-direction:column;align-items:stretch;text-align:center;gap:4px;padding:10px}
+  .grid-2 .name{font-size:11px}
+  .grid-2 .price{font-size:12px;text-align:center}
+  .grid-2 .price-ir{font-size:12px;text-align:center}
+  .grid-2 .toman{font-size:10px;text-align:center}
+  .grid-2 .change{font-size:10px;text-align:center}
   .card{padding:12px 14px}
   .name{font-size:14px}
   .price-ir{font-size:15px}
