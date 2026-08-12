@@ -93,7 +93,17 @@ var CRYPTOS = [
   ['solana','◎','سولانا'],
   ['ripple','✕','ریپل'],
   ['dogecoin','🐕','دوج‌کوین'],
-  ['tron','🔴','ترون']
+  ['tron','🔴','ترون'],
+  ['cardano','🔵','کاردانو'],
+  ['avalanche-2','🔺','آوالانچ'],
+  ['chainlink','🔗','چین‌لینک'],
+  ['polkadot','⚫','پالکادات'],
+  ['matic-network','🟣','پالیگان'],
+  ['litecoin','Ł','لایت‌کوین'],
+  ['bitcoin-cash','🟢','بیت‌کوین کش'],
+  ['near','⚡','نیر پروتکل'],
+  ['uniswap','🦄','یونی‌سواپ'],
+  ['stellar','✨','استلار']
 ];
 var METALS = [
   ['XAU','🥇','طلا (انس)'],
@@ -215,7 +225,7 @@ async function loadAll(){
   METALS.forEach(function(mt){ if(metals[mt[0]]) mh += metalCard(mt[1], mt[2], metals[mt[0]]); });
   setSection(m, mh, 'metals');
 
-  // ---- نوار بالا ----
+// ---- نوار بالا ----
   var th = tick('💵 دلار', navItem(nav,'usd_sell')) + tick('🪙 سکه امامی', navItem(nav,'sekkeh')) + tick('✨ طلای ۱۸ عیار', navItem(nav,'18ayar'));
   if(th){ document.getElementById('ticker').innerHTML = th; localStorage.setItem('cache_ticker', th); }
 
