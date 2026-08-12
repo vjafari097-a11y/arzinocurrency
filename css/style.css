@@ -1,6 +1,3 @@
-*{box-sizingبفرما، این هم کل فایل css/style.css با کارت‌های سه‌تایی. همه محتوای قبلی رو پاک کن و این رو جایگزین کن:
-
-`css
 *{box-sizing:border-box}
 body{font-family:Tahoma,'Segoe UI',sans-serif;background:#101828;color:#fff;margin:0;padding:16px}
 .header{text-align:center}
@@ -24,10 +21,3 @@ body{font-family:Tahoma,'Segoe UI',sans-serif;background:#101828;color:#fff;marg
 .change{font-size:12px;margin-top:6px;direction:ltr}
 .msg{text-align:center;color:#aaa;padding:18px;grid-column:1/-1}
 .time{text-align:center;color:#888;font-size:12px;margin-top:22px}
-
-@media (max-width: 700px){
-  .grid{grid-template-columns:repeat(2,1fr)}
-}
-@media (max-width: 450px){
-  .grid{grid-template-columns:1fr}
-}
