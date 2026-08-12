@@ -3,26 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>آرزینو | قیمت لحظه‌ای ارز</title>
+<title>آرزینو | قیمت لحظه‌ای ارز، طلا و سکه</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<h1><span id="logoBox">💰</span> <span id="siteName">آرزینو</span></h1>
 
-<div class="toman-box">
-<small>💵 نرخ دلار به تومان: <b id="rateBadge">...</b></small>
-<input type="number" id="tomanInput" value="187500">
-<button onclick="setToman()">ثبت دستی</button>
-<button onclick="setAuto()">🔄 خودکار</button>
+<header class="header">
+  <h1>💰 آرزینو</h1>
+  <p class="subtitle">قیمت لحظه‌ای ارز، طلا، سکه و فلزات گرانبها</p>
+  <div class="badge" id="rateBadge">⏳ در حال دریافت نرخ‌ها...</div>
+</header>
+
+<div class="ticker" id="ticker">
+  <div class="tick"><span class="t-name">💵 دلار</span><span class="t-price">...</span></div>
+  <div class="tick"><span class="t-name">🪙 سکه امامی</span><span class="t-price">...</span></div>
+  <div class="tick"><span class="t-name">✨ طلای ۱۸ عیار</span><span class="t-price">...</span></div>
 </div>
 
-<button class="refresh" onclick="loadAll()">🔄 بروزرسانی قیمت‌ها</button>
+<button class="refresh" onclick="loadAll()">🔄 به‌روزرسانی قیمت‌ها</button>
 
-<h2 class="section">🪙 ارزهای دیجیتال</h2>
+<h2 class="section">🪙 طلا و سکه — بازار تهران</h2>
+<div class="grid" id="gold"><div class="msg">در حال بارگذاری...</div></div>
+
+<h2 class="section">💵 ارزها — بازار تهران</h2>
+<div class="grid" id="fiat"><div class="msg">در حال بارگذاری...</div></div>
+
+<h2 class="section">₿ ارزهای دیجیتال</h2>
 <div class="grid" id="crypto"><div class="msg">در حال بارگذاری...</div></div>
 
-<h2 class="section">💵 ارزهای فیزیکی</h2>
-<div class="grid" id="fiat"><div class="msg">در حال بارگذاری...</div></div>
+<h2 class="section">⚱️ فلزات گرانبها — بازار جهانی</h2>
+<div class="grid" id="metals"><div class="msg">در حال بارگذاری...</div></div>
 
 <p class="time" id="time"></p>
 
