@@ -2,16 +2,18 @@
 html,body{max-width:100%;overflow-x:hidden}
 body{font-family:Tahoma,'Segoe UI',sans-serif;background:#101828;color:#fff;margin:0;padding:16px}
 .header{text-align:center}
-.header h1{margin:0;font-size:28px;color:#f9d423}
+.header h1{margin:0;font-size:28px;color:#f9d423;text-shadow:0 2px 8px rgba(249,212,35,.3)}
 .subtitle{color:#8892b0;font-size:13px;margin:8px 0 4px}
-.badge{display:inline-block;background:#16213e;border:1px solid #f9d423;color:#00e676;border-radius:20px;padding:6px 16px;font-size:13px;margin-top:4px;max-width:100%}
+.badge{display:inline-block;background:#16213e;border:1px solid #f9d423;color:#00e676;border-radius:20px;padding:6px 16px;font-size:13px;margin-top:4px;max-width:100%;box-shadow:0 2px 8px rgba(0,0,0,.2)}
 .ticker{display:flex;gap:8px;max-width:950px;margin:12px auto 6px;padding:2px}
-.tick{flex:1;min-width:0;background:#16213e;border:1px solid #22304a;border-radius:8px;padding:6px 8px;text-align:center}
+.tick{flex:1;min-width:0;background:#16213e;border:1px solid #22304a;border-radius:8px;padding:6px 8px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}
 .t-name{display:block;color:#aaa;font-size:11px;margin-bottom:3px}
 .t-price{color:#f9d423;font-weight:bold;font-size:13px}
 .section{max-width:950px;margin:22px auto 10px;border-right:4px solid #f9d423;padding-right:10px;font-size:17px}
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;max-width:950px;margin:10px auto}
-.card{background:#16213e;border:1px solid #22304a;border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center;gap:8px;min-width:0}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:950px;margin:10px auto}
+.card{background:#16213e;border:1px solid #22304a;border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center;gap:8px;min-width:0;transition:all .2s ease;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.25);border-color:#f9d423}
 .name{color:#ccc;font-size:13px;flex:1;min-width:0}
 .price{font-size:15px;font-weight:bold;direction:ltr;text-align:left}
 .price-ir{font-size:14px;font-weight:bold;text-align:left}
@@ -22,6 +24,7 @@ body{font-family:Tahoma,'Segoe UI',sans-serif;background:#101828;color:#fff;marg
 .time{text-align:center;color:#888;font-size:12px;margin-top:22px}
 @media (max-width:760px){
   .grid{grid-template-columns:1fr}
+  .grid-2{grid-template-columns:1fr}
   .card{padding:12px 14px}
   .name{font-size:14px}
   .price-ir{font-size:15px}
