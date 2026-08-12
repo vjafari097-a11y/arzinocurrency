@@ -17,20 +17,73 @@ function getJSON(file){
   });
 }
 
-// ============ فهرست داده‌ها ============
-var IRAN_GOLD = [
+// ============ فهرست آیتم‌های بازار تهران (Navasan) ============
+var GOLD = [
   ['sekkeh','🪙','سکه امامی (تمام)'],
-  ['nims','🥇','نیم سکه'],
-  ['robs','🥈','ربع سکه'],
-  ['mesghal','⚖️','مثقال طلا'],
-  ['gold18','✨','طلای ۱۸ عیار (گرم)']
+  ['bahar','🪙','سکه بهار آزادی'],
+  ['nim','🥇','نیم سکه'],
+  ['rob','🥈','ربع سکه'],
+  ['gerami','🏅','سکه گرمی'],
+  ['18ayar','✨','طلای ۱۸ عیار (گرم)'],
+  ['absodeh','⚗️','طلای آب‌شده (مثقال)']
 ];
-var IRAN_FIAT = [
-  ['usd','💵','دلار آمریکا'],
+var MAIN_FIAT = [
+  ['usd_sell','💵','دلار (فروش)'],
+  ['usd_buy','💵','دلار (خرید)'],
+  ['usdt','💲','تتر'],
   ['eur','💶','یورو'],
   ['gbp','💷','پوند انگلیس'],
   ['try','💱','لیر ترکیه'],
-  ['aed','🛢️','درهم امارات']
+  ['aed_sell','🛢️','درهم امارات'],
+  ['sar','🕋','ریال سعودی'],
+  ['iqd','🌴','دینار عراق'],
+  ['afn','🪁','افغانی افغانستان'],
+  ['pkr','🌙','روپیه پاکستان']
+];
+var WORLD_FIAT = [
+  ['dirham_dubai','🏙️','درهم دبی'],
+  ['qar','🏜️','ریال قطر'],
+  ['omr','🗻','ریال عمان'],
+  ['kwd','⛵','دینار کویت'],
+  ['bhd','🐚','دینار بحرین'],
+  ['jod','🏺','دینار اردن'],
+  ['lbp','🌲','پوند لبنان'],
+  ['syp','🌹','پوند سوریه'],
+  ['cad_cash','🍁','دلار کانادا'],
+  ['aud','🦘','دلار استرالیا'],
+  ['chf','⌚','فرانک سوئیس'],
+  ['jpy','🌸','ین ژاپن'],
+  ['cny','🏮','یوان چین'],
+  ['inr','🕌','روپیه هند'],
+  ['rub','🪆','روبل روسیه'],
+  ['kzt','🎪','تنگه قزاقستان'],
+  ['azn','🔥','منات آذربایجان'],
+  ['gel','🍇','لاری گرجستان'],
+  ['amd','🍑','درام ارمنستان'],
+  ['uzs','🧵','سوم ازبکستان'],
+  ['tjs','👑','سامانی تاجیکستان'],
+  ['tmt','🐎','منات ترکمنستان'],
+  ['uah','🌻','هریونیا اوکراین'],
+  ['sek','🧊','کرون سوئد'],
+  ['nok','⛷️','کرون نروژ'],
+  ['dkk','🧜','کرون دانمارک'],
+  ['pln','🦅','زواتی لهستان'],
+  ['czk','🏰','کرون چک'],
+  ['huf','🌶️','فورینت مجارستان'],
+  ['bgn','🌹','لئو بلغارستان'],
+  ['rsd','🎺','دینار صربستان'],
+  ['zar','🦁','راند آفریقای جنوبی'],
+  ['kes','🦒','شیلینگ کنیا'],
+  ['brl','🦜','رئال برزیل'],
+  ['mxn','🌮','پزوی مکزیک'],
+  ['krw','🎎','وان کره جنوبی'],
+  ['thb','🐘','بات تایلند'],
+  ['vnd','🍜','دونگ ویتنام'],
+  ['idr','🌋','روپیه اندونزی'],
+  ['php','🥭','پزوی فیلیپین'],
+  ['myr','🌴','رینگیت مالزی'],
+  ['sgd','🦭','دلار سنگاپور'],
+  ['nzd','🥝','دلار نیوزلند']
 ];
 var CRYPTOS = [
   ['bitcoin','₿','بیت‌کوین'],
@@ -49,50 +102,22 @@ var METALS = [
   ['XPD','🌑','پالادیوم (انس)']
 ];
 
-var KNOWN = {};
-IRAN_GOLD.concat(IRAN_FIAT).forEach(function(i){ KNOWN[i[0]] = true; });
-
-var TITLE = {
-  'دلار آمریکا':'usd','دلار':'usd','یورو':'eur','پوند انگلیس':'gbp',
-  'لیر ترکیه':'try','درهم امارات':'aed','سکه امامی':'sekkeh',
-  'سکه تمام بهار امامی':'sekkeh','نیم سکه':'nims','ربع سکه':'robs',
-  'مثقال طلا':'mesghal','طلای ۱۸ عیار':'gold18','طلای 18 عیار':'gold18'
-};
-
-// ============ دریافت داده‌ها از فایل‌های خود سایت ============
-function parseIran(j){
-  var out = {};
-  try{
-    var d = j && j.data;
-    var arr = [];
-    if(Array.isArray(d)) arr = d;
-    else if(d && typeof d === 'object'){
-      for(var k in d){ if(d[k] && typeof d[k] === 'object') arr.push(d[k]); }
-    }
-    for(var i=0;i<arr.length;i++){
-      var it = arr[i] || {};
-      var raw = (it.id || it.symbol || '').toString().toLowerCase();
-      var key = KNOWN[raw] ? raw : (TITLE[(it.title || it.name || '').toString().trim()] || raw);
-      var price = num(it.price);
-      var ch = num(it.percent_change != null ? it.percent_change : it.change_percent);
-      if(key && price > 0) out[key] = {price: price, change: ch};
-    }
-  }catch(e){}
-  return out;
+// ============ خواندن داده Navasan ============
+function navItem(j, key){
+  var it = j && j[key];
+  if(!it) return null;
+  var v = num(it.value);
+  if(v <= 0) return null;
+  return {value: v, change: num(it.change)};
+}
+function pctOf(info){
+  var prev = info.value - info.change;
+  if(prev <= 0) return 0;
+  return (info.change / prev) * 100;
 }
 
-function fetchIran(){ return getJSON('tgju').then(parseIran); }
-
-function fetchBonbast(){
-  return getJSON('bonbast').then(function(j){
-    if(j && j.usd && j.usd.sell) return num(j.usd.sell);
-    if(j && j.usd && j.usd.buy) return num(j.usd.buy);
-    return 0;
-  });
-}
-
+// ============ دریافت کریپتو و فلزات ============
 function fetchCrypto(){ return getJSON('crypto'); }
-
 function fetchMetals(){
   var ps = METALS.map(function(m){
     return getJSON(m[0].toLowerCase())
@@ -114,8 +139,8 @@ function changeHtml(ch){
 }
 function iranCard(icon, name, info){
   return '<div class="card"><div class="name">' + icon + ' ' + name + '</div>' +
-    '<div class="price-ir">' + faNum(info.price) + ' تومان</div>' + changeHtml(info.change) + '</div>';
-  }
+    '<div class="price-ir">' + faNum(info.value) + ' تومان</div>' + changeHtml(pctOf(info)) + '</div>';
+}
 function cryptoCard(icon, name, usd, change){
   return '<div class="card"><div class="name">' + icon + ' ' + name + '</div>' +
     '<div class="price">' + usdFmt(usd) + '</div>' +
@@ -128,17 +153,30 @@ function metalCard(icon, name, usd){
 }
 function tick(name, info){
   if(!info) return '';
-  return '<div class="tick"><span class="t-name">' + name + '</span><span class="t-price">' + faNum(info.price) + ' تومان</span></div>';
+  return '<div class="tick"><span class="t-name">' + name + '</span><span class="t-price">' + faNum(info.value) + ' تومان</span></div>';
+}
+function renderList(list, data){
+  var h = '';
+  list.forEach(function(it){
+    var info = navItem(data, it[0]);
+    if(info) h += iranCard(it[1], it[2], info);
+  });
+  return h;
+}
+function setSection(el, html, key){
+  if(html){ el.innerHTML = html; localStorage.setItem('cache_' + key, html); }
+  else if(!localStorage.getItem('cache_' + key)) el.innerHTML = '<div class="msg">دریافت قیمت این بخش ممکن نشد</div>';
 }
 
 // ============ تابع اصلی ============
 async function loadAll(){
   var g = document.getElementById('gold');
   var f = document.getElementById('fiat');
+  var w = document.getElementById('world');
   var c = document.getElementById('crypto');
   var m = document.getElementById('metals');
 
-  [['gold',g],['fiat',f],['crypto',c],['metals',m]].forEach(function(p){
+  [['gold',g],['fiat',f],['world',w],['crypto',c],['metals',m]].forEach(function(p){
     var cache = localStorage.getItem('cache_' + p[0]);
     if(cache) p[1].innerHTML = cache;
   });
@@ -147,52 +185,38 @@ async function loadAll(){
 
   badge('⏳ در حال دریافت نرخ‌ها...');
 
-  var res = await Promise.allSettled([fetchIran(), fetchCrypto(), fetchMetals()]);
-  var iran = res[0].status === 'fulfilled' ? res[0].value : {};
+  var res = await Promise.allSettled([getJSON('navasan'), fetchCrypto(), fetchMetals()]);
+  var nav = res[0].status === 'fulfilled' ? res[0].value : {};
   var crypto = res[1].status === 'fulfilled' ? res[1].value : null;
   var metals = res[2].status === 'fulfilled' ? res[2].value : {};
 
   // ---- دلار هوشمند ----
-  var srcName = '';
-  if(iran.usd && iran.usd.price > 1000){ TOMAN = iran.usd.price; srcName = 'TGJU'; }
-  else {
-    try { var b = await fetchBonbast(); if(b > 1000){ TOMAN = b; srcName = 'بنبست'; } } catch(e){}
-  }
-  if(srcName){
+  var d = navItem(nav,'usd_sell') || navItem(nav,'usd_buy') || navItem(nav,'usd_usdt');
+  if(d && d.value > 1000){
+    TOMAN = d.value;
     localStorage.setItem('cachedTomanRate', TOMAN);
-    badge('🟢 دلار: ' + faNum(TOMAN) + ' تومان — خودکار از ' + srcName);
+    badge('🟢 دلار: ' + faNum(TOMAN) + ' تومان — خودکار از Navasan');
   } else if(TOMAN > 1000){
     badge('🟡 دلار: ' + faNum(TOMAN) + ' تومان — آخرین نرخ دریافتی');
   } else {
     badge('🟡 دلار: نرخ پشتیبان');
   }
 
-  // ---- طلا و سکه ----
-  var gh = '';
-  IRAN_GOLD.forEach(function(it){ if(iran[it[0]]) gh += iranCard(it[1], it[2], iran[it[0]]); });
-  if(gh){ g.innerHTML = gh; localStorage.setItem('cache_gold', gh); }
-  else if(!localStorage.getItem('cache_gold')) g.innerHTML = '<div class="msg">دریافت قیمت طلا و سکه ممکن نشد</div>';
+  // ---- بخش‌ها ----
+  setSection(g, renderList(GOLD, nav), 'gold');
+  setSection(f, renderList(MAIN_FIAT, nav), 'fiat');
+  setSection(w, renderList(WORLD_FIAT, nav), 'world');
 
-  // ---- ارزها ----
-  var fh = '';
-  IRAN_FIAT.forEach(function(it){ if(iran[it[0]]) fh += iranCard(it[1], it[2], iran[it[0]]); });
-  if(fh){ f.innerHTML = fh; localStorage.setItem('cache_fiat', fh); }
-  else if(!localStorage.getItem('cache_fiat')) f.innerHTML = '<div class="msg">دریافت قیمت ارزها ممکن نشد</div>';
-
-  // ---- کریپتو ----
   var chh = '';
   if(crypto){ CRYPTOS.forEach(function(cc){ var info = crypto[cc[0]]; if(info) chh += cryptoCard(cc[1], cc[2], info.usd, info.usd_24h_change); }); }
-  if(chh){ c.innerHTML = chh; localStorage.setItem('cache_crypto', chh); }
-  else if(!localStorage.getItem('cache_crypto')) c.innerHTML = '<div class="msg">دریافت قیمت کریپتو ممکن نشد</div>';
+  setSection(c, chh, 'crypto');
 
-  // ---- فلزات ----
   var mh = '';
   METALS.forEach(function(mt){ if(metals[mt[0]]) mh += metalCard(mt[1], mt[2], metals[mt[0]]); });
-  if(mh){ m.innerHTML = mh; localStorage.setItem('cache_metals', mh); }
-  else if(!localStorage.getItem('cache_metals')) m.innerHTML = '<div class="msg">دریافت قیمت فلزات ممکن نشد</div>';
+  setSection(m, mh, 'metals');
 
   // ---- نوار بالا ----
-  var th = tick('💵 دلار', iran.usd) + tick('🪙 سکه امامی', iran.sekkeh) + tick('✨ طلای ۱۸ عیار', iran.gold18);
+  var th = tick('💵 دلار', navItem(nav,'usd_sell')) + tick('🪙 سکه امامی', navItem(nav,'sekkeh')) + tick('✨ طلای ۱۸ عیار', navItem(nav,'18ayar'));
   if(th){ document.getElementById('ticker').innerHTML = th; localStorage.setItem('cache_ticker', th); }
 
   document.getElementById('time').textContent = 'آخرین به‌روزرسانی: ' + new Date().toLocaleTimeString('fa-IR');
