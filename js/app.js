@@ -10,6 +10,12 @@ function num(x){
   if(typeof x === 'string'){ var n = Number(x.replace(/,/g,'')); return isFinite(n) ? n : 0; }
   return 0;
 }
+function getJSON(file){
+  return fetch('data/' + file + '.json?t=' + Date.now()).then(function(r){
+    if(!r.ok) throw new Error('net');
+    return r.json();
+  });
+}
 
 // ============ فهرست داده‌ها ============
 var IRAN_GOLD = [
@@ -53,22 +59,7 @@ var TITLE = {
   'مثقال طلا':'mesghal','طلای ۱۸ عیار':'gold18','طلای 18 عیار':'gold18'
 };
 
-var PROXIES = [
-  function(u){ return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); },
-  function(u){ return 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(u); }
-];
-
-function proxyFetch(url){
-  var ps = PROXIES.map(function(p){
-    return fetch(p(url)).then(function(r){
-      if(!r.ok) throw new Error('net');
-      return r.json();
-    });
-  });
-  return Promise.any(ps);
-}
-
-// ============ دریافت داده‌ها ============
+// ============ دریافت داده‌ها از فایل‌های خود سایت ============
 function parseIran(j){
   var out = {};
   try{
@@ -90,30 +81,22 @@ function parseIran(j){
   return out;
 }
 
-function fetchIran(){
-  var names = IRAN_GOLD.concat(IRAN_FIAT).map(function(i){ return i[0]; }).join(',');
-  return proxyFetch('https://api.tgju.org/v1/market/indicator/summary-parameter-data?name=' + names).then(parseIran);
-}
+function fetchIran(){ return getJSON('tgju').then(parseIran); }
 
 function fetchBonbast(){
-  return proxyFetch('https://bonbast.com/json/').then(function(j){
+  return getJSON('bonbast').then(function(j){
     if(j && j.usd && j.usd.sell) return num(j.usd.sell);
     if(j && j.usd && j.usd.buy) return num(j.usd.buy);
     return 0;
   });
 }
 
-function fetchCrypto(){
-  var ids = CRYPTOS.map(function(c){ return c[0]; }).join(',');
-  return fetch('https://api.coingecko.com/api/v3/simple/price?ids=' + ids + '&vs_currencies=usd&include_24hr_change=true')
-    .then(function(r){ if(!r.ok) throw new Error('net'); return r.json(); });
-}
+function fetchCrypto(){ return getJSON('crypto'); }
 
 function fetchMetals(){
   var ps = METALS.map(function(m){
-    return fetch('https://api.gold-api.com/price/' + m[0])
-      .then(function(r){ if(!r.ok) throw new Error('net'); return r.json(); })
-.then(function(j){ return {sym: m[0], price: num(j.price)}; })
+    return getJSON(m[0].toLowerCase())
+      .then(function(j){ return {sym: m[0], price: num(j.price)}; })
       .catch(function(){ return null; });
   });
   return Promise.all(ps).then(function(rs){
@@ -132,7 +115,7 @@ function changeHtml(ch){
 function iranCard(icon, name, info){
   return '<div class="card"><div class="name">' + icon + ' ' + name + '</div>' +
     '<div class="price-ir">' + faNum(info.price) + ' تومان</div>' + changeHtml(info.change) + '</div>';
-}
+  }
 function cryptoCard(icon, name, usd, change){
   return '<div class="card"><div class="name">' + icon + ' ' + name + '</div>' +
     '<div class="price">' + usdFmt(usd) + '</div>' +
@@ -202,7 +185,7 @@ async function loadAll(){
   if(chh){ c.innerHTML = chh; localStorage.setItem('cache_crypto', chh); }
   else if(!localStorage.getItem('cache_crypto')) c.innerHTML = '<div class="msg">دریافت قیمت کریپتو ممکن نشد</div>';
 
-// ---- فلزات ----
+  // ---- فلزات ----
   var mh = '';
   METALS.forEach(function(mt){ if(metals[mt[0]]) mh += metalCard(mt[1], mt[2], metals[mt[0]]); });
   if(mh){ m.innerHTML = mh; localStorage.setItem('cache_metals', mh); }
