@@ -161,22 +161,37 @@ function changeHtml(ch){
   return '<div class="change ' + cls + '">' + (ch >= 0 ? '▲' : '▼') + ' ' + Math.abs(ch).toFixed(2) + '%</div>';
 }
 function iranCard(icon, name, info){
+  // اگه قیمت بالای ۱ میلیون باشه، به میلیون تومان نشون بده
+  var priceText;
+  if(info.value >= 1000000){
+    var millions = (info.value / 1000000).toFixed(1);
+    priceText = faNum(millions) + ' میلیون تومان';
+  } else {
+    priceText = faNum(info.value) + ' تومان';
+  }
   return '<div class="card"><div class="name">' + icon + ' ' + name + '</div>' +
-    '<div class="price-ir">' + faNum(info.value) + ' تومان</div>' + changeHtml(pctOf(info)) + '</div>';
+    '<div><div class="price-ir">' + priceText + '</div>' + changeHtml(pctOf(info)) + '</div></div>';
 }
 function cryptoCard(icon, name, usd, change){
   return '<div class="card"><div class="name">' + icon + ' ' + name + '</div>' +
-    '<div class="price">' + usdFmt(usd) + '</div>' +
-    '<div class="toman">' + faNum(Math.round(usd * TOMAN)) + ' تومان</div>' + changeHtml(change) + '</div>';
+    '<div><div class="price">' + usdFmt(usd) + '</div>' +
+    '<div class="toman">' + faNum(Math.round(usd * TOMAN)) + ' تومان</div>' + changeHtml(change) + '</div></div>';
 }
 function metalCard(icon, name, usd){
   return '<div class="card"><div class="name">' + icon + ' ' + name + '</div>' +
-    '<div class="price">' + usdFmt(usd) + '</div>' +
-    '<div class="toman">' + faNum(Math.round(usd * TOMAN)) + ' تومان</div></div>';
+    '<div><div class="price">' + usdFmt(usd) + '</div>' +
+    '<div class="toman">' + faNum(Math.round(usd * TOMAN)) + ' تومان</div></div></div>';
 }
 function tick(name, info){
   if(!info) return '';
-  return '<div class="tick"><span class="t-name">' + name + '</span><span class="t-price">' + faNum(info.value) + ' تومان</span></div>';
+  // برای نوار بالا هم اگه میلیونی بود، کوتاه‌تر نشون بده
+  var priceText;
+  if(info.value >= 1000000){
+    priceText = (info.value / 1000000).toFixed(1) + 'M';
+  } else {
+    priceText = faNum(info.value);
+  }
+  return '<div class="tick"><span class="t-name">' + name + '</span><span class="t-price">' + priceText + '</span></div>';
 }
 function renderList(list, data){
   var h = '';
@@ -213,14 +228,14 @@ async function loadAll(){
   var crypto = res[1].status === 'fulfilled' ? res[1].value : null;
   var metals = res[2].status === 'fulfilled' ? res[2].value : {};
 
-  // ---- دلار هوشمند ----
+// ---- دلار هوشمند ----
   var d = navItem(nav,'usd_sell') || navItem(nav,'usd_buy') || navItem(nav,'usd_usdt');
   if(d && d.value > 1000){
     TOMAN = d.value;
     localStorage.setItem('cachedTomanRate', TOMAN);
-    badge('🟢 دلار: ' + faNum(TOMAN) + ' تومان — خودکار از Navasan');
+    badge('🟢 دلار: ' + faNum(TOMAN) + ' تومان');
   } else if(TOMAN > 1000){
-    badge('🟡 دلار: ' + faNum(TOMAN) + ' تومان — آخرین نرخ دریافتی');
+    badge('🟡 دلار: ' + faNum(TOMAN) + ' تومان');
   } else {
     badge('🟡 دلار: نرخ پشتیبان');
   }
@@ -230,7 +245,7 @@ async function loadAll(){
   setSection(f, renderList(MAIN_FIAT, nav), 'fiat');
   setSection(w, renderList(WORLD_FIAT, nav), 'world');
 
-var chh = '';
+  var chh = '';
   if(crypto){ CRYPTOS.forEach(function(cc){ var info = crypto[cc[0]]; if(info) chh += cryptoCard(cc[1], cc[2], info.usd, info.usd_24h_change); }); }
   setSection(c, chh, 'crypto');
 
@@ -239,7 +254,7 @@ var chh = '';
   setSection(m, mh, 'metals');
 
   // ---- نوار بالا ----
-  var th = tick('💵 دلار', navItem(nav,'usd_sell')) + tick('🪙 سکه امامی', navItem(nav,'sekkeh')) + tick('✨ طلای ۱۸ عیار', navItem(nav,'18ayar'));
+  var th = tick('💵 دلار', navItem(nav,'usd_sell')) + tick('🪙 سکه', navItem(nav,'sekkeh')) + tick('✨ طلا', navItem(nav,'18ayar'));
   if(th){ document.getElementById('ticker').innerHTML = th; localStorage.setItem('cache_ticker', th); }
 
   document.getElementById('time').textContent = 'آخرین به‌روزرسانی: ' + new Date().toLocaleTimeString('fa-IR');
