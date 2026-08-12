@@ -4,7 +4,6 @@ var TOMAN = Number(localStorage.getItem('cachedTomanRate')) || DEFAULT_TOMAN;
 
 function badge(t){ document.getElementById('rateBadge').textContent = t; }
 function faNum(n){ return Number(n).toLocaleString('fa-IR'); }
-function faM(n){ return Number(n).toLocaleString('fa-IR', {maximumFractionDigits: 1}); }
 function usdFmt(n){ return '$' + Number(n).toLocaleString('en-US', {maximumFractionDigits: n < 10 ? 4 : 2}); }
 function num(x){
   if(typeof x === 'number') return isFinite(x) ? x : 0;
@@ -165,13 +164,9 @@ function changeHtml(ch){
   var cls = ch >= 0 ? 'up' : 'down';
   return '<div class="change ' + cls + '">' + (ch >= 0 ? '▲' : '▼') + ' ' + Math.abs(ch).toFixed(2) + '%</div>';
 }
-function priceText(v){
-  if(v >= 1000000) return faM(v / 1000000) + ' میلیون تومان';
-  return faNum(v) + ' تومان';
-}
 function iranCard(icon, name, info){
   return '<div class="card"><div class="name">' + icon + ' ' + name + '</div>' +
-    '<div><div class="price-ir">' + priceText(info.value) + '</div>' + changeHtml(pctOf(info)) + '</div></div>';
+    '<div><div class="price-ir">' + faNum(info.value) + ' تومان</div>' + changeHtml(pctOf(info)) + '</div></div>';
 }
 function cryptoCard(icon, name, usd, change){
   return '<div class="card"><div class="name">' + icon + ' ' + name + '</div>' +
@@ -185,8 +180,7 @@ function metalCard(icon, name, usd){
 }
 function tick(name, info){
   if(!info) return '';
-  var t = (info.value >= 1000000) ? (faM(info.value / 1000000) + ' میلیون') : faNum(info.value);
-  return '<div class="tick"><span class="t-name">' + name + '</span><span class="t-price">' + t + '</span></div>';
+  return '<div class="tick"><span class="t-name">' + name + '</span><span class="t-price">' + faNum(info.value) + '</span></div>';
 }
 function renderList(list, data){
   var h = '';
@@ -235,12 +229,12 @@ async function loadAll(){
     badge('🟡 دلار: نرخ پشتیبان');
   }
 
-// ---- بخش‌ها ----
+  // ---- بخش‌ها ----
   setSection(g, renderList(GOLD, nav), 'gold');
   setSection(f, renderList(MAIN_FIAT, nav), 'fiat');
   setSection(w, renderList(WORLD_FIAT, nav), 'world');
 
-  var chh = '';
+var chh = '';
   if(crypto){ CRYPTOS.forEach(function(cc){ var info = crypto[cc[0]]; if(info) chh += cryptoCard(cc[1], cc[2], info.usd, info.usd_24h_change); }); }
   setSection(c, chh, 'crypto');
 
