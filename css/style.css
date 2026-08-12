@@ -1,3 +1,6 @@
+*{box-sizingبفرما، این هم کل فایل css/style.css با کارت‌های سه‌تایی. همه محتوای قبلی رو پاک کن و این رو جایگزین کن:
+
+`css
 *{box-sizing:border-box}
 body{font-family:Tahoma,'Segoe UI',sans-serif;background:#101828;color:#fff;margin:0;padding:16px}
 .header{text-align:center}
@@ -10,7 +13,7 @@ body{font-family:Tahoma,'Segoe UI',sans-serif;background:#101828;color:#fff;marg
 .t-price{color:#f9d423;font-weight:bold;font-size:15px}
 .refresh{display:block;margin:14px auto;padding:10px 26px;border:none;border-radius:20px;background:#f9d423;font-weight:bold;cursor:pointer;font-size:14px}
 .section{max-width:950px;margin:22px auto 10px;border-right:4px solid #f9d423;padding-right:10px;font-size:17px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;max-width:950px;margin:10px auto}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:950px;margin:10px auto}
 .card{background:#16213e;border:1px solid #22304a;border-radius:12px;padding:14px;text-align:center;transition:transform .15s}
 .card:hover{transform:translateY(-3px)}
 .name{color:#ccc;margin-bottom:8px;font-size:14px}
@@ -21,3 +24,10 @@ body{font-family:Tahoma,'Segoe UI',sans-serif;background:#101828;color:#fff;marg
 .change{font-size:12px;margin-top:6px;direction:ltr}
 .msg{text-align:center;color:#aaa;padding:18px;grid-column:1/-1}
 .time{text-align:center;color:#888;font-size:12px;margin-top:22px}
+
+@media (max-width: 700px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width: 450px){
+  .grid{grid-template-columns:1fr}
+}
