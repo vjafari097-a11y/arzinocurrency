@@ -112,12 +112,25 @@ var METALS = [
   ['XPD','🌑','پالادیوم (انس)']
 ];
 
+// ============ کلیدهایی که قیمتشون به ریاله (باید تقسیم بر ۱۰ بشه) ============
+var RIAL_KEYS = {
+  'sekkeh': true,
+  'bahar': true,
+  'nim': true,
+  'rob': true,
+  'gerami': true,
+  '18ayar': true,
+  'absodeh': true
+};
+
 // ============ خواندن داده Navasan ============
 function navItem(j, key){
   var it = j && j[key];
   if(!it) return null;
   var v = num(it.value);
   if(v <= 0) return null;
+  // اگه کلید توی لیست ریال‌ها باشه، تقسیم بر ۱۰ می‌کنیم
+  if(RIAL_KEYS[key]) v = Math.round(v / 10);
   return {value: v, change: num(it.change)};
 }
 function pctOf(info){
@@ -217,7 +230,7 @@ async function loadAll(){
   setSection(f, renderList(MAIN_FIAT, nav), 'fiat');
   setSection(w, renderList(WORLD_FIAT, nav), 'world');
 
-  var chh = '';
+var chh = '';
   if(crypto){ CRYPTOS.forEach(function(cc){ var info = crypto[cc[0]]; if(info) chh += cryptoCard(cc[1], cc[2], info.usd, info.usd_24h_change); }); }
   setSection(c, chh, 'crypto');
 
@@ -225,7 +238,7 @@ async function loadAll(){
   METALS.forEach(function(mt){ if(metals[mt[0]]) mh += metalCard(mt[1], mt[2], metals[mt[0]]); });
   setSection(m, mh, 'metals');
 
-// ---- نوار بالا ----
+  // ---- نوار بالا ----
   var th = tick('💵 دلار', navItem(nav,'usd_sell')) + tick('🪙 سکه امامی', navItem(nav,'sekkeh')) + tick('✨ طلای ۱۸ عیار', navItem(nav,'18ayar'));
   if(th){ document.getElementById('ticker').innerHTML = th; localStorage.setItem('cache_ticker', th); }
 
