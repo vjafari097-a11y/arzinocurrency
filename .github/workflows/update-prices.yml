@@ -24,7 +24,7 @@ jobs:
           [ -s data/tgju.json ] || echo "{}" > data/tgju.json
           curl -s -A "Mozilla/5.0" --max-time 40 "https://bonbast.com/json/" -o data/bonbast.json
           [ -s data/bonbast.json ] || echo "{}" > data/bonbast.json
-          curl -s -A "Mozilla/5.0" --max-time 40 "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether,binancecoin,solana,ripple,dogecoin,tron&vs_currencies=usd&include_24hr_change=true" -o data/crypto.json
+          curl -s -A "Mozilla/5.0" --max-time 40 "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether,binancecoin,solana,ripple,dogecoin,tron,cardano,avalanche-2,chainlink,polkadot,matic-network,litecoin,bitcoin-cash,near,uniswap,stellar&vs_currencies=usd&include_24hr_change=true" -o data/crypto.json
           [ -s data/crypto.json ] || echo "{}" > data/crypto.json
           curl -s --max-time 40 "https://api.gold-api.com/price/XAU" -o data/xau.json
           [ -s data/xau.json ] || echo "{}" > data/xau.json
@@ -34,6 +34,16 @@ jobs:
           [ -s data/xpt.json ] || echo "{}" > data/xpt.json
           curl -s --max-time 40 "https://api.gold-api.com/price/XPD" -o data/xpd.json
           [ -s data/xpd.json ] || echo "{}" > data/xpd.json
+          curl -s --max-time 40 "https://api.gold-api.com/price/XCU" -o data/xcu.json
+          [ -s data/xcu.json ] || echo "{}" > data/xcu.json
+          curl -s --max-time 40 "https://api.gold-api.com/price/XAL" -o data/xal.json
+          [ -s data/xal.json ] || echo "{}" > data/xal.json
+          curl -s --max-time 40 "https://api.gold-api.com/price/XNI" -o data/xni.json
+          [ -s data/xni.json ] || echo "{}" > data/xni.json
+          curl -s --max-time 40 "https://api.gold-api.com/price/XZN" -o data/xzn.json
+          [ -s data/xzn.json ] || echo "{}" > data/xzn.json
+          curl -s --max-time 40 "https://api.gold-api.com/price/XPB" -o data/xpb.json
+          [ -s data/xpb.json ] || echo "{}" > data/xpb.json
 
       - name: Commit and push
         run: |
