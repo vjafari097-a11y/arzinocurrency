@@ -2,7 +2,7 @@ name: update-prices
 
 on:
   schedule:
-    - cron: "*/10 * * * *"   # هر ۱۰ دقیقه
+    - cron: "*/5 * * * *"   # هر ۵ دقیقه
   workflow_dispatch:         # امکان اجرای دستی
 
 permissions:
@@ -38,9 +38,6 @@ jobs:
             curl -s --max-time 30 "https://api.gold-api.com/price/$metal" -o data/$lower.json
             [ -s data/$lower.json ] || echo "{}" > data/$lower.json
           done
-
-          # منابع قبلی که اغلب بلاک می‌شوند (tgju و bonbast) را حذف کردیم
-          # تا اکشن پایدارتر بماند.
 
           echo "Fetch completed."
           ls -la data/
