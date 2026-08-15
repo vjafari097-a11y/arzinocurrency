@@ -2,8 +2,8 @@ name: update-prices
 
 on:
   schedule:
-    - cron: "*/10 * * * *"
-  workflow_dispatch:
+    - cron: "*/10 * * * *"   # هر ۱۰ دقیقه
+  workflow_dispatch:         # امکان اجرای دستی
 
 permissions:
   contents: write
@@ -18,45 +18,41 @@ jobs:
       - name: Fetch prices
         run: |
           mkdir -p data
+
+          # === منبع اصلی و پایدار: Navasan ===
+          echo "Fetching Navasan..."
           curl -s --max-time 40 "https://api.navasan.tech/latest/?api_key=freeqNwteMeqD7BsSJ93t0MQ9k4wtcUZ" -o data/navasan.json
           [ -s data/navasan.json ] || echo "{}" > data/navasan.json
-          curl -s -A "Mozilla/5.0" --max-time 40 "https://api.tgju.org/v1/market/indicator/summary-parameter-data?name=usd,eur,gbp,try,aed,sekkeh,nims,robs,mesghal,gold18" -o data/tgju.json
-          [ -s data/tgju.json ] || echo "{}" > data/tgju.json
-          curl -s -A "Mozilla/5.0" --max-time 40 "https://bonbast.com/json/" -o data/bonbast.json
-          [ -s data/bonbast.json ] || echo "{}" > data/bonbast.json
-          curl -s -A "Mozilla/5.0" --max-time 40 "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether,binancecoin,solana,ripple,dogecoin,tron,cardano,avalanche-2,chainlink,polkadot,matic-network,litecoin,bitcoin-cash,near,uniswap,stellar&vs_currencies=usd&include_24hr_change=true" -o data/crypto.json
+
+          # === ارزهای دیجیتال (CoinGecko) ===
+          echo "Fetching Crypto..."
+          curl -s -A "Mozilla/5.0" --max-time 40 \
+            "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether,binancecoin,solana,ripple,dogecoin,tron,cardano,avalanche-2,chainlink,polkadot,matic-network,litecoin,bitcoin-cash,near,uniswap,stellar&vs_currencies=usd&include_24hr_change=true" \
+            -o data/crypto.json
           [ -s data/crypto.json ] || echo "{}" > data/crypto.json
-          curl -s --max-time 40 "https://api.gold-api.com/price/XAU" -o data/xau.json
-          [ -s data/xau.json ] || echo "{}" > data/xau.json
-          curl -s --max-time 40 "https://api.gold-api.com/price/XAG" -o data/xag.json
-          [ -s data/xag.json ] || echo "{}" > data/xag.json
-          curl -s --max-time 40 "https://api.gold-api.com/price/XPT" -o data/xpt.json
-          [ -s data/xpt.json ] || echo "{}" > data/xpt.json
-          curl -s --max-time 40 "https://api.gold-api.com/price/XPD" -o data/xpd.json
-          [ -s data/xpd.json ] || echo "{}" > data/xpd.json
-          curl -s --max-time 40 "https://api.gold-api.com/price/XCU" -o data/xcu.json
-          [ -s data/xcu.json ] || echo "{}" > data/xcu.json
-          curl -s --max-time 40 "https://api.gold-api.com/price/XAL" -o data/xal.json
-          [ -s data/xal.json ] || echo "{}" > data/xal.json
-          curl -s --max-time 40 "https://api.gold-api.com/price/XNI" -o data/xni.json
-          [ -s data/xni.json ] || echo "{}" > data/xni.json
-          curl -s --max-time 40 "https://api.gold-api.com/price/XZN" -o data/xzn.json
-          [ -s data/xzn.json ] || echo "{}" > data/xzn.json
-          curl -s --max-time 40 "https://api.gold-api.com/price/XPB" -o data/xpb.json
-          [ -s data/xpb.json ] || echo "{}" > data/xpb.json
-          curl -s --max-time 40 "https://api.gold-api.com/price/XFE" -o data/xfe.json
-          [ -s data/xfe.json ] || echo "{}" > data/xfe.json
-          curl -s --max-time 40 "https://api.gold-api.com/price/XSN" -o data/xsn.json
-          [ -s data/xsn.json ] || echo "{}" > data/xsn.json
+
+          # === فلزات گرانبهای جهانی (gold-api.com) ===
+          echo "Fetching Metals..."
+          for metal in XAU XAG XPT XPD; do
+            lower=$(echo $metal | tr '[:upper:]' '[:lower:]')
+            curl -s --max-time 30 "https://api.gold-api.com/price/$metal" -o data/$lower.json
+            [ -s data/$lower.json ] || echo "{}" > data/$lower.json
+          done
+
+          # منابع قبلی که اغلب بلاک می‌شوند (tgju و bonbast) را حذف کردیم
+          # تا اکشن پایدارتر بماند.
+
+          echo "Fetch completed."
+          ls -la data/
 
       - name: Commit and push
         run: |
           git config user.name "price-bot"
           git config user.email "price-bot@users.noreply.github.com"
-          git add data
+          git add data/
           if git diff --staged --quiet; then
-            echo "no changes"
+            echo "No changes detected"
           else
-            git commit -m "update prices"
+            git commit -m "update prices $(date -u +%Y-%m-%dT%H:%M:%SZ)"
             git push
           fi
