@@ -22,6 +22,47 @@ body{font-family:Tahoma,'Segoe UI',sans-serif;background:#101828;color:#fff;marg
 .change{font-size:11px;text-align:left}
 .msg{text-align:center;color:#aaa;padding:18px;grid-column:1/-1}
 .time{text-align:center;color:#888;font-size:12px;margin-top:22px}
+
+/* تبدیل‌گر */
+.converter-box{
+  max-width:950px;
+  margin:12px auto;
+  background:#16213e;
+  border:1px solid #22304a;
+  border-radius:12px;
+  padding:16px;
+  box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+.conv-row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.conv-row input,
+.conv-row select{
+  flex:1;
+  min-width:140px;
+  padding:12px;
+  border-radius:8px;
+  border:1px solid #22304a;
+  background:#101828;
+  color:#fff;
+  font-size:15px;
+  outline:none;
+}
+.conv-row input:focus,
+.conv-row select:focus{
+  border-color:#f9d423;
+}
+.conv-result{
+  margin-top:14px;
+  font-size:18px;
+  font-weight:bold;
+  color:#f9d423;
+  text-align:center;
+  min-height:28px;
+}
+
 @media (max-width:760px){
   .grid{grid-template-columns:1fr}
   .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -35,4 +76,5 @@ body{font-family:Tahoma,'Segoe UI',sans-serif;background:#101828;color:#fff;marg
   .name{font-size:14px}
   .price-ir{font-size:15px}
   .price{font-size:15px}
+  .conv-row{flex-direction:column}
 }
