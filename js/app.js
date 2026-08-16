@@ -1,7 +1,8 @@
-// ============ آرزینو - نسخه سریع + ارزهای بیشتر ============
+// ============ آرزینو - نسخه سریع + تبدیل‌گر ============
 var DEFAULT_TOMAN = 187500;
 var TOMAN = Number(localStorage.getItem('cachedTomanRate')) || DEFAULT_TOMAN;
 var CACHE_KEY = 'arzino_last_data';
+var RATES = {};
 
 function badge(t) {
   var el = document.getElementById('rateBadge');
@@ -48,7 +49,6 @@ function normalizeCoin(v) {
   if (v > 0 && v < 1000000) return v * 1000;
   return v;
 }
-
 function card(name, priceHtml, changeVal) {
   return '<div class="card">' +
     '<div class="name">' + name + '</div>' +
@@ -73,6 +73,37 @@ function cardUsd(name, usdPrice, tomanPrice, changePct) {
   '</div>';
 }
 
+function updateConverter() {
+  var amountEl = document.getElementById('convAmount');
+  var fromEl = document.getElementById('convFrom');
+  var resultEl = document.getElementById('convResult');
+  if (!amountEl || !fromEl || !resultEl) return;
+
+  var amount = Number(amountEl.value) || 0;
+  var from = fromEl.value;
+  var rate = RATES[from];
+
+  if (!rate || rate <= 0) {
+    resultEl.textContent = 'نرخ موجود نیست';
+    return;
+  }
+
+  if (from === 'toman') {
+    var usd = amount / (RATES.usd || TOMAN);
+    resultEl.textContent = faNum(amount) + ' تومان ≈ ' + usdFmt(usd) + ' دلار';
+  } else {
+    var toman = amount * rate;
+    resultEl.textContent = faNum(amount) + ' ≈ ' + faNum(Math.round(toman)) + ' تومان';
+  }
+}
+
+function setupConverter() {
+  var amountEl = document.getElementById('convAmount');
+  var fromEl = document.getElementById('convFrom');
+  if (amountEl) amountEl.addEventListener('input', updateConverter);
+  if (fromEl) fromEl.addEventListener('change', updateConverter);
+  updateConverter();
+}
 function renderAll(navasan, crypto, xau, xag, xpt, xpd, isCache) {
   if (!navasan) return false;
 
@@ -80,7 +111,17 @@ function renderAll(navasan, crypto, xau, xag, xpt, xpd, isCache) {
   TOMAN = usdSell;
   localStorage.setItem('cachedTomanRate', String(TOMAN));
 
-  // تیکر
+  RATES = {
+    usd: num(navasan.usd_sell) || usdSell,
+    eur: num(navasan.eur),
+    gbp: num(navasan.gbp),
+    aed: num(navasan.aed),
+    try: num(navasan.try),
+    sekkeh: normalizeCoin(navasan.sekkeh),
+    '18ayar': num(navasan['18ayar']),
+    toman: 1
+  };
+
   var sekkeh = normalizeCoin(navasan.sekkeh);
   var gold18 = num(navasan['18ayar']);
   var ticker = document.getElementById('ticker');
@@ -90,9 +131,7 @@ function renderAll(navasan, crypto, xau, xag, xpt, xpd, isCache) {
       '<div class="tick"><span class="t-name">🪙 سکه</span><span class="t-price">' + faNum(sekkeh) + '</span></div>' +
       '<div class="tick"><span class="t-name">✨ طلا</span><span class="t-price">' + faNum(gold18) + '</span></div>';
   }
-
-  // ========== طلا و سکه ==========
-  var goldHtml = '';
+ var goldHtml = '';
   var goldItems = [
     { key: 'sekkeh',   name: 'سکه امامی',           normalize: true },
     { key: 'bahar',    name: 'سکه بهار آزادی',       normalize: true },
@@ -110,7 +149,7 @@ function renderAll(navasan, crypto, xau, xag, xpt, xpd, isCache) {
     goldHtml += card(item.name, faNum(Math.round(val)) + ' تومان', ch);
   });
   document.getElementById('gold').innerHTML = goldHtml || '<div class="msg">داده‌ای موجود نیست</div>';
- // ========== ارزهای اصلی ==========
+
   var fiatHtml = '';
   var fiatItems = [
     { key: 'usd_sell', name: 'دلار آمریکا (فروش)' },
@@ -132,11 +171,8 @@ function renderAll(navasan, crypto, xau, xag, xpt, xpd, isCache) {
     fiatHtml += card(item.name, faNum(Math.round(val)) + ' تومان', ch);
   });
   document.getElementById('fiat').innerHTML = fiatHtml || '<div class="msg">داده‌ای موجود نیست</div>';
-
-  // ========== سایر ارزهای جهان (گسترش‌یافته) ==========
   var worldHtml = '';
   var worldItems = [
-    // قبلی‌ها
     { key: 'chf', name: 'فرانک سوئیس' },
     { key: 'sek', name: 'کرون سوئد' },
     { key: 'nok', name: 'کرون نروژ' },
@@ -149,7 +185,6 @@ function renderAll(navasan, crypto, xau, xag, xpt, xpd, isCache) {
     { key: 'sar', name: 'ریال عربستان' },
     { key: 'qar', name: 'ریال قطر' },
     { key: 'kwd', name: 'دینار کویت' },
-    // جدیدها
     { key: 'nzd', name: 'دلار نیوزیلند' },
     { key: 'sgd', name: 'دلار سنگاپور' },
     { key: 'hkd', name: 'دلار هنگ‌کنگ' },
@@ -197,8 +232,6 @@ function renderAll(navasan, crypto, xau, xag, xpt, xpd, isCache) {
     worldHtml += card(item.name, faNum(Math.round(val)) + ' تومان', ch);
   });
   document.getElementById('world').innerHTML = worldHtml || '<div class="msg">داده‌ای موجود نیست</div>';
-
-  // ========== ارزهای دیجیتال ==========
   var cryptoHtml = '';
   if (crypto) {
     var cryptoMap = [
@@ -228,7 +261,6 @@ function renderAll(navasan, crypto, xau, xag, xpt, xpd, isCache) {
   }
   document.getElementById('crypto').innerHTML = cryptoHtml || '<div class="msg">داده‌ای موجود نیست</div>';
 
-  // ========== فلزات گرانبها ==========
   var metalsHtml = '';
   var metals = [
     { data: xau, name: 'طلای جهانی (XAU)', unit: 'اونس' },
@@ -249,9 +281,7 @@ function renderAll(navasan, crypto, xau, xag, xpt, xpd, isCache) {
     metalsHtml += card('نقره (نرخ داخلی)', faNum(Math.round(num(navasan.xag))) + ' تومان', navasan.xag.change);
   }
   document.getElementById('metals').innerHTML = metalsHtml || '<div class="msg">داده‌ای موجود نیست</div>';
-
-  // زمان
-  var timeEl = document.getElementById('time');
+var timeEl = document.getElementById('time');
   if (timeEl) {
     var now = new Date();
     timeEl.textContent = (isCache ? 'نمایش از حافظه • ' : '') + 'آخرین به‌روزرسانی: ' + now.toLocaleString('fa-IR');
@@ -263,6 +293,7 @@ function renderAll(navasan, crypto, xau, xag, xpt, xpd, isCache) {
     badge('✅ نرخ‌ها به‌روز شد • دلار: ' + faNum(usdSell) + ' تومان');
   }
 
+  setupConverter();
   return true;
 }
 
