@@ -1,37 +1,128 @@
 *{box-sizing:border-box}
 html,body{max-width:100%;overflow-x:hidden}
-body{font-family:Tahoma,'Segoe UI',sans-serif;background:#101828;color:#fff;margin:0;padding:16px}
+body{
+  font-family:Tahoma,'Segoe UI',sans-serif;
+  background:#f5f7fb;
+  color:#1a1a2e;
+  margin:0;
+  padding:16px;
+}
+
 .header{text-align:center}
-.header h1{margin:0;font-size:28px;color:#f9d423;text-shadow:0 2px 8px rgba(249,212,35,.3)}
-.subtitle{color:#8892b0;font-size:13px;margin:8px 0 4px}
-.badge{display:inline-block;background:#16213e;border:1px solid #f9d423;color:#00e676;border-radius:20px;padding:6px 16px;font-size:13px;margin-top:4px;max-width:100%;box-shadow:0 2px 8px rgba(0,0,0,.2)}
-.ticker{display:flex;gap:8px;max-width:950px;margin:12px auto 6px;padding:2px}
-.tick{flex:1;min-width:0;background:#16213e;border:1px solid #22304a;border-radius:8px;padding:6px 8px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}
-.t-name{display:block;color:#aaa;font-size:11px;margin-bottom:3px}
-.t-price{color:#f9d423;font-weight:bold;font-size:13px}
-.section{max-width:950px;margin:22px auto 10px;border-right:4px solid #f9d423;padding-right:10px;font-size:17px}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;max-width:950px;margin:10px auto}
-.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:950px;margin:10px auto}
-.card{background:#16213e;border:1px solid #22304a;border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center;gap:8px;min-width:0;transition:all .2s ease;box-shadow:0 2px 6px rgba(0,0,0,.15)}
-.card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.25);border-color:#f9d423}
-.name{color:#ccc;font-size:13px;flex:1;min-width:0}
-.price{font-size:15px;font-weight:bold;direction:ltr;text-align:left}
-.price-ir{font-size:14px;font-weight:bold;text-align:left}
-.toman{color:#f9d423;font-size:12px;text-align:left}
-.up{color:#00e676}.down{color:#ff5252}
+.header h1{
+  margin:0;
+  font-size:28px;
+  color:#0d6efd;
+}
+.subtitle{
+  color:#6c757d;
+  font-size:13px;
+  margin:8px 0 4px;
+}
+.badge{
+  display:inline-block;
+  background:#fff;
+  border:1px solid #0d6efd;
+  color:#198754;
+  border-radius:20px;
+  padding:6px 16px;
+  font-size:13px;
+  margin-top:4px;
+  max-width:100%;
+  box-shadow:0 2px 6px rgba(0,0,0,.06);
+}
+
+.ticker{
+  display:flex;
+  gap:8px;
+  max-width:950px;
+  margin:12px auto 6px;
+  padding:2px;
+}
+.tick{
+  flex:1;
+  min-width:0;
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  padding:8px;
+  text-align:center;
+  box-shadow:0 2px 6px rgba(0,0,0,.04);
+}
+.t-name{
+  display:block;
+  color:#6c757d;
+  font-size:11px;
+  margin-bottom:3px;
+}
+.t-price{
+  color:#0d6efd;
+  font-weight:bold;
+  font-size:13px;
+}
+
+.section{
+  max-width:950px;
+  margin:22px auto 10px;
+  border-right:4px solid #0d6efd;
+  padding-right:10px;
+  font-size:17px;
+  color:#1a1a2e;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  max-width:950px;
+  margin:10px auto;
+}
+.grid-2{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+  max-width:950px;
+  margin:10px auto;
+}
+
+.card{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  min-width:0;
+  transition:all .2s ease;
+  box-shadow:0 2px 6px rgba(0,0,0,.04);
+}
+.card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+  border-color:#0d6efd;
+}
+
+.name{color:#495057;font-size:13px;flex:1;min-width:0}
+.price{font-size:15px;font-weight:bold;direction:ltr;text-align:left;color:#1a1a2e}
+.price-ir{font-size:14px;font-weight:bold;text-align:left;color:#1a1a2e}
+.toman{color:#0d6efd;font-size:12px;text-align:left}
+.up{color:#198754}
+.down{color:#dc3545}
 .change{font-size:11px;text-align:left}
-.msg{text-align:center;color:#aaa;padding:18px;grid-column:1/-1}
-.time{text-align:center;color:#888;font-size:12px;margin-top:22px}
+.msg{text-align:center;color:#6c757d;padding:18px;grid-column:1/-1}
+.time{text-align:center;color:#6c757d;font-size:12px;margin-top:22px}
 
 /* تبدیل‌گر */
 .converter-box{
   max-width:950px;
   margin:12px auto;
-  background:#16213e;
-  border:1px solid #22304a;
+  background:#fff;
+  border:1px solid #e5e7eb;
   border-radius:12px;
   padding:16px;
-  box-shadow:0 2px 8px rgba(0,0,0,.2);
+  box-shadow:0 2px 8px rgba(0,0,0,.04);
 }
 .conv-row{
   display:flex;
@@ -44,21 +135,29 @@ body{font-family:Tahoma,'Segoe UI',sans-serif;background:#101828;color:#fff;marg
   min-width:140px;
   padding:12px;
   border-radius:8px;
-  border:1px solid #22304a;
-  background:#101828;
-  color:#fff;
+  border:1px solid #ced4da;
+  background:#fff;
+  color:#1a1a2e;
   font-size:15px;
   outline:none;
 }
 .conv-row input:focus,
 .conv-row select:focus{
-  border-color:#f9d423;
+  border-color:#0d6efd;
+  box-shadow:0 0 0 3px rgba(13,110,253,.15);
 }
+
+/* لیست بازشونده اسکرول‌دار و جمع‌وجور */
+.conv-row select{
+  max-height:44px;
+  cursor:pointer;
+}
+
 .conv-result{
   margin-top:14px;
   font-size:18px;
   font-weight:bold;
-  color:#f9d423;
+  color:#0d6efd;
   text-align:center;
   min-height:28px;
 }
@@ -66,7 +165,13 @@ body{font-family:Tahoma,'Segoe UI',sans-serif;background:#101828;color:#fff;marg
 @media (max-width:760px){
   .grid{grid-template-columns:1fr}
   .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .grid-2 .card{flex-direction:column;align-items:stretch;text-align:center;gap:4px;padding:10px}
+  .grid-2 .card{
+    flex-direction:column;
+    align-items:stretch;
+    text-align:center;
+    gap:4px;
+    padding:10px;
+  }
   .grid-2 .name{font-size:11px}
   .grid-2 .price{font-size:12px;text-align:center}
   .grid-2 .price-ir{font-size:12px;text-align:center}
@@ -77,4 +182,4 @@ body{font-family:Tahoma,'Segoe UI',sans-serif;background:#101828;color:#fff;marg
   .price-ir{font-size:15px}
   .price{font-size:15px}
   .conv-row{flex-direction:column}
-}
+    }
