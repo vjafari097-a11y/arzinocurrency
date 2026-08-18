@@ -160,22 +160,52 @@ function setupSearch() {
   var input = document.getElementById('searchInput');
   if (!input) return;
 
+function setupSearch() {
+  var input = document.getElementById('searchInput');
+  var results = document.getElementById('searchResults');
+  if (!input || !results) return;
+
+  var sections = document.querySelectorAll('.section, .grid, .grid-2, .ticker, .stats, .converter, .time');
+
   input.oninput = function () {
     var q = (input.value || '').trim().toLowerCase();
-    var cards = document.querySelectorAll('.card');
+    var cards = document.querySelectorAll('.grid .card, .grid-2 .card');
 
-    for (var i = 0; i < cards.length; i++) {
-      var c = cards[i];
+    if (!q) {
+      results.style.display = 'none';
+      results.innerHTML = '';
+      for (var i = 0; i < sections.length; i++) {
+        sections[i].style.display = '';
+      }
+      for (var j = 0; j < cards.length; j++) {
+        cards[j].style.display = '';
+      }
+      return;
+    }
+
+    // مخفی کردن بخش‌های اصلی
+    for (var s = 0; s < sections.length; s++) {
+      sections[s].style.display = 'none';
+    }
+
+    // جمع کردن نتایج و نمایش زیر سرچ
+    var html = '';
+    for (var k = 0; k < cards.length; k++) {
+      var c = cards[k];
       var name = c.getAttribute('data-name') || '';
       if (!name) {
         var nameEl = c.querySelector('.name');
         name = nameEl ? nameEl.textContent : '';
       }
-      name = name.toLowerCase();
-      c.style.display = (!q || name.indexOf(q) !== -1) ? '' : 'none';
+      if (name.toLowerCase().indexOf(q) !== -1) {
+        html += c.outerHTML;
+      }
     }
+
+    results.innerHTML = html || '<div class="msg">موردی پیدا نشد</div>';
+    results.style.display = 'grid';
   };
-}
+}  
 async function loadStats(navasan) {
   var usdtEl = document.getElementById('statUsdt');
   var domEl = document.getElementById('statDom');
