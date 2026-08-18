@@ -172,3 +172,13 @@ flex-direction:column;
   .price-ir,.price{font-size:15px}
   .conv-row{flex-direction:column}
 }    
+.search-results{
+  max-width:950px;
+  margin:8px auto 12px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+@media (max-width:760px){
+  .search-results{grid-template-columns:1fr}
+}
