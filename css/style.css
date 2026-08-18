@@ -32,6 +32,54 @@ body{
   box-shadow:0 2px 6px rgba(0,0,0,.06);
 }
 
+/* جستجو */
+.search-box{
+  max-width:950px;
+  margin:12px auto;
+}
+.search-box input{
+  width:100%;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid #e5e7eb;
+  background:#fff;
+  color:#1a1a2e;
+  font-size:14px;
+  outline:none;
+  box-shadow:0 2px 6px rgba(0,0,0,.04);
+}
+.search-box input:focus{
+  border-color:#0d6efd;
+  box-shadow:0 0 0 3px rgba(13,110,253,.12);
+}
+
+/* ۴ کادر آمار */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+  max-width:950px;
+  margin:10px auto;
+}
+.stat-card{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:12px 8px;
+  text-align:center;
+  box-shadow:0 2px 6px rgba(0,0,0,.04);
+}
+.stat-label{
+  color:#6c757d;
+  font-size:11px;
+  margin-bottom:6px;
+}
+.stat-value{
+  color:#0d6efd;
+  font-weight:bold;
+  font-size:14px;
+}
+
 .ticker{
   display:flex;
   gap:8px;
@@ -146,13 +194,10 @@ body{
   border-color:#0d6efd;
   box-shadow:0 0 0 3px rgba(13,110,253,.15);
 }
-
-/* لیست بازشونده اسکرول‌دار و جمع‌وجور */
 .conv-row select{
   max-height:44px;
   cursor:pointer;
 }
-
 .conv-result{
   margin-top:14px;
   font-size:18px;
@@ -161,8 +206,8 @@ body{
   text-align:center;
   min-height:28px;
 }
-
 @media (max-width:760px){
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
   .grid{grid-template-columns:1fr}
   .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
   .grid-2 .card{
@@ -182,4 +227,4 @@ body{
   .price-ir{font-size:15px}
   .price{font-size:15px}
   .conv-row{flex-direction:column}
-    }
+}
