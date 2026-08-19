@@ -185,79 +185,475 @@ function updateConverter() {
 function setupConverter() {
   var amountEl = document.getElementById('convAmount');
   var fromEl = document.getElementById('convFrom');
+
   if (!fromEl) return;
 
   var labels = {
-    usd: 'دلار آمریکا', eur: 'یورو', gbp: 'پوند انگلیس', aed: 'درهم امارات',
-    try: 'لیر ترکیه', cad: 'دلار کانادا', aud: 'دلار استرالیا', cny: 'یوان چین',
-    jpy: 'ین ژاپن', sekkeh: 'سکه امامی', bahar: 'سکه بهار آزادی', nim: 'نیم سکه',
-    rob: 'ربع سکه', gerami: 'سکه گرمی', '18ayar': 'طلای ۱۸ عیار (گرم)',
-    abshodeh: 'طلای آب‌شده (مثقال)', chf: 'فرانک سوئیس', sek: 'کرون سوئد',
-    nok: 'کرون نروژ', dkk: 'کرون دانمارک', rub: 'روبل روسیه', inr: 'روپیه هند',
-    pkr: 'روپیه پاکستان', afn: 'افغانی', iqd: 'دینار عراق', sar: 'ریال عربستان',
-    qar: 'ریال قطر', kwd: 'دینار کویت', nzd: 'دلار نیوزیلند', sgd: 'دلار سنگاپور',
-    hkd: 'دلار هنگ‌کنگ', myr: 'رینگیت مالزی', thb: 'بات تایلاند',
-    krw: 'وون کره جنوبی', mxn: 'پزو مکزیک', brl: 'رئال برزیل',
-    zar: 'راند آفریقای جنوبی', egp: 'پوند مصر', syp: 'لیر سوریه',
-    azn: 'منات آذربایجان', gel: 'لاری گرجستان', amd: 'درام ارمنستان',
-    ils: 'شِکِل اسرائیل', pln: 'زلوتی لهستان', czk: 'کرون چک',
-    huf: 'فورینت مجارستان', ron: 'لئو رومانی', jod: 'دینار اردن',
-    omr: 'ریال عمان', bhd: 'دینار بحرین', tnd: 'دینار تونس',
-    mad: 'درهم مراکش', dzd: 'دینار الجزایر', lbp: 'لیر لبنان',
-    yer: 'ریال یمن', twd: 'دلار تایوان', php: 'پزو فیلیپین',
-    idr: 'روپیه اندونزی', vnd: 'دانگ ویتنام', uah: 'هریونیا اوکراین',
-    kzt: 'تنگه قزاقستان', uzs: 'سوم ازبکستان', tmt: 'منات ترکمنستان',
-    tjs: 'سامانی تاجیکستان', kgs: 'سوم قرقیزستان', toman: 'تومان'
+    usd: 'دلار آمریکا',
+    eur: 'یورو',
+    gbp: 'پوند انگلیس',
+    aed: 'درهم امارات',
+    try: 'لیر ترکیه',
+    cad: 'دلار کانادا',
+    aud: 'دلار استرالیا',
+    cny: 'یوان چین',
+    jpy: 'ین ژاپن',
+
+    sekkeh: 'سکه امامی',
+    bahar: 'سکه بهار آزادی',
+    nim: 'نیم سکه',
+    rob: 'ربع سکه',
+    gerami: 'سکه گرمی',
+
+    '18ayar': 'طلای ۱۸ عیار (گرم)',
+    abshodeh: 'طلای آب‌شده (مثقال)',
+
+    chf: 'فرانک سوئیس',
+    sek: 'کرون سوئد',
+    nok: 'کرون نروژ',
+    dkk: 'کرون دانمارک',
+    rub: 'روبل روسیه',
+    inr: 'روپیه هند',
+    pkr: 'روپیه پاکستان',
+    afn: 'افغانی',
+    iqd: 'دینار عراق',
+    sar: 'ریال عربستان',
+    qar: 'ریال قطر',
+    kwd: 'دینار کویت',
+
+    nzd: 'دلار نیوزیلند',
+    sgd: 'دلار سنگاپور',
+    hkd: 'دلار هنگ‌کنگ',
+    myr: 'رینگیت مالزی',
+    thb: 'بات تایلند',
+    krw: 'وون کره جنوبی',
+
+    mxn: 'پزو مکزیک',
+    brl: 'رئال برزیل',
+    zar: 'راند آفریقای جنوبی',
+    egp: 'پوند مصر',
+    syp: 'لیر سوریه',
+
+    azn: 'منات آذربایجان',
+    gel: 'لاری گرجستان',
+    amd: 'درام ارمنستان',
+    ils: 'شِکِل اسرائیل',
+
+    pln: 'زلوتی لهستان',
+    czk: 'کرون چک',
+    huf: 'فورینت مجارستان',
+    ron: 'لئو رومانی',
+
+    jod: 'دینار اردن',
+    omr: 'ریال عمان',
+    bhd: 'دینار بحرین',
+    tnd: 'دینار تونس',
+    mad: 'درهم مراکش',
+    dzd: 'دینار الجزایر',
+    lbp: 'لیر لبنان',
+    yer: 'ریال یمن',
+
+    twd: 'دلار تایوان',
+    php: 'پزو فیلیپین',
+    idr: 'روپیه اندونزی',
+    vnd: 'دانگ ویتنام',
+    uah: 'هریونیا اوکراین',
+
+    kzt: 'تنگه قزاقستان',
+    uzs: 'سوم ازبکستان',
+    tmt: 'منات ترکمنستان',
+    tjs: 'سامانی تاجیکستان',
+    kgs: 'سوم قرقیزستان',
+
+    toman: 'تومان'
   };
 
+
   var priority = [
-    'usd', 'eur', 'gbp', 'aed', 'try', 'cad', 'aud', 'cny', 'jpy',
-    'chf', 'sek', 'nok', 'dkk', 'rub', 'inr', 'pkr', 'afn', 'iqd',
-    'sar', 'qar', 'kwd', 'nzd', 'sgd', 'hkd', 'myr', 'thb', 'krw',
-    'mxn', 'brl', 'zar', 'egp', 'syp', 'azn', 'gel', 'amd', 'ils',
-    'pln', 'czk', 'huf', 'ron', 'jod', 'omr', 'bhd', 'tnd', 'mad',
-    'dzd', 'lbp', 'yer', 'twd', 'php', 'idr', 'vnd', 'uah', 'kzt',
-    'uzs', 'tmt', 'tjs', 'kgs', 'toman',
-    'sekkeh', 'bahar', 'nim', 'rob', 'gerami', '18ayar', 'abshodeh'
+    'usd',
+    'eur',
+    'gbp',
+    'aed',
+    'try',
+    'cad',
+    'aud',
+    'cny',
+    'jpy',
+
+    'chf',
+    'sek',
+    'nok',
+    'dkk',
+    'rub',
+    'inr',
+    'pkr',
+    'afn',
+    'iqd',
+    'sar',
+    'qar',
+    'kwd',
+
+    'nzd',
+    'sgd',
+    'hkd',
+    'myr',
+    'thb',
+    'krw',
+
+    'mxn',
+    'brl',
+    'zar',
+    'egp',
+    'syp',
+
+    'azn',
+    'gel',
+    'amd',
+    'ils',
+
+    'pln',
+    'czk',
+    'huf',
+    'ron',
+
+    'jod',
+    'omr',
+    'bhd',
+    'tnd',
+    'mad',
+    'dzd',
+    'lbp',
+    'yer',
+
+    'twd',
+    'php',
+    'idr',
+    'vnd',
+    'uah',
+
+    'kzt',
+    'uzs',
+    'tmt',
+    'tjs',
+    'kgs',
+
+    'toman',
+
+    'sekkeh',
+    'bahar',
+    'nim',
+    'rob',
+    'gerami',
+    '18ayar',
+    'abshodeh'
   ];
+
 
   var options = [];
   var used = {};
 
+
+  /*
+   * ساخت لیست ارزها
+   */
   priority.forEach(function (key) {
-    if (RATES[key] && RATES[key] > 0 && !used[key]) {
-      options.push(
-        '<option value="' + key + '">' +
-        (labels[key] || key) +
-        '</option>'
-      );
+
+    if (
+      RATES[key] &&
+      RATES[key] > 0 &&
+      !used[key]
+    ) {
+
+      options.push({
+        value: key,
+        label: labels[key] || key
+      });
+
       used[key] = true;
     }
   });
 
+
+  /*
+   * ارزهای دیگری که در RATES هستند
+   */
   Object.keys(RATES).forEach(function (key) {
-    if (!used[key] && RATES[key] > 0) {
-      options.push(
-        '<option value="' + key + '">' +
-        (labels[key] || key) +
-        '</option>'
-      );
+
+    if (
+      !used[key] &&
+      RATES[key] > 0
+    ) {
+
+      options.push({
+        value: key,
+        label: labels[key] || key
+      });
+
       used[key] = true;
     }
   });
 
-  fromEl.innerHTML =
-    options.join('') ||
-    '<option value="">نرخی موجود نیست</option>';
 
-  if (amountEl) {
-    amountEl.oninput = updateConverter;
+  /*
+   * select اصلی را مخفی می‌کنیم
+   * ولی مقدار آن همچنان برای مبدل استفاده می‌شود.
+   */
+  fromEl.style.display = 'none';
+
+
+  /*
+   * اگر قبلاً Dropdown ساخته شده بود،
+   * حذفش می‌کنیم تا دوباره ساخته نشود.
+   */
+  var oldWrap =
+    document.getElementById(
+      'arzinoCustomCurrency'
+    );
+
+  if (oldWrap) {
+    oldWrap.remove();
   }
 
-  fromEl.onchange = updateConverter;
 
+  /*
+   * ساخت کادر اصلی
+   */
+  var wrap =
+    document.createElement('div');
+
+  wrap.id =
+    'arzinoCustomCurrency';
+
+  wrap.className =
+    'arzino-select-wrap';
+
+
+  /*
+   * دکمه انتخاب ارز
+   */
+  var button =
+    document.createElement('button');
+
+  button.type =
+    'button';
+
+  button.className =
+    'arzino-select-button';
+
+
+  /*
+   * متن داخل دکمه
+   */
+  var buttonText =
+    document.createElement('span');
+
+  buttonText.className =
+    'arzino-select-text';
+
+
+  /*
+   * فلش
+   */
+  var arrow =
+    document.createElement('span');
+arrow.className =
+    'arzino-select-arrow';
+
+  arrow.textContent =
+    '▼';
+
+
+  button.appendChild(buttonText);
+  button.appendChild(arrow);
+
+
+  /*
+   * منوی ارزها
+   */
+  var menu =
+    document.createElement('div');
+
+  menu.className =
+    'arzino-select-menu';
+
+
+  /*
+   * ساخت گزینه‌های ارز
+   */
+  options.forEach(function (item) {
+
+    var option =
+      document.createElement('div');
+
+    option.className =
+      'arzino-select-option';
+
+    option.dataset.value =
+      item.value;
+
+    option.textContent =
+      item.label;
+
+
+    option.onclick =
+      function () {
+
+        /*
+         * مقدار select اصلی را تغییر می‌دهیم
+         */
+        fromEl.value =
+          item.value;
+
+
+        /*
+         * متن دکمه را تغییر می‌دهیم
+         */
+        buttonText.textContent =
+          item.label;
+
+
+        /*
+         * حذف حالت انتخاب‌شده از همه گزینه‌ها
+         */
+        var all =
+          menu.querySelectorAll(
+            '.arzino-select-option'
+          );
+
+        for (
+          var i = 0;
+          i < all.length;
+          i++
+        ) {
+
+          all[i].classList.remove(
+            'selected'
+          );
+        }
+
+
+        /*
+         * علامت‌گذاری گزینه فعلی
+         */
+        option.classList.add(
+          'selected'
+        );
+
+
+        /*
+         * بستن منو
+         */
+        wrap.classList.remove(
+          'open'
+        );
+
+
+        /*
+         * اجرای مبدل
+         */
+        updateConverter();
+      };
+
+
+    menu.appendChild(option);
+  });
+
+
+  /*
+   * باز و بسته کردن منو
+   */
+  button.onclick =
+    function (e) {
+
+      e.stopPropagation();
+
+      wrap.classList.toggle(
+        'open'
+      );
+    };
+
+
+  /*
+   * قرار دادن اجزا کنار هم
+   */
+  wrap.appendChild(button);
+  wrap.appendChild(menu);
+
+
+  /*
+   * قرار دادن Dropdown جدید
+   * قبل از select اصلی
+   */
+  fromEl.parentNode.insertBefore(
+    wrap,
+    fromEl
+  );
+
+
+  /*
+   * انتخاب اولین ارز به صورت پیش‌فرض
+   */
+  if (options.length > 0) {
+
+    var defaultOption =
+      options[0];
+
+    fromEl.value =
+      defaultOption.value;
+
+    buttonText.textContent =
+      defaultOption.label;
+
+
+    var first =
+      menu.querySelector(
+        '.arzino-select-option'
+      );
+
+    if (first) {
+
+      first.classList.add(
+        'selected'
+      );
+    }
+
+  } else {
+
+    buttonText.textContent =
+      'نرخی موجود نیست';
+  }
+
+
+  /*
+   * بستن منو با کلیک بیرون
+   */
+  document.addEventListener(
+    'click',
+    function () {
+
+      wrap.classList.remove(
+        'open'
+      );
+
+    }
+  );
+
+
+  /*
+   * ورودی مقدار
+   */
+  if (amountEl) {
+
+    amountEl.oninput =
+      updateConverter;
+  }
+
+
+  /*
+   * اجرای اولیه مبدل
+   */
   updateConverter();
-}
+}  
 
 
 function setupSearch() {
