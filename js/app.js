@@ -198,7 +198,7 @@ function setupConverter() {
     qar: 'ریال قطر', kwd: 'دینار کویت', nzd: 'دلار نیوزیلند', sgd: 'دلار سنگاپور',
     hkd: 'دلار هنگ‌کنگ', myr: 'رینگیت مالزی', thb: 'بات تایلاند',
     krw: 'وون کره جنوبی', mxn: 'پزو مکزیک', brl: 'رئال برزیل',
-zar: 'راند آفریقای جنوبی', egp: 'پوند مصر', syp: 'لیر سوریه',
+    zar: 'راند آفریقای جنوبی', egp: 'پوند مصر', syp: 'لیر سوریه',
     azn: 'منات آذربایجان', gel: 'لاری گرجستان', amd: 'درام ارمنستان',
     ils: 'شِکِل اسرائیل', pln: 'زلوتی لهستان', czk: 'کرون چک',
     huf: 'فورینت مجارستان', ron: 'لئو رومانی', jod: 'دینار اردن',
@@ -377,7 +377,8 @@ async function loadStats(navasan) {
 
 
   try {
-var fRes =
+
+    var fRes =
       await fetch(
         'https://api.alternative.me/fng/?limit=1'
       );
@@ -397,7 +398,7 @@ var fRes =
           f.data[0].value +
           ' / ' +
           f.data[0].value_classification;
-}
+      }
     }
 
   } catch (e) {}
@@ -597,7 +598,7 @@ var goldHtml = '';
 
   var fiatItems = [
     { key: 'usd_sell', name: 'دلار آمریکا (فروش)' },
-{ key: 'usd_buy', name: 'دلار آمریکا (خرید)' },
+    { key: 'usd_buy', name: 'دلار آمریکا (خرید)' },
     { key: 'eur', name: 'یورو' },
     { key: 'gbp', name: 'پوند انگلیس' },
     { key: 'aed', name: 'درهم امارات' },
@@ -727,7 +728,7 @@ var worldHtml = '';
       { id: 'dogecoin', name: 'دوج‌کوین (DOGE)' },
       { id: 'tron', name: 'ترون (TRX)' },
       { id: 'cardano', name: 'کاردانو (ADA)' },
-{ id: 'chainlink', name: 'چین‌لینک (LINK)' },
+      { id: 'chainlink', name: 'چین‌لینک (LINK)' },
       { id: 'polkadot', name: 'پولکادات (DOT)' },
       { id: 'litecoin', name: 'لایت‌کوین (LTC)' },
       { id: 'avalanche-2', name: 'آوالانچ (AVAX)' },
@@ -738,45 +739,23 @@ var worldHtml = '';
 
     cryptoMap.forEach(function (c) {
 
-      var data = crypto[c.id];
-      if (!data) return;
+      var data =
+        crypto[c.id];
 
-      // اولویت با قیمت تومان مستقیم از نوبیتکس
-      var tomanPrice = data.toman || null;
-      var usdPrice = data.usd || null;
-      var change = data.usd_24h_change;
+      if (!data || !data.usd) return;
 
-      // اگر تومان از نوبیتکس نبود، از دلار × نرخ تومان بساز
-      if (!tomanPrice && usdPrice) {
-        tomanPrice = usdPrice * TOMAN;
-      }
-
-      // اگر هیچ قیمتی نبود رد کن
-      if (!tomanPrice && !usdPrice) return;
-
-      // نمایش: اگر دلار داریم نشون بده، وگرنه فقط تومان
-      if (usdPrice) {
-        cryptoHtml += cardUsd(
-          c.name,
-          usdPrice,
-          tomanPrice,
-          change
-        );
-      } else {
-        // فقط تومان (از نوبیتکس)
-        cryptoHtml += card(
-          c.name,
-          faNum(Math.round(tomanPrice)) + ' تومان',
-          change
-        );
-      }
+      cryptoHtml += cardUsd(
+        c.name,
+        data.usd,
+        data.usd * TOMAN,
+        data.usd_24h_change
+      );
     });
   }
 
   document.getElementById('crypto').innerHTML =
     cryptoHtml ||
     '<div class="msg">داده‌ای موجود نیست</div>';
-
 var metalsHtml = '';
 
   var metals = [
@@ -800,7 +779,8 @@ var metalsHtml = '';
       null
     );
   });
-if (navasan.xau && num(navasan.xau) > 0) {
+
+  if (navasan.xau && num(navasan.xau) > 0) {
 
     metalsHtml += card(
       'طلای جهانی (نرخ داخلی)',
@@ -995,7 +975,8 @@ async function main() {
   if (!navasan) {
 
     if (!hasCache) {
-badge(
+
+      badge(
         '❌ خطا در دریافت داده‌ها — چند دقیقه دیگر دوباره امتحان کنید'
       );
 
@@ -1039,4 +1020,4 @@ main().catch(function (err) {
   badge(
     '❌ خطا در بارگذاری'
   );
-});      
+});  
