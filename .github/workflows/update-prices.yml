@@ -1,7 +1,9 @@
 name: update-prices
 
 on:
-  workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"   # هر ۵ دقیقه
+  workflow_dispatch:         # امکان اجرای دستی
 
 permissions:
   contents: write
@@ -11,37 +13,44 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Prepare data
+      - name: Fetch prices
         run: |
           mkdir -p data
 
-      - name: Test Nobitex
-        run: |
-          echo "Testing Nobitex..."
+          # === منبع اصلی و پایدار: Navasan ===
+          echo "Fetching Navasan..."
+          curl -s --max-time 40 "https://api.navasan.tech/latest/?api_key=freeqNwteMeqD7BsSJ93t0MQ9k4wtcUZ" -o data/navasan.json
+          [ -s data/navasan.json ] || echo "{}" > data/navasan.json
 
-          curl -L -sS \
-            --connect-timeout 15 \
-            --max-time 40 \
-            "https://api.nobitex.ir/market/stats?srcCurrency=btc,eth,usdt&dstCurrency=rls" \
-            -o data/nobitex.json
+          # === ارزهای دیجیتال (CoinGecko) ===
+          echo "Fetching Crypto..."
+          curl -s -A "Mozilla/5.0" --max-time 40 \
+            "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether,binancecoin,solana,ripple,dogecoin,tron,cardano,avalanche-2,chainlink,polkadot,matic-network,litecoin,bitcoin-cash,near,uniswap,stellar&vs_currencies=usd&include_24hr_change=true" \
+            -o data/crypto.json
+          [ -s data/crypto.json ] || echo "{}" > data/crypto.json
 
-          echo "Nobitex response:"
-          head -c 1000 data/nobitex.json || true
+          # === فلزات گرانبهای جهانی (gold-api.com) ===
+          echo "Fetching Metals..."
+          for metal in XAU XAG XPT XPD; do
+            lower=$(echo $metal | tr '[:upper:]' '[:lower:]')
+            curl -s --max-time 30 "https://api.gold-api.com/price/$metal" -o data/$lower.json
+            [ -s data/$lower.json ] || echo "{}" > data/$lower.json
+          done
 
-      - name: Save data
+          echo "Fetch completed."
+          ls -la data/
+
+      - name: Commit and push
         run: |
           git config user.name "price-bot"
           git config user.email "price-bot@users.noreply.github.com"
-
           git add data/
-
           if git diff --staged --quiet; then
-            echo "No changes"
+            echo "No changes detected"
           else
-            git commit -m "test nobitex"
+            git commit -m "update prices $(date -u +%Y-%m-%dT%H:%M:%SZ)"
             git push
           fi
