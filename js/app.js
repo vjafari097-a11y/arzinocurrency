@@ -129,40 +129,46 @@ function cardUsd(name, usdPrice, tomanPrice, changePct) {
 
 
 function updateConverter() {
-
-  var amountEl =
-    document.getElementById('convAmount');
-
-  var fromEl =
-    document.getElementById('convFrom');
-
-  var resultEl =
-    document.getElementById('convResult');
+  var amountEl = document.getElementById('convAmount');
+  var fromEl = document.getElementById('convFrom');
+  var resultEl = document.getElementById('convResult');
 
   if (!amountEl || !fromEl || !resultEl) return;
 
-  var amount =
-    Number(amountEl.value) || 0;
+  var amount = Number(amountEl.value) || 0;
+  var from = fromEl.value;
 
-  var from =
-    fromEl.value;
+  /*
+   * نرخ انتخاب‌شده
+   */
+  var rate = Number(RATES[from]) || 0;
 
-  var rate =
-    RATES[from];
-
-  if (!from || !rate || rate <= 0) {
-
-    resultEl.textContent =
-      'نرخ موجود نیست';
-
-    return;
+  /*
+   * برای دلار اگر به هر دلیل RATES.usd
+   * خالی بود، از TOMAN استفاده می‌کنیم.
+   */
+  if (from === 'usd' && rate <= 0) {
+    rate = Number(TOMAN) || 0;
   }
 
+  /*
+   * تومان
+   */
   if (from === 'toman') {
 
+    var usdRate =
+      Number(RATES.usd) ||
+      Number(TOMAN) ||
+      0;
+
+    if (usdRate <= 0) {
+      resultEl.textContent =
+        'نرخ دلار موجود نیست';
+      return;
+    }
+
     var usd =
-      amount /
-      (RATES.usd || TOMAN);
+      amount / usdRate;
 
     resultEl.textContent =
       faNum(amount) +
@@ -170,17 +176,33 @@ function updateConverter() {
       usdFmt(usd) +
       ' دلار';
 
-  } else {
+    return;
+  }
 
-    var toman =
-      amount * rate;
+
+  /*
+   * اگر ارز انتخاب‌شده نرخ نداشت
+   */
+  if (!from || rate <= 0) {
 
     resultEl.textContent =
-      faNum(amount) +
-      ' ≈ ' +
-      faNum(Math.round(toman)) +
-      ' تومان';
+      'نرخ موجود نیست';
+
+    return;
   }
+
+
+  /*
+   * تبدیل ارز به تومان
+   */
+  var toman =
+    amount * rate;
+
+  resultEl.textContent =
+    faNum(amount) +
+    ' ≈ ' +
+    faNum(Math.round(toman)) +
+    ' تومان';
 }
 function setupConverter() {
   var amountEl = document.getElementById('convAmount');
