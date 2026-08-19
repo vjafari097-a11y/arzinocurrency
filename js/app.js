@@ -1,18 +1,26 @@
-// ============ آرزینو - نسخه کامل + Nobitex Crypto ============
+// ============ آرزینو - نسخه کامل + جستجو + مبدل مرتب ============
 
 var DEFAULT_TOMAN = 187500;
-var TOMAN = Number(localStorage.getItem('cachedTomanRate')) || DEFAULT_TOMAN;
+
+var TOMAN =
+  Number(localStorage.getItem('cachedTomanRate')) ||
+  DEFAULT_TOMAN;
+
 var CACHE_KEY = 'arzino_last_data';
+
 var RATES = {};
+
 
 function badge(t) {
   var el = document.getElementById('rateBadge');
   if (el) el.textContent = t;
 }
 
+
 function faNum(n) {
   return Number(n).toLocaleString('fa-IR');
 }
+
 
 function usdFmt(n) {
   n = Number(n);
@@ -22,6 +30,7 @@ function usdFmt(n) {
   });
 }
 
+
 function num(x) {
 
   if (typeof x === 'number') {
@@ -29,26 +38,38 @@ function num(x) {
   }
 
   if (typeof x === 'string') {
-    var n = Number(String(x).replace(/,/g, ''));
+
+    var n =
+      Number(
+        String(x).replace(/,/g, '')
+      );
+
     return isFinite(n) ? n : 0;
   }
 
-  if (x && typeof x === 'object' && x.value !== undefined) {
+  if (
+    x &&
+    typeof x === 'object' &&
+    x.value !== undefined
+  ) {
     return num(x.value);
   }
 
   return 0;
 }
 
+
 function changeClass(ch) {
 
   ch = Number(ch) || 0;
 
   if (ch > 0) return 'up';
+
   if (ch < 0) return 'down';
 
   return '';
 }
+
 
 function changeText(ch) {
 
@@ -56,82 +77,103 @@ function changeText(ch) {
 
   if (ch === 0) return '';
 
-  var sign = ch > 0 ? '▲' : '▼';
+  var sign =
+    ch > 0 ? '▲' : '▼';
 
-  return sign + ' ' + faNum(Math.abs(ch));
+  return (
+    sign +
+    ' ' +
+    faNum(Math.abs(ch))
+  );
 }
+
 
 function normalizeCoin(v) {
 
   v = num(v);
 
-  if (v > 0 && v < 1000000) {
+  if (
+    v > 0 &&
+    v < 1000000
+  ) {
     return v * 1000;
   }
 
   return v;
 }
-
 function card(name, priceHtml, changeVal) {
-
   return '<div class="card" data-name="' + name + '">' +
     '<div class="name">' + name + '</div>' +
     '<div>' +
       '<div class="price-ir">' + priceHtml + '</div>' +
-      (changeVal ?
-        '<div class="change ' + changeClass(changeVal) + '">' +
-          changeText(changeVal) +
-        '</div>' : '') +
+      (changeVal ? '<div class="change ' + changeClass(changeVal) + '">' + changeText(changeVal) + '</div>' : '') +
     '</div>' +
   '</div>';
 }
 
-function cardUsd(name, usdPrice, tomanPrice, changePct) {
 
+function cardUsd(name, usdPrice, tomanPrice, changePct) {
   return '<div class="card" data-name="' + name + '">' +
     '<div class="name">' + name + '</div>' +
     '<div>' +
       '<div class="price">' + usdFmt(usdPrice) + '</div>' +
-      (tomanPrice ?
-        '<div class="toman">' +
-          faNum(Math.round(tomanPrice)) +
-          ' تومان</div>' : '') +
+      (tomanPrice ? '<div class="toman">' + faNum(Math.round(tomanPrice)) + ' تومان</div>' : '') +
       (changePct !== undefined && changePct !== null ?
         '<div class="change ' + changeClass(changePct) + '">' +
-          (changePct > 0 ? '▲' : changePct < 0 ? '▼' : '') +
-          ' ' +
-          Math.abs(Number(changePct)).toFixed(2) +
-          '%' +
+          (changePct > 0 ? '▲' : changePct < 0 ? '▼' : '') + ' ' +
+          Math.abs(Number(changePct)).toFixed(2) + '%' +
         '</div>' : '') +
     '</div>' +
   '</div>';
 }
+
+
 function updateConverter() {
-  var amountEl = document.getElementById('convAmount');
-  var fromEl = document.getElementById('convFrom');
-  var resultEl = document.getElementById('convResult');
+
+  var amountEl =
+    document.getElementById('convAmount');
+
+  var fromEl =
+    document.getElementById('convFrom');
+
+  var resultEl =
+    document.getElementById('convResult');
 
   if (!amountEl || !fromEl || !resultEl) return;
 
-  var amount = Number(amountEl.value) || 0;
-  var from = fromEl.value;
-  var rate = RATES[from];
+  var amount =
+    Number(amountEl.value) || 0;
+
+  var from =
+    fromEl.value;
+
+  var rate =
+    RATES[from];
 
   if (!from || !rate || rate <= 0) {
-    resultEl.textContent = 'نرخ موجود نیست';
+
+    resultEl.textContent =
+      'نرخ موجود نیست';
+
     return;
   }
 
   if (from === 'toman') {
-    var usd = amount / (RATES.usd || TOMAN);
+
+    var usd =
+      amount /
+      (RATES.usd || TOMAN);
 
     resultEl.textContent =
       faNum(amount) +
       ' تومان ≈ ' +
       usdFmt(usd) +
       ' دلار';
+
   } else {
-    var toman = amount * rate;
+
+    var toman =
+      amount * rate;
 
     resultEl.textContent =
       faNum(amount) +
@@ -140,203 +182,66 @@ function updateConverter() {
       ' تومان';
   }
 }
-
-
 function setupConverter() {
   var amountEl = document.getElementById('convAmount');
   var fromEl = document.getElementById('convFrom');
-
   if (!fromEl) return;
 
   var labels = {
-    usd: 'دلار آمریکا',
-    eur: 'یورو',
-    gbp: 'پوند انگلیس',
-    aed: 'درهم امارات',
-    try: 'لیر ترکیه',
-    cad: 'دلار کانادا',
-    aud: 'دلار استرالیا',
-    cny: 'یوان چین',
-    jpy: 'ین ژاپن',
-
-    sekkeh: 'سکه امامی',
-    bahar: 'سکه بهار آزادی',
-    nim: 'نیم سکه',
-    rob: 'ربع سکه',
-    gerami: 'سکه گرمی',
-
-    '18ayar': 'طلای ۱۸ عیار (گرم)',
-    abshodeh: 'طلای آب‌شده (مثقال)',
-
-    chf: 'فرانک سوئیس',
-    sek: 'کرون سوئد',
-    nok: 'کرون نروژ',
-    dkk: 'کرون دانمارک',
-    rub: 'روبل روسیه',
-    inr: 'روپیه هند',
-    pkr: 'روپیه پاکستان',
-    afn: 'افغانی',
-    iqd: 'دینار عراق',
-    sar: 'ریال عربستان',
-    qar: 'ریال قطر',
-    kwd: 'دینار کویت',
-
-    nzd: 'دلار نیوزیلند',
-    sgd: 'دلار سنگاپور',
-    hkd: 'دلار هنگ‌کنگ',
-    myr: 'رینگیت مالزی',
-    thb: 'بات تایلند',
-    krw: 'وون کره جنوبی',
-
-    mxn: 'پزو مکزیک',
-    brl: 'رئال برزیل',
-    zar: 'راند آفریقای جنوبی',
-    egp: 'پوند مصر',
-    syp: 'لیر سوریه',
-
-    azn: 'منات آذربایجان',
-    gel: 'لاری گرجستان',
-    amd: 'درام ارمنستان',
-    ils: 'شِکِل اسرائیل',
-
-    pln: 'زلوتی لهستان',
-    czk: 'کرون چک',
-    huf: 'فورینت مجارستان',
-    ron: 'لئو رومانی',
-
-    jod: 'دینار اردن',
-    omr: 'ریال عمان',
-    bhd: 'دینار بحرین',
-    tnd: 'دینار تونس',
-    mad: 'درهم مراکش',
-
-    dzd: 'دینار الجزایر',
-    lbp: 'لیر لبنان',
-    yer: 'ریال یمن',
-
-    twd: 'دلار تایوان',
-    php: 'پزو فیلیپین',
-    idr: 'روپیه اندونزی',
-    vnd: 'دانگ ویتنام',
-
-    uah: 'هریونیا اوکراین',
-    kzt: 'تنگه قزاقستان',
-    uzs: 'سوم ازبکستان',
-    tmt: 'منات ترکمنستان',
-    tjs: 'سامانی تاجیکستان',
-    kgs: 'سوم قرقیزستان',
-
-    toman: 'تومان'
+    usd: 'دلار آمریکا', eur: 'یورو', gbp: 'پوند انگلیس', aed: 'درهم امارات',
+    try: 'لیر ترکیه', cad: 'دلار کانادا', aud: 'دلار استرالیا', cny: 'یوان چین',
+    jpy: 'ین ژاپن', sekkeh: 'سکه امامی', bahar: 'سکه بهار آزادی', nim: 'نیم سکه',
+    rob: 'ربع سکه', gerami: 'سکه گرمی', '18ayar': 'طلای ۱۸ عیار (گرم)',
+    abshodeh: 'طلای آب‌شده (مثقال)', chf: 'فرانک سوئیس', sek: 'کرون سوئد',
+    nok: 'کرون نروژ', dkk: 'کرون دانمارک', rub: 'روبل روسیه', inr: 'روپیه هند',
+    pkr: 'روپیه پاکستان', afn: 'افغانی', iqd: 'دینار عراق', sar: 'ریال عربستان',
+    qar: 'ریال قطر', kwd: 'دینار کویت', nzd: 'دلار نیوزیلند', sgd: 'دلار سنگاپور',
+    hkd: 'دلار هنگ‌کنگ', myr: 'رینگیت مالزی', thb: 'بات تایلاند',
+    krw: 'وون کره جنوبی', mxn: 'پزو مکزیک', brl: 'رئال برزیل',
+    zar: 'راند آفریقای جنوبی', egp: 'پوند مصر', syp: 'لیر سوریه',
+    azn: 'منات آذربایجان', gel: 'لاری گرجستان', amd: 'درام ارمنستان',
+    ils: 'شِکِل اسرائیل', pln: 'زلوتی لهستان', czk: 'کرون چک',
+    huf: 'فورینت مجارستان', ron: 'لئو رومانی', jod: 'دینار اردن',
+    omr: 'ریال عمان', bhd: 'دینار بحرین', tnd: 'دینار تونس',
+    mad: 'درهم مراکش', dzd: 'دینار الجزایر', lbp: 'لیر لبنان',
+    yer: 'ریال یمن', twd: 'دلار تایوان', php: 'پزو فیلیپین',
+    idr: 'روپیه اندونزی', vnd: 'دانگ ویتنام', uah: 'هریونیا اوکراین',
+    kzt: 'تنگه قزاقستان', uzs: 'سوم ازبکستان', tmt: 'منات ترکمنستان',
+    tjs: 'سامانی تاجیکستان', kgs: 'سوم قرقیزستان', toman: 'تومان'
   };
 
   var priority = [
-    'usd',
-    'eur',
-    'gbp',
-    'aed',
-    'try',
-    'cad',
-    'aud',
-    'cny',
-    'jpy',
-
-    'chf',
-    'sek',
-    'nok',
-    'dkk',
-    'rub',
-    'inr',
-    'pkr',
-    'afn',
-    'iqd',
-
-    'sar',
-    'qar',
-    'kwd',
-    'nzd',
-    'sgd',
-    'hkd',
-    'myr',
-    'thb',
-    'krw',
-
-    'mxn',
-    'brl',
-    'zar',
-    'egp',
-    'syp',
-    'azn',
-    'gel',
-    'amd',
-    'ils',
-
-    'pln',
-    'czk',
-    'huf',
-    'ron',
-    'jod',
-    'omr',
-    'bhd',
-    'tnd',
-    'mad',
-
-    'dzd',
-    'lbp',
-    'yer',
-    'twd',
-    'php',
-    'idr',
-    'vnd',
-    'uah',
-    'kzt',
-
-    'uzs',
-    'tmt',
-    'tjs',
-    'kgs',
-
-    'toman',
-
-    'sekkeh',
-    'bahar',
-    'nim',
-    'rob',
-    'gerami',
-    '18ayar',
-    'abshodeh'
+    'usd', 'eur', 'gbp', 'aed', 'try', 'cad', 'aud', 'cny', 'jpy',
+    'chf', 'sek', 'nok', 'dkk', 'rub', 'inr', 'pkr', 'afn', 'iqd',
+    'sar', 'qar', 'kwd', 'nzd', 'sgd', 'hkd', 'myr', 'thb', 'krw',
+    'mxn', 'brl', 'zar', 'egp', 'syp', 'azn', 'gel', 'amd', 'ils',
+    'pln', 'czk', 'huf', 'ron', 'jod', 'omr', 'bhd', 'tnd', 'mad',
+    'dzd', 'lbp', 'yer', 'twd', 'php', 'idr', 'vnd', 'uah', 'kzt',
+    'uzs', 'tmt', 'tjs', 'kgs', 'toman',
+    'sekkeh', 'bahar', 'nim', 'rob', 'gerami', '18ayar', 'abshodeh'
   ];
 
   var options = [];
   var used = {};
 
   priority.forEach(function (key) {
-
     if (RATES[key] && RATES[key] > 0 && !used[key]) {
-
       options.push(
-        '<option value="' +
-        key +
-        '">' +
+        '<option value="' + key + '">' +
         (labels[key] || key) +
         '</option>'
       );
-
       used[key] = true;
     }
   });
 
   Object.keys(RATES).forEach(function (key) {
-
     if (!used[key] && RATES[key] > 0) {
-
       options.push(
-        '<option value="' +
-        key +
-        '">' +
+        '<option value="' + key + '">' +
         (labels[key] || key) +
         '</option>'
       );
-
       used[key] = true;
     }
   });
@@ -348,14 +253,16 @@ function setupConverter() {
   if (amountEl) {
     amountEl.oninput = updateConverter;
   }
-fromEl.onchange = updateConverter;
+
+  fromEl.onchange = updateConverter;
 
   updateConverter();
 }
 
 
 function setupSearch() {
-  var input = document.getElementById('searchInput');
+  var input =
+    document.getElementById('searchInput');
 
   if (!input) return;
 
@@ -387,7 +294,8 @@ function setupSearch() {
           '';
       }
 
-      name = name.toLowerCase();
+      name =
+        name.toLowerCase();
 
       c.style.display =
         (!q || name.indexOf(q) !== -1)
@@ -412,7 +320,6 @@ async function loadStats(navasan) {
       faNum(Math.round(usdt));
   }
 
-  // اطلاعات کلی بازار کریپتو
   try {
     var gRes =
       await fetch(
@@ -420,8 +327,12 @@ async function loadStats(navasan) {
       );
 
     if (gRes.ok) {
-      var g = await gRes.json();
-      var data = g.data || {};
+
+      var g =
+        await gRes.json();
+
+      var data =
+        g.data || {};
 
       if (
         domEl &&
@@ -438,65 +349,65 @@ async function loadStats(navasan) {
         data.total_market_cap &&
         data.total_market_cap.usd
       ) {
+
         var mcap =
           data.total_market_cap.usd;
 
         if (mcap >= 1e12) {
+
           mcapEl.textContent =
             (mcap / 1e12).toFixed(2) +
             'T$';
 
         } else if (mcap >= 1e9) {
+
           mcapEl.textContent =
             (mcap / 1e9).toFixed(1) +
             'B$';
 
         } else {
+
           mcapEl.textContent =
             faNum(Math.round(mcap));
         }
       }
     }
+
   } catch (e) {}
 
 
-  // شاخص ترس و طمع
   try {
+
     var fRes =
       await fetch(
         'https://api.alternative.me/fng/?limit=1'
       );
 
     if (fRes.ok) {
-      var f = await fRes.json();
+
+      var f =
+        await fRes.json();
 
       if (
         fearEl &&
         f.data &&
         f.data[0]
       ) {
+
         fearEl.textContent =
           f.data[0].value +
           ' / ' +
           f.data[0].value_classification;
       }
     }
+
   } catch (e) {}
 }
 
 
-/*
-========================================================
-ساخت قیمت‌ها
-TGJU / Navasan برای ارز و طلا
-Nobitex برای کریپتو
-========================================================
-*/
-
 function renderAll(
   navasan,
   crypto,
-  nobitex,
   xau,
   xag,
   xpt,
@@ -506,26 +417,18 @@ function renderAll(
 
   if (!navasan) return false;
 
-  // -----------------------------
-  // دلار
-  // -----------------------------
-
   var usdSell =
     num(navasan.usd_sell) ||
     num(navasan.usd_usdt) ||
     DEFAULT_TOMAN;
 
-  TOMAN = usdSell;
+  TOMAN =
+    usdSell;
 
   localStorage.setItem(
     'cachedTomanRate',
     String(TOMAN)
   );
-
-
-  // -----------------------------
-  // نرخ‌های مبدل
-  // -----------------------------
 
   RATES = {
 
@@ -591,7 +494,7 @@ function renderAll(
     amd: num(navasan.amd),
     ils: num(navasan.ils),
     pln: num(navasan.pln),
-czk: num(navasan.czk),
+    czk: num(navasan.czk),
     huf: num(navasan.huf),
     ron: num(navasan.ron),
     jod: num(navasan.jod),
@@ -616,15 +519,9 @@ czk: num(navasan.czk),
     toman: 1
   };
 
-
-  // -----------------------------
-  // نوار بالای سایت
-  // -----------------------------
-
   var sekkeh =
     normalizeCoin(navasan.sekkeh);
-
-  var gold18 =
+var gold18 =
     num(navasan['18ayar']);
 
   var ticker =
@@ -656,14 +553,8 @@ czk: num(navasan.czk),
       '</div>';
   }
 
-
-  // آمار بازار
   loadStats(navasan);
-// =========================================================
-  // طلا و سکه
-  // =========================================================
-
-  var goldHtml = '';
+var goldHtml = '';
 
   var goldItems = [
     { key: 'sekkeh', name: 'سکه امامی', normalize: true },
@@ -691,70 +582,31 @@ czk: num(navasan.czk),
         ? raw.change
         : 0;
 
-    goldHtml +=
-      card(
-        item.name,
-        faNum(Math.round(val)) + ' تومان',
-        ch
-      );
+    goldHtml += card(
+      item.name,
+      faNum(Math.round(val)) + ' تومان',
+      ch
+    );
   });
 
-  var goldEl = document.getElementById('gold');
+  document.getElementById('gold').innerHTML =
+    goldHtml ||
+    '<div class="msg">داده‌ای موجود نیست</div>';
 
-  if (goldEl) {
-    goldEl.innerHTML =
-      goldHtml ||
-      '<div class="msg">داده‌ای موجود نیست</div>';
-  }
-
-
-  // =========================================================
-  // ارزهای اصلی
-  // =========================================================
 
   var fiatHtml = '';
 
   var fiatItems = [
-    {
-      key: 'usd_sell',
-      name: 'دلار آمریکا (فروش)'
-    },
-    {
-      key: 'usd_buy',
-      name: 'دلار آمریکا (خرید)'
-    },
-    {
-      key: 'eur',
-      name: 'یورو'
-    },
-    {
-      key: 'gbp',
-      name: 'پوند انگلیس'
-    },
-    {
-      key: 'aed',
-      name: 'درهم امارات'
-    },
-    {
-      key: 'try',
-      name: 'لیر ترکیه'
-    },
-    {
-      key: 'cad',
-      name: 'دلار کانادا'
-    },
-    {
-      key: 'aud',
-      name: 'دلار استرالیا'
-    },
-    {
-      key: 'cny',
-      name: 'یوان چین'
-    },
-    {
-      key: 'jpy',
-      name: 'ین ژاپن'
-    }
+    { key: 'usd_sell', name: 'دلار آمریکا (فروش)' },
+    { key: 'usd_buy', name: 'دلار آمریکا (خرید)' },
+    { key: 'eur', name: 'یورو' },
+    { key: 'gbp', name: 'پوند انگلیس' },
+    { key: 'aed', name: 'درهم امارات' },
+    { key: 'try', name: 'لیر ترکیه' },
+    { key: 'cad', name: 'دلار کانادا' },
+    { key: 'aud', name: 'دلار استرالیا' },
+    { key: 'cny', name: 'یوان چین' },
+    { key: 'jpy', name: 'ین ژاپن' }
   ];
 
   fiatItems.forEach(function (item) {
@@ -763,35 +615,25 @@ czk: num(navasan.czk),
 
     if (!raw) return;
 
-    var val = num(raw);
+    var val =
+      num(raw);
 
     var ch =
       (raw.change !== undefined)
         ? raw.change
         : 0;
 
-    fiatHtml +=
-      card(
-        item.name,
-        faNum(Math.round(val)) + ' تومان',
-        ch
-      );
+    fiatHtml += card(
+      item.name,
+      faNum(Math.round(val)) + ' تومان',
+      ch
+    );
   });
 
-  var fiatEl = document.getElementById('fiat');
-
-  if (fiatEl) {
-    fiatEl.innerHTML =
-      fiatHtml ||
-      '<div class="msg">داده‌ای موجود نیست</div>';
-  }
-
-
-  // =========================================================
-  // سایر ارزهای جهان
-  // =========================================================
-
-  var worldHtml = '';
+  document.getElementById('fiat').innerHTML =
+    fiatHtml ||
+    '<div class="msg">داده‌ای موجود نیست</div>';
+var worldHtml = '';
 
   var worldItems = [
     { key: 'chf', name: 'فرانک سوئیس' },
@@ -810,7 +652,7 @@ czk: num(navasan.czk),
     { key: 'sgd', name: 'دلار سنگاپور' },
     { key: 'hkd', name: 'دلار هنگ‌کنگ' },
     { key: 'myr', name: 'رینگیت مالزی' },
-    { key: 'thb', name: 'بات تایلند' },
+    { key: 'thb', name: 'بات تایلاند' },
     { key: 'krw', name: 'وون کره جنوبی' },
     { key: 'mxn', name: 'پزو مکزیک' },
     { key: 'brl', name: 'رئال برزیل' },
@@ -824,7 +666,7 @@ czk: num(navasan.czk),
     { key: 'pln', name: 'زلوتی لهستان' },
     { key: 'czk', name: 'کرون چک' },
     { key: 'huf', name: 'فورینت مجارستان' },
-{ key: 'ron', name: 'لئو رومانی' },
+    { key: 'ron', name: 'لئو رومانی' },
     { key: 'jod', name: 'دینار اردن' },
     { key: 'omr', name: 'ریال عمان' },
     { key: 'bhd', name: 'دینار بحرین' },
@@ -860,254 +702,106 @@ czk: num(navasan.czk),
         ? raw.change
         : 0;
 
-    worldHtml +=
-      card(
-        item.name,
-        faNum(Math.round(val)) + ' تومان',
-        ch
-      );
+    worldHtml += card(
+      item.name,
+      faNum(Math.round(val)) + ' تومان',
+      ch
+    );
   });
 
-  var worldEl = document.getElementById('world');
+  document.getElementById('world').innerHTML =
+    worldHtml ||
+    '<div class="msg">داده‌ای موجود نیست</div>';
 
-  if (worldEl) {
-    worldEl.innerHTML =
-      worldHtml ||
-      '<div class="msg">داده‌ای موجود نیست</div>';
-  }
-// =========================================================
-  // CRYPTO
-  // منبع اول: Nobitex
-  // منبع دوم: CoinGecko
-  // =========================================================
 
   var cryptoHtml = '';
 
-  var cryptoMap = [
-    { symbol: 'BTC', id: 'bitcoin', name: 'بیت‌کوین (BTC)' },
-    { symbol: 'ETH', id: 'ethereum', name: 'اتریوم (ETH)' },
-    { symbol: 'USDT', id: 'tether', name: 'تتر (USDT)' },
-    { symbol: 'BNB', id: 'binancecoin', name: 'بایننس‌کوین (BNB)' },
-    { symbol: 'SOL', id: 'solana', name: 'سولانا (SOL)' },
-    { symbol: 'XRP', id: 'ripple', name: 'ریپل (XRP)' },
-    { symbol: 'DOGE', id: 'dogecoin', name: 'دوج‌کوین (DOGE)' },
-    { symbol: 'TRX', id: 'tron', name: 'ترون (TRX)' },
-    { symbol: 'ADA', id: 'cardano', name: 'کاردانو (ADA)' },
-    { symbol: 'LINK', id: 'chainlink', name: 'چین‌لینک (LINK)' },
-    { symbol: 'DOT', id: 'polkadot', name: 'پولکادات (DOT)' },
-    { symbol: 'LTC', id: 'litecoin', name: 'لایت‌کوین (LTC)' },
-    { symbol: 'AVAX', id: 'avalanche', name: 'آوالانچ (AVAX)' },
-    { symbol: 'NEAR', id: 'near', name: 'نیر (NEAR)' },
-    { symbol: 'UNI', id: 'uniswap', name: 'یونی‌سواپ (UNI)' },
-    { symbol: 'XLM', id: 'stellar', name: 'استلار (XLM)' }
-  ];
+  if (crypto) {
 
+    var cryptoMap = [
+      { id: 'bitcoin', name: 'بیت‌کوین (BTC)' },
+      { id: 'ethereum', name: 'اتریوم (ETH)' },
+      { id: 'tether', name: 'تتر (USDT)' },
+      { id: 'binancecoin', name: 'بایننس‌کوین (BNB)' },
+      { id: 'solana', name: 'سولانا (SOL)' },
+      { id: 'ripple', name: 'ریپل (XRP)' },
+      { id: 'dogecoin', name: 'دوج‌کوین (DOGE)' },
+      { id: 'tron', name: 'ترون (TRX)' },
+      { id: 'cardano', name: 'کاردانو (ADA)' },
+      { id: 'chainlink', name: 'چین‌لینک (LINK)' },
+      { id: 'polkadot', name: 'پولکادات (DOT)' },
+      { id: 'litecoin', name: 'لایت‌کوین (LTC)' },
+      { id: 'avalanche-2', name: 'آوالانچ (AVAX)' },
+      { id: 'near', name: 'نیر (NEAR)' },
+      { id: 'uniswap', name: 'یونی‌سواپ (UNI)' },
+      { id: 'stellar', name: 'استلار (XLM)' }
+    ];
 
-  function getNobitexPrice(symbol) {
-
-    if (!nobitex) return null;
-
-    /*
-     * ساختار معمول داده Nobitex:
-     *
-     * {
-     *   "status": "ok",
-     *   "stats": {
-     *      "btc-irt": {
-     *          "latest": "...",
-     *          "dayChange": "..."
-     *      }
-     *   }
-     * }
-     */
-
-    var pair =
-      symbol.toLowerCase() + '-irt';
-
-    var market =
-      nobitex.stats &&
-      nobitex.stats[pair];
-
-    if (!market) return null;
-
-    var price =
-      num(market.latest);
-
-    if (!price || price <= 0) return null;
-
-    var change =
-      num(market.dayChange);
-
-    return {
-      toman: price,
-      change: change
-    };
-  }
-
-
-  cryptoMap.forEach(function (c) {
-
-    // -----------------------------------------
-    // منبع اول: Nobitex
-    // -----------------------------------------
-
-    var nobitexData =
-      getNobitexPrice(c.symbol);
-
-    if (nobitexData) {
-
-      var usdPrice =
-        nobitexData.toman /
-        (TOMAN || DEFAULT_TOMAN);
-
-      cryptoHtml +=
-        cardUsd(
-          c.name,
-          usdPrice,
-          nobitexData.toman,
-          nobitexData.change
-        );
-
-      return;
-    }
-
-
-    // -----------------------------------------
-    // منبع دوم: CoinGecko
-    // فقط اگر Nobitex قیمت نداشت
-    // -----------------------------------------
-
-    if (
-      crypto &&
-      crypto[c.id] &&
-      crypto[c.id].usd
-    ) {
+    cryptoMap.forEach(function (c) {
 
       var data =
         crypto[c.id];
 
-      cryptoHtml +=
-        cardUsd(
-          c.name,
-          data.usd,
-          data.usd * TOMAN,
-          data.usd_24h_change
-        );
-    }
-  });
+      if (!data || !data.usd) return;
 
-
-  var cryptoEl =
-    document.getElementById('crypto');
-
-  if (cryptoEl) {
-
-    cryptoEl.innerHTML =
-      cryptoHtml ||
-      '<div class="msg">داده‌ای موجود نیست</div>';
+      cryptoHtml += cardUsd(
+        c.name,
+        data.usd,
+        data.usd * TOMAN,
+        data.usd_24h_change
+      );
+    });
   }
 
-
-  // =========================================================
-  // فلزات جهانی
-  // =========================================================
-
-  var metalsHtml = '';
+  document.getElementById('crypto').innerHTML =
+    cryptoHtml ||
+    '<div class="msg">داده‌ای موجود نیست</div>';
+var metalsHtml = '';
 
   var metals = [
-    {
-      data: xau,
-      name: 'طلای جهانی (XAU)',
-      unit: 'اونس'
-    },
-    {
-      data: xag,
-      name: 'نقره (XAG)',
-      unit: 'اونس'
-    },
-    {
-      data: xpt,
-      name: 'پلاتین (XPT)',
-      unit: 'اونس'
-    },
-    {
-      data: xpd,
-      name: 'پالادیوم (XPD)',
-      unit: 'اونس'
-    }
+    { data: xau, name: 'طلای جهانی (XAU)', unit: 'اونس' },
+    { data: xag, name: 'نقره (XAG)', unit: 'اونس' },
+    { data: xpt, name: 'پلاتین (XPT)', unit: 'اونس' },
+    { data: xpd, name: 'پالادیوم (XPD)', unit: 'اونس' }
   ];
-
 
   metals.forEach(function (m) {
 
-    if (
-      !m.data ||
-      !m.data.price
-    ) return;
+    if (!m.data || !m.data.price) return;
 
     var usd =
       Number(m.data.price);
 
-    metalsHtml +=
-      cardUsd(
-        m.name + ' / ' + m.unit,
-        usd,
-        usd * TOMAN,
-        null
-      );
+    metalsHtml += cardUsd(
+      m.name + ' / ' + m.unit,
+      usd,
+      usd * TOMAN,
+      null
+    );
   });
 
+  if (navasan.xau && num(navasan.xau) > 0) {
 
-  // نرخ داخلی طلا و نقره
-
-  if (
-    navasan.xau &&
-    num(navasan.xau) > 0
-  ) {
-
-    metalsHtml +=
-      card(
-        'طلای جهانی (نرخ داخلی)',
-        faNum(
-          Math.round(
-            num(navasan.xau)
-          )
-        ) + ' تومان',
-        navasan.xau.change
-      );
-  }
-if (
-    navasan.xag &&
-    num(navasan.xag) > 0
-  ) {
-
-    metalsHtml +=
-      card(
-        'نقره (نرخ داخلی)',
-        faNum(
-          Math.round(
-            num(navasan.xag)
-          )
-        ) + ' تومان',
-        navasan.xag.change
-      );
+    metalsHtml += card(
+      'طلای جهانی (نرخ داخلی)',
+      faNum(Math.round(num(navasan.xau))) + ' تومان',
+      navasan.xau.change
+    );
   }
 
+  if (navasan.xag && num(navasan.xag) > 0) {
 
-  var metalsEl =
-    document.getElementById('metals');
-
-  if (metalsEl) {
-
-    metalsEl.innerHTML =
-      metalsHtml ||
-      '<div class="msg">داده‌ای موجود نیست</div>';
+    metalsHtml += card(
+      'نقره (نرخ داخلی)',
+      faNum(Math.round(num(navasan.xag))) + ' تومان',
+      navasan.xag.change
+    );
   }
 
+  document.getElementById('metals').innerHTML =
+    metalsHtml ||
+    '<div class="msg">داده‌ای موجود نیست</div>';
 
-  // =========================================================
-  // زمان آخرین بروزرسانی
-  // =========================================================
 
   var timeEl =
     document.getElementById('time');
@@ -1115,9 +809,7 @@ if (
   if (timeEl) {
 
     timeEl.textContent =
-      (isCache
-        ? 'نمایش از حافظه • '
-        : '') +
+      (isCache ? 'نمایش از حافظه • ' : '') +
       'آخرین به‌روزرسانی: ' +
       new Date().toLocaleString('fa-IR');
   }
@@ -1144,11 +836,10 @@ if (
 
   return true;
 }
-// =========================================================
-// CACHE
-// =========================================================
+
 
 function showFromCache() {
+
   try {
 
     var raw =
@@ -1159,17 +850,12 @@ function showFromCache() {
     var data =
       JSON.parse(raw);
 
-    if (
-      !data ||
-      !data.navasan
-    ) {
+    if (!data || !data.navasan)
       return false;
-    }
 
     return renderAll(
       data.navasan,
       data.crypto,
-      data.nobitex,
       data.xau,
       data.xag,
       data.xpt,
@@ -1184,14 +870,9 @@ function showFromCache() {
 }
 
 
-// =========================================================
-// ذخیره اطلاعات در حافظه مرورگر
-// =========================================================
-
 function saveToCache(
   navasan,
   crypto,
-  nobitex,
   xau,
   xag,
   xpt,
@@ -1203,33 +884,19 @@ function saveToCache(
     localStorage.setItem(
       CACHE_KEY,
       JSON.stringify({
-
         navasan: navasan,
-
         crypto: crypto,
-
-        nobitex: nobitex,
-
         xau: xau,
-
         xag: xag,
-
         xpt: xpt,
-
         xpd: xpd,
-
         savedAt: Date.now()
-
       })
     );
 
   } catch (e) {}
 }
 
-
-// =========================================================
-// خواندن JSON از GitHub Pages
-// =========================================================
 
 async function loadJSON(path) {
 
@@ -1240,14 +907,11 @@ async function loadJSON(path) {
         path + '?t=' + Date.now()
       );
 
-    if (!res.ok) {
-      return null;
-    }
+    if (!res.ok) return null;
 
     var text =
       await res.text();
 
-    // جلوگیری از قبول کردن صفحه HTML
     if (
       text.trim().startsWith('<!DOCTYPE') ||
       text.trim().startsWith('<html')
@@ -1259,20 +923,10 @@ async function loadJSON(path) {
 
   } catch (e) {
 
-    console.error(
-      'JSON load error:',
-      path,
-      e
-    );
-
     return null;
   }
 }
 
-
-// =========================================================
-// اجرای اصلی سایت
-// =========================================================
 
 async function main() {
 
@@ -1287,41 +941,15 @@ async function main() {
   }
 
 
-  // -----------------------------------------
-  // ارز و طلا
-  // -----------------------------------------
-
   var navasan =
     await loadJSON(
       'data/navasan.json'
     );
 
-
-  // -----------------------------------------
-  // CoinGecko
-  // منبع پشتیبان کریپتو
-  // -----------------------------------------
-
   var crypto =
     await loadJSON(
       'data/crypto.json'
     );
-
-
-  // -----------------------------------------
-  // Nobitex
-  // منبع اصلی کریپتو
-  // -----------------------------------------
-
-  var nobitex =
-    await loadJSON(
-      'data/nobitex.json'
-    );
-
-
-  // -----------------------------------------
-  // فلزات جهانی
-  // -----------------------------------------
 
   var xau =
     await loadJSON(
@@ -1344,10 +972,6 @@ async function main() {
     );
 
 
-  // -----------------------------------------
-  // اگر منبع اصلی ارز در دسترس نبود
-  // -----------------------------------------
-
   if (!navasan) {
 
     if (!hasCache) {
@@ -1367,14 +991,9 @@ async function main() {
   }
 
 
-  // -----------------------------------------
-  // نمایش اطلاعات
-  // -----------------------------------------
-
   renderAll(
     navasan,
     crypto,
-    nobitex,
     xau,
     xag,
     xpt,
@@ -1383,14 +1002,9 @@ async function main() {
   );
 
 
-  // -----------------------------------------
-  // ذخیره آخرین اطلاعات
-  // -----------------------------------------
-
   saveToCache(
     navasan,
     crypto,
-    nobitex,
     xau,
     xag,
     xpt,
@@ -1399,10 +1013,6 @@ async function main() {
 }
 
 
-// =========================================================
-// شروع برنامه
-// =========================================================
-
 main().catch(function (err) {
 
   console.error(err);
@@ -1410,5 +1020,4 @@ main().catch(function (err) {
   badge(
     '❌ خطا در بارگذاری'
   );
-
-});
+});  
