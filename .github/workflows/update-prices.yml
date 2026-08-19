@@ -3,10 +3,45 @@ name: update-prices
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
-  test:
+  update:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Test
-        run: echo "Workflow is working!"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare data
+        run: |
+          mkdir -p data
+
+      - name: Test Nobitex
+        run: |
+          echo "Testing Nobitex..."
+
+          curl -L -sS \
+            --connect-timeout 15 \
+            --max-time 40 \
+            "https://api.nobitex.ir/market/stats?srcCurrency=btc,eth,usdt&dstCurrency=rls" \
+            -o data/nobitex.json
+
+          echo "Nobitex response:"
+          head -c 1000 data/nobitex.json || true
+
+      - name: Save data
+        run: |
+          git config user.name "price-bot"
+          git config user.email "price-bot@users.noreply.github.com"
+
+          git add data/
+
+          if git diff --staged --quiet; then
+            echo "No changes"
+          else
+            git commit -m "test nobitex"
+            git push
+          fi
