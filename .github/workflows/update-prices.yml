@@ -40,7 +40,26 @@ jobs:
       # 3. ارز و طلا
       # منبع فعلی پایدار
       # ==========================================
+- name: Test API connections
+        run: |
+          echo "Testing DNS and API connections..."
 
+          echo "1. Navasan"
+          curl -v --connect-timeout 10 \
+            "https://api.navasan.tech" \
+            -o /dev/null
+
+          echo "2. Nobitex"
+          curl -v --connect-timeout 10 \
+            "https://api.nobitex.ir" \
+            -o /dev/null
+
+          echo "3. CoinGecko"
+          curl -v --connect-timeout 10 \
+            "https://api.coingecko.com" \
+            -o /dev/null
+
+          echo "All connection tests completed."
       - name: Fetch Navasan
         run: |
 
