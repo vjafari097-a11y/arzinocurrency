@@ -3,6 +3,7 @@ name: update-prices
 on:
   schedule:
     - cron: "*/5 * * * *"
+
   workflow_dispatch:
 
 permissions:
@@ -14,35 +15,39 @@ jobs:
 
     steps:
 
-      # ==============================
-      # دریافت Repository
-      # ==============================
+      # ==========================================
+      # 1. Checkout
+      # ==========================================
 
       - name: Checkout
         uses: actions/checkout@v4
 
 
-      # ==============================
-      # ساخت پوشه data
-      # ==============================
+      # ==========================================
+      # 2. ساخت پوشه data
+      # ==========================================
 
-      - name: Prepare data folder
+      - name: Prepare data
         run: |
           mkdir -p data
-          echo "Data folder ready."
+
+          echo "{}" > data/navasan.json
+          echo "{}" > data/nobitex.json
+          echo "{}" > data/crypto.json
 
 
-      # ==============================
-      # دریافت ارز و طلا
-      # منبع اصلی فعلاً Navasan
-      # ==============================
+      # ==========================================
+      # 3. ارز و طلا
+      # منبع فعلی پایدار
+      # ==========================================
 
-      - name: Fetch main prices
+      - name: Fetch Navasan
         run: |
 
-          echo "Fetching main prices..."
+          echo "Fetching Navasan..."
 
-          curl -L -s \
+          curl -L -sS \
+            --fail \
             --max-time 40 \
             "https://api.navasan.tech/latest/?api_key=freeqNwteMeqD7BsSJ93t0MQ9k4wtcUZ" \
             -o data/navasan.json
@@ -51,20 +56,48 @@ jobs:
             echo "{}" > data/navasan.json
           fi
 
-          echo "Main prices fetched."
+          echo "Navasan OK."
 
 
-      # ==============================
-      # دریافت کریپتو از CoinGecko
-      # منبع پشتیبان
-      # ==============================
+      # ==========================================
+      # 4. کریپتو
+      # منبع اول: Nobitex
+      # ==========================================
 
-      - name: Fetch crypto backup
+      - name: Fetch Nobitex
+        run: |
+
+          echo "Fetching Nobitex..."
+
+          curl -L -sS \
+            --fail \
+            --max-time 40 \
+            "https://api.nobitex.ir/market/stats?srcCurrency=btc,eth,usdt,bnb,sol,xrp,doge,trx,ada,link,dot,ltc,avax,near,uni,xlm&dstCurrency=rls" \
+            -o data/nobitex.json
+
+          if [ ! -s data/nobitex.json ]; then
+            echo "{}" > data/nobitex.json
+          fi
+
+          echo "Nobitex OK."
+
+          echo "Nobitex response:"
+          head -c 500 data/nobitex.json || true
+          echo
+
+
+      # ==========================================
+      # 5. کریپتو
+      # منبع دوم: CoinGecko
+      # ==========================================
+
+      - name: Fetch CoinGecko backup
         run: |
 
           echo "Fetching CoinGecko..."
 
-          curl -L -s \
+          curl -L -sS \
+            --fail \
             -A "Mozilla/5.0" \
             --max-time 40 \
             "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether,binancecoin,solana,ripple,dogecoin,tron,cardano,avalanche-2,chainlink,polkadot,litecoin,near,uniswap,stellar&vs_currencies=usd&include_24hr_change=true" \
@@ -74,54 +107,39 @@ jobs:
             echo "{}" > data/crypto.json
           fi
 
-          echo "CoinGecko fetched."
-# ==============================
-      # Nobitex
-      # منبع اول کریپتو
-      # ==============================
+          echo "CoinGecko OK."
 
-      - name: Fetch Nobitex crypto
-        run: |
-          echo "Fetching Nobitex market stats..."
 
-          curl -L -s \
-            --max-time 40 \
-            "https://api.nobitex.ir/market/stats?srcCurrency=btc,eth,usdt,bnb,sol,xrp,doge,trx,ada,link,dot,ltc,avax,near,uni,xlm&dstCurrency=rls" \
-            -o data/nobitex.json
+      # ==========================================
+      # 6. فلزات جهانی
+      # ==========================================
 
-          if [ ! -s data/nobitex.json ]; then
-            echo "{}" > data/nobitex.json
-          fi
-
-          echo "Nobitex response:"
-          head -c 1000 data/nobitex.json || true
-
-          echo
-          echo "Nobitex completed."
-# ==============================
-      # دریافت منبع دوم ارز و طلا
-      # Signal
-      # ==============================
-
-      - name: Fetch Signal backup
+      - name: Fetch metals
         run: |
 
-          echo "Fetching Signal..."
+          echo "Fetching metals..."
 
-          # فعلاً فایل خالی ایجاد می‌کنیم
-          # تا ساختار واقعی API/Network Signal
-          # را تأیید کنیم.
+          for metal in XAU XAG XPT XPD; do
 
-          if [ ! -f data/signal.json ]; then
-            echo "{}" > data/signal.json
-          fi
+            lower=$(echo "$metal" | tr '[:upper:]' '[:lower:]')
 
-          echo "Signal backup file ready."
+            curl -L -sS \
+              --max-time 30 \
+              "https://api.gold-api.com/price/$metal" \
+              -o "data/$lower.json" || true
+
+            if [ ! -s "data/$lower.json" ]; then
+              echo "{}" > "data/$lower.json"
+            fi
+
+          done
+
+          echo "Metals completed."
 
 
-      # ==============================
-      # بررسی فایل‌های دریافت‌شده
-      # ==============================
+      # ==========================================
+      # 7. بررسی فایل‌ها
+      # ==========================================
 
       - name: Check data
         run: |
@@ -139,12 +157,37 @@ jobs:
           echo
           echo
           echo "Nobitex:"
-          head -c 300 data/nobitex.json || true
+          head -c 500 data/nobitex.json || true
 
           echo
           echo
-          echo "Signal:"
-          head -c 300 data/signal.json || true
+          echo "CoinGecko:"
+          head -c 300 data/crypto.json || true
 
           echo
-          echo "=============================="          
+          echo
+          echo "=============================="
+# ==========================================
+      # 8. Commit و Push
+      # ==========================================
+
+      - name: Commit and push
+        run: |
+
+          git config user.name "price-bot"
+          git config user.email "price-bot@users.noreply.github.com"
+
+          git add data/
+
+          if git diff --staged --quiet; then
+
+            echo "No changes detected"
+
+          else
+
+            git commit \
+              -m "update prices $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+            git push
+
+          fi          
