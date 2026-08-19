@@ -2,8 +2,8 @@ name: update-prices
 
 on:
   schedule:
-    - cron: "*/5 * * * *"   # هر ۵ دقیقه
-  workflow_dispatch:         # امکان اجرای دستی
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -11,45 +11,140 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
+
     steps:
+
+      # ==============================
+      # دریافت Repository
+      # ==============================
+
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Fetch prices
+
+      # ==============================
+      # ساخت پوشه data
+      # ==============================
+
+      - name: Prepare data folder
         run: |
           mkdir -p data
+          echo "Data folder ready."
 
-          # === منبع اصلی و پایدار: Navasan ===
-          echo "Fetching Navasan..."
-          curl -s --max-time 40 "https://api.navasan.tech/latest/?api_key=freeqNwteMeqD7BsSJ93t0MQ9k4wtcUZ" -o data/navasan.json
-          [ -s data/navasan.json ] || echo "{}" > data/navasan.json
 
-          # === ارزهای دیجیتال (CoinGecko) ===
-          echo "Fetching Crypto..."
-          curl -s -A "Mozilla/5.0" --max-time 40 \
-            "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether,binancecoin,solana,ripple,dogecoin,tron,cardano,avalanche-2,chainlink,polkadot,matic-network,litecoin,bitcoin-cash,near,uniswap,stellar&vs_currencies=usd&include_24hr_change=true" \
-            -o data/crypto.json
-          [ -s data/crypto.json ] || echo "{}" > data/crypto.json
+      # ==============================
+      # دریافت ارز و طلا
+      # منبع اصلی فعلاً Navasan
+      # ==============================
 
-          # === فلزات گرانبهای جهانی (gold-api.com) ===
-          echo "Fetching Metals..."
-          for metal in XAU XAG XPT XPD; do
-            lower=$(echo $metal | tr '[:upper:]' '[:lower:]')
-            curl -s --max-time 30 "https://api.gold-api.com/price/$metal" -o data/$lower.json
-            [ -s data/$lower.json ] || echo "{}" > data/$lower.json
-          done
-
-          echo "Fetch completed."
-          ls -la data/
-
-      - name: Commit and push
+      - name: Fetch main prices
         run: |
-          git config user.name "price-bot"
-          git config user.email "price-bot@users.noreply.github.com"
-          git add data/
-          if git diff --staged --quiet; then
-            echo "No changes detected"
-          else
-            git commit -m "update prices $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            git push
+
+          echo "Fetching main prices..."
+
+          curl -L -s \
+            --max-time 40 \
+            "https://api.navasan.tech/latest/?api_key=freeqNwteMeqD7BsSJ93t0MQ9k4wtcUZ" \
+            -o data/navasan.json
+
+          if [ ! -s data/navasan.json ]; then
+            echo "{}" > data/navasan.json
           fi
+
+          echo "Main prices fetched."
+
+
+      # ==============================
+      # دریافت کریپتو از CoinGecko
+      # منبع پشتیبان
+      # ==============================
+
+      - name: Fetch crypto backup
+        run: |
+
+          echo "Fetching CoinGecko..."
+
+          curl -L -s \
+            -A "Mozilla/5.0" \
+            --max-time 40 \
+            "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether,binancecoin,solana,ripple,dogecoin,tron,cardano,avalanche-2,chainlink,polkadot,litecoin,near,uniswap,stellar&vs_currencies=usd&include_24hr_change=true" \
+            -o data/crypto.json
+
+          if [ ! -s data/crypto.json ]; then
+            echo "{}" > data/crypto.json
+          fi
+
+          echo "CoinGecko fetched."
+# ==============================
+      # Nobitex
+      # منبع اول کریپتو
+      # ==============================
+
+      - name: Fetch Nobitex crypto
+        run: |
+          echo "Fetching Nobitex market stats..."
+
+          curl -L -s \
+            --max-time 40 \
+            "https://api.nobitex.ir/market/stats?srcCurrency=btc,eth,usdt,bnb,sol,xrp,doge,trx,ada,link,dot,ltc,avax,near,uni,xlm&dstCurrency=rls" \
+            -o data/nobitex.json
+
+          if [ ! -s data/nobitex.json ]; then
+            echo "{}" > data/nobitex.json
+          fi
+
+          echo "Nobitex response:"
+          head -c 1000 data/nobitex.json || true
+
+          echo
+          echo "Nobitex completed."
+# ==============================
+      # دریافت منبع دوم ارز و طلا
+      # Signal
+      # ==============================
+
+      - name: Fetch Signal backup
+        run: |
+
+          echo "Fetching Signal..."
+
+          # فعلاً فایل خالی ایجاد می‌کنیم
+          # تا ساختار واقعی API/Network Signal
+          # را تأیید کنیم.
+
+          if [ ! -f data/signal.json ]; then
+            echo "{}" > data/signal.json
+          fi
+
+          echo "Signal backup file ready."
+
+
+      # ==============================
+      # بررسی فایل‌های دریافت‌شده
+      # ==============================
+
+      - name: Check data
+        run: |
+
+          echo "=============================="
+          echo "DATA FILES"
+          echo "=============================="
+
+          ls -lah data/
+
+          echo
+          echo "Navasan:"
+          head -c 300 data/navasan.json || true
+
+          echo
+          echo
+          echo "Nobitex:"
+          head -c 300 data/nobitex.json || true
+
+          echo
+          echo
+          echo "Signal:"
+          head -c 300 data/signal.json || true
+
+          echo
+          echo "=============================="          
