@@ -20,19 +20,148 @@ jobs:
         run: |
           mkdir -p data
 
-          # === منبع اصلی و پایدار: Navasan ===
+          # === منبع اصلی: Navasan ===
           echo "Fetching Navasan..."
           curl -s --max-time 40 "https://api.navasan.tech/latest/?api_key=freeqNwteMeqD7BsSJ93t0MQ9k4wtcUZ" -o data/navasan.json
           [ -s data/navasan.json ] || echo "{}" > data/navasan.json
 
-          # === ارزهای دیجیتال (CoinGecko) ===
-          echo "Fetching Crypto..."
-          curl -s -A "Mozilla/5.0" --max-time 40 \
-            "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether,binancecoin,solana,ripple,dogecoin,tron,cardano,avalanche-2,chainlink,polkadot,matic-network,litecoin,bitcoin-cash,near,uniswap,stellar&vs_currencies=usd&include_24hr_change=true" \
-            -o data/crypto.json
-          [ -s data/crypto.json ] || echo "{}" > data/crypto.json
+          # === ارزهای دیجیتال: نوبیتکس (اول) + CoinGecko (پشتیبان) ===
+          echo "Fetching Crypto from Nobitex (primary)..."
 
-          # === فلزات گرانبهای جهانی (gold-api.com) ===
+          # درخواست آمار از نوبیتکس (همه بازارها)
+          curl -s --max-time 40 -X POST "https://api.nobitex.ir/market/stats" \
+            -H "Content-Type: application/json" \
+            -d '{}' \
+            -o data/nobitex_raw.json
+
+          # اگر نوبیتکس موفق بود، داده رو به فرمت سایت تبدیل کن
+          if [ -s data/nobitex_raw.json ] && grep -q '"status":"ok"' data/nobitex_raw.json 2>/dev/null; then
+            echo "Nobitex OK → converting..."
+
+            python3 - << 'EOF'
+import json
+from pathlib import Path
+
+# نگاشت ID سایت ←→ جفت نوبیتکس
+mapping = {
+    "bitcoin":      "btc-rls",
+    "ethereum":     "eth-rls",
+    "tether":       "usdt-rls",
+    "binancecoin":  "bnb-rls",
+    "solana":       "sol-rls",
+    "ripple":       "xrp-rls",
+    "dogecoin":     "doge-rls",
+    "tron":         "trx-rls",
+    "cardano":      "ada-rls",
+    "chainlink":    "link-rls",
+    "polkadot":     "dot-rls",
+    "litecoin":     "ltc-rls",
+    "avalanche-2":  "avax-rls",
+    "near":         "near-rls",
+    "uniswap":      "uni-rls",
+    "stellar":      "xlm-rls",
+}
+
+raw = json.loads(Path("data/nobitex_raw.json").read_text())
+stats = raw.get("stats", {})
+
+result = {}
+for site_id, pair in mapping.items():
+    item = stats.get(pair)
+    if not item:
+        continue
+
+    # قیمت نوبیتکس به ریال است → تبدیل به تومان
+    latest_rial = float(item.get("latest") or 0)
+    toman = latest_rial / 10 if latest_rial > 0 else 0
+
+    change = item.get("dayChange")
+    try:
+        change = float(change) if change is not None else None
+    except:
+        change = None
+
+    result[site_id] = {
+        "toman": round(toman),
+        "usd": None,
+        "usd_24h_change": change,
+        "source": "nobitex"
+    }
+
+Path("data/crypto.json").write_text(json.dumps(result, ensure_ascii=False))
+print(f"Converted {len(result)} coins from Nobitex")
+EOF
+
+          else
+            echo "Nobitex failed or empty → will use CoinGecko"
+            echo "{}" > data/crypto.json
+          fi
+
+          # === پشتیبان: CoinGecko ===
+          echo "Fetching CoinGecko as backup / for USD prices..."
+          curl -s -A "Mozilla/5.0" --max-time 40 \
+            "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether,binancecoin,solana,ripple,dogecoin,tron,cardano,avalanche-2,chainlink,polkadot,litecoin,near,uniswap,stellar&vs_currencies=usd&include_24hr_change=true" \
+            -o data/coingecko.json
+          [ -s data/coingecko.json ] || echo "{}" > data/coingecko.json
+
+          # ادغام نهایی
+          python3 - << 'EOF'
+import json
+from pathlib import Path
+
+crypto_path = Path("data/crypto.json")
+cg_path = Path("data/coingecko.json")
+
+crypto = {}
+if crypto_path.exists():
+    try:
+        crypto = json.loads(crypto_path.read_text())
+    except:
+        crypto = {}
+
+cg = {}
+if cg_path.exists():
+    try:
+        cg = json.loads(cg_path.read_text())
+    except:
+        cg = {}
+
+all_ids = [
+    "bitcoin", "ethereum", "tether", "binancecoin", "solana", "ripple",
+    "dogecoin", "tron", "cardano", "chainlink", "polkadot", "litecoin",
+    "avalanche-2", "near", "uniswap", "stellar"
+]
+
+final = {}
+for cid in all_ids:
+    nobi = crypto.get(cid, {})
+    gecko = cg.get(cid, {})
+# اولویت با نوبیتکس (قیمت تومان واقعی)
+    if nobi.get("toman") and nobi["toman"] > 0:
+        final[cid] = {
+            "toman": nobi["toman"],
+            "usd": gecko.get("usd"),
+            "usd_24h_change": nobi.get("usd_24h_change") if nobi.get("usd_24h_change") is not None else gecko.get("usd_24h_change"),
+            "source": "nobitex"
+        }
+    # در غیر این صورت از CoinGecko
+    elif gecko.get("usd"):
+        final[cid] = {
+            "toman": None,
+            "usd": gecko["usd"],
+            "usd_24h_change": gecko.get("usd_24h_change"),
+            "source": "coingecko"
+        }
+
+Path("data/crypto.json").write_text(json.dumps(final, ensure_ascii=False, indent=2))
+print("Final crypto.json ready with", len(final), "coins")
+print("Sources used:", {v.get("source") for v in final.values()})
+EOF
+
+          # پاکسازی فایل‌های موقت
+          rm -f data/nobitex_raw.json data/coingecko.json
+
+          # === فلزات گرانبهای جهانی ===
           echo "Fetching Metals..."
           for metal in XAU XAG XPT XPD; do
             lower=$(echo $metal | tr '[:upper:]' '[:lower:]')
@@ -42,6 +171,9 @@ jobs:
 
           echo "Fetch completed."
           ls -la data/
+          echo "--- crypto.json preview ---"
+          head -c 500 data/crypto.json || true
+          echo ""
 
       - name: Commit and push
         run: |
@@ -53,4 +185,4 @@ jobs:
           else
             git commit -m "update prices $(date -u +%Y-%m-%dT%H:%M:%SZ)"
             git push
-          fi
+          fi    
