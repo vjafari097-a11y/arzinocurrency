@@ -55,6 +55,7 @@ body{
   max-width:950px;
   margin:10px auto;
 }
+
 .stat-card{
   background:#16213e;
   border:1px solid #22304a;
@@ -63,6 +64,7 @@ body{
   text-align:center;
   box-shadow:0 2px 6px rgba(0,0,0,.15);
 }
+
 .stat-label{color:#aaa;font-size:11px;margin-bottom:6px}
 .stat-value{color:#f9d423;font-weight:bold;font-size:13px}
 
@@ -76,6 +78,7 @@ body{
   text-align:center;
   box-shadow:0 2px 6px rgba(0,0,0,.15);
 }
+
 .t-name{display:block;color:#aaa;font-size:11px;margin-bottom:3px}
 .t-price{color:#f9d423;font-weight:bold;font-size:13px}
 
@@ -103,6 +106,7 @@ body{
   transition:all .2s ease;
   box-shadow:0 2px 6px rgba(0,0,0,.15);
 }
+
 .card:hover{
   transform:translateY(-2px);
   box-shadow:0 4px 12px rgba(0,0,0,.25);
@@ -118,7 +122,6 @@ body{
 .change{font-size:11px;text-align:left}
 .msg{text-align:center;color:#aaa;padding:18px;grid-column:1/-1}
 .time{text-align:center;color:#888;font-size:12px;margin-top:22px}
-
 /* تبدیل‌گر */
 .converter-box{
   max-width:950px;
@@ -129,7 +132,9 @@ body{
   padding:16px;
   box-shadow:0 2px 8px rgba(0,0,0,.2);
 }
+
 .conv-row{display:flex;gap:10px;flex-wrap:wrap}
+
 .conv-row input,
 .conv-row select{
   flex:1;
@@ -142,8 +147,12 @@ body{
   font-size:15px;
   outline:none;
 }
+
 .conv-row input:focus,
-.conv-row select:focus{border-color:#f9d423}
+.conv-row select:focus{
+  border-color:#f9d423
+}
+
 .conv-result{
   margin-top:14px;
   font-size:18px;
@@ -158,20 +167,29 @@ body{
   .grid{grid-template-columns:1fr}
   .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
   .grid-2 .card{
-flex-direction:column;
+    flex-direction:column;
     align-items:stretch;
     text-align:center;
     gap:4px;
     padding:10px;
   }
   .grid-2 .name{font-size:11px}
-  .grid-2 .price,.grid-2 .price-ir{font-size:12px;text-align:center}
-  .grid-2 .toman,.grid-2 .change{font-size:10px;text-align:center}
+  .grid-2 .price,
+  .grid-2 .price-ir{
+    font-size:12px;
+    text-align:center
+  }
+  .grid-2 .toman,
+  .grid-2 .change{
+    font-size:10px;
+    text-align:center
+  }
   .card{padding:12px 14px}
   .name{font-size:14px}
   .price-ir,.price{font-size:15px}
   .conv-row{flex-direction:column}
-}    
+}
+
 .search-results{
   max-width:950px;
   margin:8px auto 12px;
@@ -179,6 +197,7 @@ flex-direction:column;
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:10px;
 }
+
 @media (max-width:760px){
   .search-results{grid-template-columns:1fr}
 }
@@ -356,8 +375,6 @@ flex-direction:column;
 .arzino-select-menu::-webkit-scrollbar-thumb {
   border-radius: 10px;
 }
-
-
 /* =========================================================
    تنظیمات موبایل
    ========================================================= */
@@ -368,7 +385,6 @@ flex-direction:column;
     width: 230px;
     max-width: 85%;
   }
-
 
   .arzino-select-button {
     width: 100%;
@@ -381,20 +397,17 @@ flex-direction:column;
     border-radius: 9px;
   }
 
-
   .arzino-select-menu {
     max-height: 260px;
 
     border-radius: 9px;
   }
 
-
   .arzino-select-option {
     padding: 10px 12px;
 
     font-size: 14px;
   }
-
 
   .arzino-select-arrow {
     font-size: 12px;
@@ -415,7 +428,6 @@ flex-direction:column;
     max-width: 85%;
   }
 
-
   .arzino-select-button {
     height: 40px;
 
@@ -424,18 +436,15 @@ flex-direction:column;
     padding: 0 10px;
   }
 
-
   .arzino-select-menu {
     max-height: 230px;
   }
-
 
   .arzino-select-option {
     padding: 9px 11px;
 
     font-size: 13px;
   }
-
 
   .arzino-select-arrow {
     font-size: 11px;
