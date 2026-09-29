@@ -1,9 +1,9 @@
 {
     "usd_usdt": {
-        "value": "254450",
-        "change": 10900,
-        "timestamp": 1790711402,
-        "date": "1405-07-07 23:20:02"
+        "value": "257700",
+        "change": 2100,
+        "timestamp": 1790723702,
+        "date": "1405-07-08 02:45:02"
     },
     "dolar_harat_sell": {
         "value": "17610",
@@ -13,85 +13,85 @@
     },
     "harat_naghdi_sell": {
         "value": "250890",
-        "change": 9100,
+        "change": 0,
         "timestamp": 1790706499,
         "date": "1405-07-07 21:58:19"
     },
     "harat_naghdi_buy": {
         "value": "250490",
-        "change": 9100,
+        "change": 0,
         "timestamp": 1790706499,
         "date": "1405-07-07 21:58:19"
     },
     "sekkeh": {
         "value": "255000",
-        "change": 8000,
+        "change": 0,
         "timestamp": 1790698214,
         "date": "1405-07-07 19:40:14"
     },
     "bahar": {
         "value": "247000",
-        "change": 8000,
+        "change": 0,
         "timestamp": 1790698214,
         "date": "1405-07-07 19:40:14"
     },
     "nim": {
         "value": "132000",
-        "change": 5000,
+        "change": 0,
         "timestamp": 1790698214,
         "date": "1405-07-07 19:40:14"
     },
     "rob": {
         "value": "71000",
-        "change": 3000,
+        "change": 0,
         "timestamp": 1790698214,
         "date": "1405-07-07 19:40:14"
     },
     "abshodeh": {
         "value": "109270",
-        "change": 3470,
+        "change": 0,
         "timestamp": 1790698214,
         "date": "1405-07-07 19:40:14"
     },
     "gerami": {
         "value": "37000",
-        "change": 1000,
+        "change": 0,
         "timestamp": 1790698214,
         "date": "1405-07-07 19:40:14"
     },
     "18ayar": {
         "value": "25225080",
-        "change": 801050,
+        "change": 0,
         "timestamp": 1790698214,
         "date": "1405-07-07 19:40:14"
     },
     "usd_sell": {
         "value": "253500",
-        "change": 9500,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "usd_buy": {
         "value": "253100",
-        "change": 9500,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "usd_farda_sell": {
         "value": "253500",
-        "change": 9500,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "usd_farda_buy": {
         "value": "253100",
-        "change": 9500,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "dirham_dubai": {
         "value": "69800",
-        "change": 3200,
+        "change": 0,
         "timestamp": 1790699077,
         "date": "1405-07-07 19:54:37"
     },
@@ -102,992 +102,992 @@
         "date": "1404-07-29 15:27:22"
     },
     "hav_cad_my": {
-        "value": "182740",
-        "change": 6730,
-        "timestamp": 1790711405,
-        "date": "1405-07-07 23:20:05"
+        "value": "182670",
+        "change": 20,
+        "timestamp": 1790724606,
+        "date": "1405-07-08 03:00:06"
     },
     "aed_sell": {
         "value": "69680",
-        "change": 2610,
-        "timestamp": 1790710805,
-        "date": "1405-07-07 23:10:05"
+        "change": 0,
+        "timestamp": 1790713205,
+        "date": "1405-07-07 23:50:05"
     },
     "usdt": {
-        "value": "254450",
-        "change": 10900,
-        "timestamp": 1790711402,
-        "date": "1405-07-07 23:20:02"
+        "value": "257700",
+        "change": 2100,
+        "timestamp": 1790723702,
+        "date": "1405-07-08 02:45:02"
     },
     "usd_shakhs": {
         "value": "259220",
-        "change": 9210,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_sherkat": {
         "value": "256790",
-        "change": 9120,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "eur_hav": {
         "value": "292660",
-        "change": 9500,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "gbp_hav": {
         "value": "337440",
-        "change": 11030,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "aud_hav": {
         "value": "178180",
-        "change": 5360,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "myr_hav": {
         "value": "62560",
-        "change": 2220,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "cny_hav": {
         "value": "38820",
-        "change": 1390,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "try_hav": {
         "value": "5320",
-        "change": 190,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "jpy_hav": {
         "value": "1650",
-        "change": 50,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "cad_hav": {
         "value": "180500",
-        "change": 6500,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "hav_cad_cheque": {
         "value": "180600",
-        "change": 6500,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "hav_cad_cash": {
         "value": "180500",
-        "change": 6500,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_pp": {
         "value": "252900",
-        "change": 9500,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "eur_pp": {
         "value": "287600",
-        "change": 10050,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_btc": {
         "value": "21042328090",
-        "change": 697806880,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_eth": {
         "value": "677497440",
-        "change": 24019610,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_xrp": {
         "value": "385130",
-        "change": 22130,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_bch": {
         "value": "77866630",
-        "change": 2807440,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_ltc": {
         "value": "17109830",
-        "change": 320810,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_eos": {
         "value": "24080",
-        "change": 950,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_bnb": {
         "value": "191207680",
-        "change": 5031950,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_dash": {
         "value": "15265640",
-        "change": -356730,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "aed_note": {
         "value": "69550",
-        "change": 2470,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "aed": {
         "value": "69540",
-        "change": 2470,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "gbp_wht": {
         "value": "332370",
-        "change": 10860,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "aud_wht": {
         "value": "171940",
-        "change": 5170,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_doge": {
         "value": "23810",
-        "change": 960,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_sol": {
         "value": "29961180",
-        "change": 1021870,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_ada": {
         "value": "61980",
-        "change": 2360,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_shib": {
         "value": "1.4611337874659",
-        "change": 0.08212316076290005,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_avax": {
         "value": "2830470",
-        "change": 302060,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_matic": {
         "value": "31980",
-        "change": 1230,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_dot": {
         "value": "300920",
-        "change": 14900,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_xlm": {
         "value": "57310",
-        "change": 1690,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_ton": {
         "value": "388580",
-        "change": -2960,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_trx": {
         "value": "84890",
-        "change": 3260,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_uni": {
         "value": "2250020",
-        "change": 108510,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_link": {
         "value": "3744970",
-        "change": 53230,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_atom": {
         "value": "441030",
-        "change": 17640,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_xmr": {
         "value": "137521190",
-        "change": 5517090,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_etc": {
         "value": "2308000",
-        "change": 56320,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_fil": {
         "value": "274010",
-        "change": 20510,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_icp": {
         "value": "859980",
-        "change": 122690,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_hbar": {
         "value": "28310",
-        "change": -660,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_vet": {
         "value": "2230",
-        "change": 100,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_near": {
         "value": "1260980",
-        "change": 96980,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_qnt": {
         "value": "64542500",
-        "change": 4495150,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_mkr": {
         "value": "488117380",
-        "change": 46601050,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_aave": {
         "value": "43017520",
-        "change": 7061050,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_grt": {
         "value": "7520",
-        "change": 70,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_algo": {
         "value": "32580",
-        "change": 270,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_axs": {
         "value": "289190",
-        "change": 21750,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_stx": {
         "value": "80750",
-        "change": 3770,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_egld": {
         "value": "1167800",
-        "change": 66180,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_sand": {
         "value": "10970",
-        "change": 560,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd_theta": {
         "value": "57390",
-        "change": 3160,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "btc": {
         "value": "21042328090",
-        "change": 697806880,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "eth": {
         "value": "677497440",
-        "change": 24019610,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "xrp": {
         "value": "385130",
-        "change": 22130,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "bch": {
         "value": "77866630",
-        "change": 2807440,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "ltc": {
         "value": "17109830",
-        "change": 320810,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "eos": {
         "value": "24080",
-        "change": 950,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "bnb": {
         "value": "191207680",
-        "change": 5031950,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "dash": {
         "value": "15265640",
-        "change": -356730,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "doge": {
         "value": "23810",
-        "change": 960,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "sol": {
         "value": "29961180",
-        "change": 1021870,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "ada": {
         "value": "61980",
-        "change": 2360,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "shib": {
         "value": "1.4611337874659",
-        "change": 0.08212316076290005,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "avax": {
         "value": "2830470",
-        "change": 302060,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "matic": {
         "value": "31980",
-        "change": 1230,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "dot": {
         "value": "300920",
-        "change": 14900,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "xlm": {
         "value": "57310",
-        "change": 1690,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "ton": {
         "value": "388580",
-        "change": -2960,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "trx": {
         "value": "84890",
-        "change": 3260,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "uni": {
         "value": "2250020",
-        "change": 108510,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "link": {
         "value": "3744970",
-        "change": 53230,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "atom": {
         "value": "441030",
-        "change": 17640,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "xmr": {
         "value": "137521190",
-        "change": 5517090,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "etc": {
         "value": "2308000",
-        "change": 56320,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "fil": {
         "value": "274010",
-        "change": 20510,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "icp": {
         "value": "859980",
-        "change": 122690,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "hbar": {
         "value": "28310",
-        "change": -660,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "vet": {
         "value": "2230",
-        "change": 100,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "near": {
         "value": "1260980",
-        "change": 96980,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "qnt": {
         "value": "64542500",
-        "change": 4495150,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "mkr": {
         "value": "488117380",
-        "change": 46601050,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "aave": {
         "value": "43017520",
-        "change": 7061050,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "grt": {
         "value": "7520",
-        "change": 70,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "algo": {
         "value": "32580",
-        "change": 270,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "axs": {
         "value": "289190",
-        "change": 21750,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "stx": {
         "value": "80750",
-        "change": 3770,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "egld": {
         "value": "1167800",
-        "change": 66180,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "sand": {
         "value": "10970",
-        "change": 560,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "theta": {
         "value": "57390",
-        "change": 3160,
+        "change": 0,
         "timestamp": 1790698205,
         "date": "1405-07-07 19:40:05"
     },
     "usd": {
         "value": "253500",
-        "change": 9500,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "afn": {
         "value": "3930",
-        "change": 120,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "all": {
         "value": "3125",
-        "change": 115,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "amd": {
         "value": "700",
-        "change": 30,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "ang": {
         "value": "141590",
-        "change": 5300,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "aoa": {
         "value": "276.44",
-        "change": 10.639999999999986,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "ars": {
         "value": "166.22",
-        "change": 6.199999999999989,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "aud": {
         "value": "176700",
-        "change": 5290,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "awg": {
         "value": "140740",
-        "change": 5180,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "azn": {
         "value": "149020",
-        "change": 5680,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "bam": {
         "value": "147070",
-        "change": 5190,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "bbd": {
         "value": "125830",
-        "change": 4700,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "bdt": {
         "value": "2060",
-        "change": 80,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "bgn": {
         "value": "150580",
-        "change": 5640,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "bhd": {
         "value": "672380",
-        "change": 25120,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "bif": {
         "value": "84.58",
-        "change": 3.1499999999999915,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "bmd": {
         "value": "253500",
-        "change": 9500,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "bnd": {
         "value": "198380",
-        "change": 7510,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "bob": {
         "value": "21020",
-        "change": 1090,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "brl": {
         "value": "48410",
-        "change": 1630,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "bsd": {
         "value": "253450",
-        "change": 9480,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "btn": {
         "value": "2640",
-        "change": 95,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "bwp": {
         "value": "18560",
-        "change": 720,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "byn": {
         "value": "83960",
-        "change": 3360,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "byr": {
         "value": "12.93",
-        "change": 0.4800000000000004,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "bzd": {
         "value": "126020",
-        "change": 4710,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "cad": {
         "value": "178540",
-        "change": 6330,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "cdf": {
         "value": "109.03",
-        "change": 4.760000000000005,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "chf": {
         "value": "303340",
-        "change": 9930,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "clf": {
         "value": "10291490",
-        "change": 331900,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "clp": {
         "value": "260.65",
-        "change": 8.43999999999997,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "cny": {
         "value": "37780",
-        "change": 1430,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "cnh": {
         "value": "37770",
-        "change": 1420,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "cop": {
         "value": "75.57",
-        "change": 2.9499999999999886,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "crc": {
         "value": "555",
-        "change": 20,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "cuc": {
         "value": "253500",
-        "change": 9500,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "cup": {
         "value": "10560",
-        "change": 390,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "cve": {
         "value": "2610",
-        "change": 95,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "czk": {
         "value": "11730",
-        "change": 350,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "djf": {
         "value": "1425",
-        "change": 55,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "dkk": {
         "value": "38370",
-        "change": 1240,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "dop": {
         "value": "4260",
-        "change": 160,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "dzd": {
         "value": "1895",
-        "change": 70,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "egp": {
         "value": "4870",
-        "change": 185,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "ern": {
         "value": "16900",
-        "change": 630,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "etb": {
         "value": "1550",
-        "change": 55,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "eur": {
         "value": "286850",
-        "change": 9300,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "fjd": {
         "value": "112880",
-        "change": 3720,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "fkp": {
         "value": "336060",
-        "change": 12800,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "gbp": {
         "value": "334840",
-        "change": 11190,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "gel": {
         "value": "97690",
-        "change": 4380,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "ggp": {
         "value": "336060",
-        "change": 12800,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "ghs": {
         "value": "21750",
-        "change": 780,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "gip": {
         "value": "336060",
-        "change": 12800,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "gmd": {
         "value": "3425",
-        "change": 105,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "gnf": {
         "value": "28.82",
-        "change": 1.0800000000000018,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "gtq": {
         "value": "33200",
-        "change": 1250,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "gyd": {
         "value": "1210",
-        "change": 45,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "hkd": {
         "value": "32310",
-        "change": 1210,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "hnl": {
         "value": "9440",
-        "change": 350,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "hrk": {
         "value": "38070",
-        "change": 1220,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "htg": {
         "value": "1935",
-        "change": 70,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "huf": {
         "value": "780",
-        "change": 25,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "idr": {
         "value": "14.12",
-        "change": 0.5899999999999999,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "ils": {
         "value": "82650",
-        "change": 3420,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "imp": {
         "value": "336060",
-        "change": 12800,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "inr": {
         "value": "2640",
-        "change": 100,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "iqd": {
         "value": "193.47",
-        "change": 7.219999999999999,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
@@ -1099,619 +1099,619 @@
     },
     "isk": {
         "value": "2095",
-        "change": 70,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "jep": {
         "value": "336060",
-        "change": 12800,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "jmd": {
         "value": "1600",
-        "change": 60,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "jod": {
         "value": "357550",
-        "change": 13410,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "jpy": {
         "value": "1610",
-        "change": 60,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "kes": {
         "value": "1955",
-        "change": 75,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "kgs": {
         "value": "2900",
-        "change": 110,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "khr": {
         "value": "62.45",
-        "change": 2.3400000000000034,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "kmf": {
         "value": "585",
-        "change": 20,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "kpw": {
         "value": "281.67",
-        "change": 10.560000000000002,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "krw": {
         "value": "187.05",
-        "change": 7.5400000000000205,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "kwd": {
         "value": "820970",
-        "change": 30710,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "kyd": {
         "value": "304130",
-        "change": 11370,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "kzt": {
         "value": "575",
-        "change": 20,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "lak": {
         "value": "11.3",
-        "change": 0.4300000000000015,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "lbp": {
         "value": "2.83",
-        "change": 0.10999999999999988,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "lkr": {
         "value": "765",
-        "change": 30,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "lrd": {
         "value": "1480",
-        "change": 60,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "lsl": {
         "value": "15470",
-        "change": 620,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "ltl": {
         "value": "85850",
-        "change": 3210,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "lvl": {
         "value": "419080",
-        "change": 15700,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "lyd": {
         "value": "39620",
-        "change": 1480,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "mad": {
         "value": "26170",
-        "change": 830,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "mdl": {
         "value": "14280",
-        "change": 480,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "mga": {
         "value": "57.55",
-        "change": 1.9299999999999997,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "mkd": {
         "value": "4670",
-        "change": 165,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "mmk": {
         "value": "120.75",
-        "change": 4.549999999999997,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "mnt": {
         "value": "70.47",
-        "change": 2.6200000000000045,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "mop": {
         "value": "31360",
-        "change": 1170,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "mru": {
         "value": "6330",
-        "change": 240,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "mur": {
         "value": "5320",
-        "change": 180,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "mvr": {
         "value": "16400",
-        "change": 610,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "mwk": {
         "value": "146.16",
-        "change": 5.460000000000008,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "mxn": {
         "value": "13990",
-        "change": 320,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "myr": {
         "value": "62090",
-        "change": 2320,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "mzn": {
         "value": "3965",
-        "change": 145,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "nad": {
         "value": "15470",
-        "change": 620,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "ngn": {
         "value": "191.31",
-        "change": 7.640000000000015,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "nio": {
         "value": "6890",
-        "change": 260,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "nok": {
         "value": "26360",
-        "change": 760,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "npr": {
         "value": "1650",
-        "change": 60,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "nzd": {
         "value": "142720",
-        "change": 4280,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "omr": {
         "value": "659310",
-        "change": 24720,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "pab": {
         "value": "253450",
-        "change": 9470,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "pen": {
         "value": "73680",
-        "change": 1880,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "pgk": {
         "value": "56020",
-        "change": 2090,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "php": {
         "value": "4045",
-        "change": 140,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "pkr": {
         "value": "915",
-        "change": 35,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "pln": {
         "value": "65610",
-        "change": 2060,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "pyg": {
         "value": "43.14",
-        "change": 1.6000000000000014,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "qar": {
         "value": "69530",
-        "change": 2590,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "ron": {
         "value": "54340",
-        "change": 1760,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "rsd": {
         "value": "2440",
-        "change": 80,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "rub": {
         "value": "3025",
-        "change": 135,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "rwf": {
         "value": "171.66",
-        "change": 6.4199999999999875,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "sar": {
         "value": "67480",
-        "change": 2520,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "sbd": {
         "value": "31580",
-        "change": 1080,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "scr": {
         "value": "18210",
-        "change": 690,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "sdg": {
         "value": "421.45",
-        "change": 15.789999999999964,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "sek": {
         "value": "25280",
-        "change": 760,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "sgd": {
         "value": "198140",
-        "change": 7100,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "shp": {
         "value": "336030",
-        "change": 12850,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "sle": {
         "value": "10300",
-        "change": 400,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "sll": {
         "value": "12.09",
-        "change": 0.4499999999999993,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "sos": {
         "value": "443.49",
-        "change": 16.620000000000005,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "srd": {
         "value": "6710",
-        "change": 240,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "std": {
         "value": "12.25",
-        "change": 0.46000000000000085,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "stn": {
         "value": "11740",
-        "change": 410,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "svc": {
         "value": "28960",
-        "change": 1080,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "syp": {
         "value": "19.5",
-        "change": 0.7300000000000004,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "szl": {
         "value": "15470",
-        "change": 620,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "thb": {
         "value": "7540",
-        "change": 270,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "tjs": {
         "value": "27530",
-        "change": 1080,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "tmt": {
         "value": "72430",
-        "change": 2910,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "tnd": {
         "value": "85380",
-        "change": 2990,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "top": {
         "value": "105280",
-        "change": 3940,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "try": {
         "value": "5170",
-        "change": 190,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "ttd": {
         "value": "37360",
-        "change": 1410,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "twd": {
         "value": "7960",
-        "change": 280,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "tzs": {
         "value": "96.2",
-        "change": 3.6000000000000085,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "uah": {
         "value": "5650",
-        "change": 210,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "ugx": {
         "value": "64.65",
-        "change": 2.3200000000000074,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "uyu": {
         "value": "6320",
-        "change": 230,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "uzs": {
         "value": "21.44",
-        "change": 0.7900000000000027,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "ves": {
         "value": "295.9",
-        "change": 9.659999999999968,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "vnd": {
         "value": "9.76",
-        "change": 0.3699999999999992,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "vuv": {
         "value": "2130",
-        "change": 60,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "wst": {
         "value": "91540",
-        "change": 2670,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "xaf": {
         "value": "437.29",
-        "change": 14.160000000000025,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "xag": {
         "value": "15400970",
-        "change": 454570,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "xau": {
         "value": "1050908330",
-        "change": 45042730,
+        "change": -1638880,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "xcd": {
         "value": "93800",
-        "change": 3510,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "xcg": {
         "value": "140630",
-        "change": 5250,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "xdr": {
         "value": "358530",
-        "change": 13440,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "xof": {
         "value": "437.29",
-        "change": 14.160000000000025,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "xpf": {
         "value": "2410",
-        "change": 85,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "yer": {
         "value": "1070",
-        "change": 40,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "zar": {
         "value": "15390",
-        "change": 510,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "zmk": {
         "value": "28.16",
-        "change": 1.0500000000000007,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "zmw": {
         "value": "12950",
-        "change": 420,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "zwl": {
         "value": "785",
-        "change": 25,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "ssp": {
         "value": "44.38",
-        "change": 1.6700000000000017,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
     "mxv": {
         "value": "123600",
-        "change": 2910,
+        "change": 0,
         "timestamp": 1790702962,
         "date": "1405-07-07 20:59:22"
     },
@@ -1741,43 +1741,43 @@
     },
     "usd_xau": {
         "value": "4152.06",
-        "change": 29.660000000000764,
+        "change": 0,
         "timestamp": 1790698214,
         "date": "1405-07-07 19:40:14"
     },
     "bub_sekkeh": {
         "value": "7270040",
-        "change": -2985770,
+        "change": 0,
         "timestamp": 1790698214,
         "date": "1405-07-07 19:40:14"
     },
     "bub_bahar": {
         "value": "699960",
-        "change": -1585850,
+        "change": 0,
         "timestamp": 1790698214,
         "date": "1405-07-07 19:40:14"
     },
     "bub_nim": {
         "value": "8135250",
-        "change": -492210,
+        "change": 0,
         "timestamp": 1790698214,
         "date": "1405-07-07 19:40:14"
     },
     "bub_rob": {
         "value": "9052630",
-        "change": 253900,
+        "change": 0,
         "timestamp": 1790698214,
         "date": "1405-07-07 19:40:14"
     },
     "bub_18ayar": {
         "value": "155050",
-        "change": -14480,
+        "change": 0,
         "timestamp": 1790698214,
         "date": "1405-07-07 19:40:14"
     },
     "bub_gerami": {
         "value": "6513840",
-        "change": -350760,
+        "change": 0,
         "timestamp": 1790698214,
         "date": "1405-07-07 19:40:14"
     },
